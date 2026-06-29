@@ -1,0 +1,12 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+.vscode/
+.idea/
+
+# Never commit secrets (use the serverless proxy + env vars instead)
+.env
+.env.*
+secrets.*

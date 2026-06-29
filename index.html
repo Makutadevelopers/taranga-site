@@ -676,8 +676,8 @@ body{overflow-x:hidden}
 }
 
 /* official master plan — two-column interactive locator */
-.mplan2{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(1.4rem,3vw,2.6rem);align-items:center;margin-top:1.6rem}
-.mplan2-map{position:relative;border-radius:3px;overflow:hidden;cursor:zoom-in;
+.mplan2{display:grid;grid-template-columns:2.2fr 1fr;gap:clamp(1.4rem,3vw,2.6rem);align-items:center;margin-top:1.6rem}
+.mplan2-map{position:relative;border-radius:3px;overflow:hidden;cursor:zoom-in;pointer-events:auto;z-index:5;
   box-shadow:0 30px 70px -44px rgba(14,27,44,.6),0 8px 24px -18px rgba(14,27,44,.4)}
 .mplan2-map>img{display:block;width:100%;height:auto}
 .mp-pin{position:absolute;transform:translate(-50%,-50%);width:clamp(18px,2.1vw,26px);height:clamp(18px,2.1vw,26px);
@@ -716,18 +716,240 @@ body{overflow-x:hidden}
 .port-teaser:hover .pt-cap span{transform:translateX(4px)}
 @media(max-width:820px){.port-band{grid-template-columns:1fr;gap:1.4rem}.port-teaser{aspect-ratio:16/9}}
 
-</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"ApartmentComplex","name":"Makuta Taranga","description":"Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet-Kukatpally, Hyderabad. G+24 twin towers connected by a sky bridge, 10.35-ft ceilings, privacy foyers and 40+ amenities.","url":"https://www.makutataranga.com","image":"https://www.makutataranga.com/og-image.jpg","numberOfAccommodationUnits":"248","petsAllowed":true,"address":{"@type":"PostalAddress","streetAddress":"IDL Road, Opp. IDL Lake, Habeeb Nagar, Moosapet","addressLocality":"Hyderabad","addressRegion":"Telangana","postalCode":"500072","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"17.486","longitude":"78.411"},"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Infinity Pool","value":true},{"@type":"LocationFeatureSpecification","name":"Rooftop Lounge","value":true},{"@type":"LocationFeatureSpecification","name":"Sky Bridge","value":true},{"@type":"LocationFeatureSpecification","name":"Temple Garden","value":true},{"@type":"LocationFeatureSpecification","name":"Gymnasium","value":true}],"containsPlace":[{"@type":"Apartment","name":"3 BHK","numberOfRooms":3},{"@type":"Apartment","name":"4 BHK","numberOfRooms":4}],"developer":{"@type":"Organization","name":"Makuta Developers","url":"https://www.makutadevelopers.com"},"branchOf":{"@type":"RealEstateAgent","name":"Makuta Developers","telephone":"+91-90596-76464"}}</script></head><body><div class="loader" id="loader"><div class="lwrap"><div class="lmk">MAKUTA</div><div class="ltg">Taranga</div><svg class="lwave" viewBox="0 0 200 24" aria-hidden="true"><path d="M4,14 C40,2 80,24 112,12 S170,2 196,12"/></svg></div></div><div class="progress" id="progress"></div><header id="hdr" class="over-hero"><div class="bar"><a class="brand" href="index.html" aria-label="Makuta Taranga — Home"><img class="lg-dark" src="taranga_navy.png" alt="Makuta Taranga" width="160"><img class="lg-light" src="taranga_white.png" alt="Makuta Taranga" width="160"></a><div class="hamb" id="hamb" role="button" tabindex="0" aria-label="Menu"><span></span><span></span><span></span></div><nav id="nav"><a href="index.html" class="active">Home</a><a href="residences.html">Residences</a><a href="amenities.html">Amenities</a><a href="location.html">Location</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="#" class="nbtn" onclick="openModal('visit');return false">Book a Visit</a></nav></div></header><section class="hero" id="top"><div class="img"></div><div class="veil"></div>
-<div class="vr"><span class="vlabel">Makuta · Crown of Excellence</span></div>
-<div class="wrap inner"><div class="label">IDL Lakefront · Moosapet–Kukatpally, Hyderabad</div><h1>Taranga</h1><div class="rule"></div><div class="sub">The Finest Form of Luxury</div>
-<div class="cta"><a class="hbtn sol" href="#" onclick="openModal('brochure');return false">Download Brochure</a><a class="hbtn gho" href="#" onclick="openModal('price');return false">Price Sheet</a><a class="hbtn gho" href="#" onclick="openModal('visit');return false">Book a Visit</a></div></div>
-<div class="scrollcue">Scroll<div class="d"></div></div></section>
+/* RERA link */
+a[href*='ts-rera']:hover{color:var(--line)!important;}
+
+/* ============ STICKY 4-ICON BAR ============ */
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:center;gap:0;background:var(--ink);
+  box-shadow:0 -2px 30px rgba(14,27,44,.3);padding:0;height:60px}
+/* HIDE ON DESKTOP */
+@media(min-width:861px){.sticky-bar{display:none !important}}
+/* FLOATING PILL ON MOBILE */
+@media(max-width:860px){
+  .sticky-bar{bottom:20px;left:auto;right:20px;width:auto;height:auto;
+    flex-direction:column;gap:0;background:transparent;box-shadow:none;
+    padding:8px;border-radius:50px;flex-wrap:wrap;justify-content:flex-end}
+}
+.sb-btn:hover{background:rgba(193,154,99,.15);color:var(--line)}
+.sb-icon{font-size:1.4rem;display:block}
+.sb-label{font-size:.62rem;letter-spacing:.1em}
+@media(max-width:600px){.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:center;gap:0;background:var(--ink);
+  box-shadow:0 -2px 30px rgba(14,27,44,.3);padding:0;height:60px}
+/* HIDE ON DESKTOP */
+@media(min-width:861px){.sticky-bar{display:none !important}}
+/* FLOATING PILL ON MOBILE */
+@media(max-width:860px){
+  .sticky-bar{bottom:20px;left:auto;right:20px;width:auto;height:auto;
+    flex-direction:column;gap:0;background:transparent;box-shadow:none;
+    padding:8px;border-radius:50px;flex-wrap:wrap;justify-content:flex-end}
+}.sb-icon{font-size:1.2rem}}
+@media(max-width:400px){.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:999;
+  display:flex;justify-content:center;gap:0;background:var(--ink);
+  box-shadow:0 -2px 30px rgba(14,27,44,.3);padding:0;height:60px}
+/* HIDE ON DESKTOP */
+@media(min-width:861px){.sticky-bar{display:none !important}}
+/* FLOATING PILL ON MOBILE */
+@media(max-width:860px){
+  .sticky-bar{bottom:20px;left:auto;right:20px;width:auto;height:auto;
+    flex-direction:column;gap:0;background:transparent;box-shadow:none;
+    padding:8px;border-radius:50px;flex-wrap:wrap;justify-content:flex-end}
+}
+  .sb-icon{font-size:1rem}.sb-label{display:none}}
+
+.form-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(14,27,44,.7);
+  display:none;z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(2px)}
+.form-modal.active{display:flex}
+.form-modal .form-container{background:#fff;padding:2rem;border-radius:4px;max-width:500px;width:90%;max-height:90vh;overflow-y:auto;animation:slideUp .3s var(--ease)}
+@keyframes slideUp{from{transform:translateY(60px);opacity:0}to{transform:translateY(0);opacity:1}}
+
+</style><script type="application/ld+json">{"@context":"https://schema.org","@type":"ApartmentComplex","name":"Makuta Taranga","description":"Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet-Kukatpally, Hyderabad. G+24 twin towers connected by a sky bridge, 10.35-ft ceilings, privacy foyers and 40+ amenities.","url":"https://www.makutataranga.com","image":"https://www.makutataranga.com/og-image.jpg","numberOfAccommodationUnits":"248","petsAllowed":true,"address":{"@type":"PostalAddress","streetAddress":"IDL Road, Opp. IDL Lake, Habeeb Nagar, Moosapet","addressLocality":"Hyderabad","addressRegion":"Telangana","postalCode":"500072","addressCountry":"IN"},"geo":{"@type":"GeoCoordinates","latitude":"17.486","longitude":"78.411"},"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Infinity Pool","value":true},{"@type":"LocationFeatureSpecification","name":"Rooftop Lounge","value":true},{"@type":"LocationFeatureSpecification","name":"Sky Bridge","value":true},{"@type":"LocationFeatureSpecification","name":"Temple Garden","value":true},{"@type":"LocationFeatureSpecification","name":"Gymnasium","value":true}],"containsPlace":[{"@type":"Apartment","name":"3 BHK","numberOfRooms":3},{"@type":"Apartment","name":"4 BHK","numberOfRooms":4}],"developer":{"@type":"Organization","name":"Makuta Developers","url":"https://www.makutadevelopers.com"},"branchOf":{"@type":"RealEstateAgent","name":"Makuta Developers","telephone":"+91-90596-76464"}}</script><!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LG2FQH38BR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LG2FQH38BR', {'anonymize_ip': true});
+</script>
+<!-- Meta Pixel -->
+<script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '29987720737478821');
+  fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=29987720737478821&ev=PageView&noscript=1" /></noscript>
+
+<style id="final-fixes-v3">
+/* HEADER on scroll (canvas opaque) */
+#hdr{position:fixed;top:0;left:0;right:0;z-index:90;transition:background 0.35s ease,box-shadow 0.35s ease}
+#hdr.solid,#hdr.solid .bar{background:#F4F1EA !important;backdrop-filter:none !important}
+#hdr.solid{box-shadow:0 1px 18px rgba(28,42,56,0.07);border-bottom:1px solid rgba(28,42,56,0.06)}
+
+/* Progress bar (top scroll loader) */
+.progress{position:fixed !important;top:0 !important;left:0 !important;height:2px !important;background:linear-gradient(90deg,#A07C4A,#C19A63) !important;z-index:100 !important;transition:width 0.1s linear !important}
+
+/* HERO — SMALLER text + heavier vignette */
+.hero,.hero-section{background:#0E1B2C;position:relative}
+.hero-overlay{background:radial-gradient(ellipse at center,rgba(14,27,44,0.55) 0%,rgba(14,27,44,0.8) 60%,rgba(14,27,44,0.92) 100%) !important;z-index:2}
+.hero-content{position:relative !important;z-index:5 !important;max-width:780px !important;margin:0 auto;padding:0 1.5rem}
+.hero-h1{font-family:'Cormorant Garamond',Georgia,serif !important;font-weight:300 !important;font-size:clamp(1.9rem,3.2vw,3rem) !important;line-height:1.15 !important;color:#F7F4ED !important;margin:0 0 1.2rem 0 !important;text-shadow:0 4px 32px rgba(0,0,0,0.65) !important;letter-spacing:-0.005em !important}
+.hero-sub{font-size:clamp(0.9rem,1.3vw,1.05rem) !important;text-shadow:0 2px 16px rgba(0,0,0,0.6) !important;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-trust{text-shadow:0 2px 12px rgba(0,0,0,0.75) !important;font-size:0.68rem !important}
+.hero-scroll-text{font-size:0.66rem !important}
+
+/* REVEAL: content visible */
+.reveal,.chapter,.phead,.figures,.assure,.wrap,.scard,.sstory__head,.scard__body{opacity:1 !important;transform:none !important;visibility:visible !important}
+
+/* STICKIES — desktop: WA pill only | mobile: sticky-bar only */
+@media(min-width:861px){.sticky-bar,.mcall{display:none !important}.wa{display:grid !important}}
+@media(max-width:860px){.sticky-bar{display:none !important}.wa{display:none !important}.mcall{display:flex !important}
+  .hamb{display:flex !important;z-index:99 !important;cursor:pointer}
+  .hero-h1{font-size:clamp(1.7rem,6vw,2.2rem) !important}
+  .hero-content{max-width:92% !important;padding:0 1rem !important}
+}
+
+/* HAMBURGER nav */
+#hdr nav{z-index:98 !important}
+#hdr nav.open{transform:translateX(0) !important}
+
+/* LOADER smooth */
+.loader{transition:opacity 0.6s ease,visibility 0.6s ease}
+.loader.done{opacity:0;visibility:hidden;pointer-events:none}
+</style>
+</head><body>
+<div class="loader" id="loader"><div class="lwrap"><div class="lmk">MAKUTA</div><div class="ltg">Taranga</div><svg class="lwave" viewBox="0 0 200 24" aria-hidden="true"><path d="M4,14 C40,2 80,24 112,12 S170,2 196,12"/></svg></div></div>
+<script>
+/* Bulletproof loader hide: fires on multiple events */
+(function(){
+  function hide(){var l=document.getElementById('loader');if(l)l.classList.add('done');}
+  if(document.readyState==='complete'){hide();}
+  else{
+    document.addEventListener('DOMContentLoaded',function(){setTimeout(hide,400);});
+    window.addEventListener('load',function(){setTimeout(hide,300);});
+    setTimeout(hide,1500); /* hard fallback */
+  }
+})();
+</script>
+
+
+<div class="progress" id="progress"></div><header id="hdr" class="over-hero"><div class="bar"><a class="brand" href="index.html" aria-label="Makuta Taranga — Home"><img class="lg-dark" src="taranga_navy.png" alt="Makuta Taranga" width="160"><img class="lg-light" src="taranga_white.png" alt="Makuta Taranga" width="160"></a><div class="hamb" id="hamb" role="button" tabindex="0" aria-label="Menu"><span></span><span></span><span></span></div><nav id="nav"><a href="index.html" class="active">Home</a><a href="residences.html">Residences</a><a href="amenities.html">Amenities</a><a href="location.html">Location</a><a href="gallery.html">Gallery</a><a href="about.html">About</a><a href="contact.html">Contact</a><a href="#" class="nbtn" onclick="openModal('visit');return false">Book a Visit</a></nav></div></header>
+<section id="hero" class="hero hero-section">
+  <video class="hero-video" autoplay muted playsinline loop poster="hero-poster.jpg">
+    <source src="hero-desktop.mp4" type="video/mp4" media="(min-width:861px)">
+    <source src="hero-mobile.mp4" type="video/mp4" media="(max-width:860px)">
+    <source src="hero-video-square.mp4" type="video/mp4">
+  </video>
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <div class="hero-crown reveal-anim" style="animation-delay:0.3s">Makuta &middot; Crown of Excellence</div>
+    <div class="hero-loc reveal-anim" style="animation-delay:0.6s">IDL Lakefront &middot; Moosapet&ndash;Kukatpally, Hyderabad</div>
+    <h1 class="hero-title reveal-anim" style="animation-delay:0.9s">Taranga</h1>
+    <p class="hero-tag reveal-anim" style="animation-delay:1.2s">The Finest Form of Luxury</p>
+    <div class="hero-ctas reveal-anim" style="animation-delay:1.5s">
+      <a href="#" onclick="openModal('brochure');return false;" class="hero-btn hero-btn-primary">Download Brochure</a>
+      <a href="#" onclick="openModal('price');return false;" class="hero-btn hero-btn-secondary">Price Sheet</a>
+      <a href="#form-anchor" class="hero-btn hero-btn-cta">Book a Visit</a>
+    </div>
+    <p class="hero-trust reveal-anim" style="animation-delay:1.8s">TS RERA <a href="https://ts-rera.telangana.gov.in/PublicSearch" target="_blank" rel="noopener">P02200011012</a></p>
+  </div>
+  <a href="#outdoors" class="hero-scroll reveal-anim" style="animation-delay:2.1s">
+    <span class="hero-scroll-text">Scroll to see why 8 in 10 homes are corners</span>
+    <span class="hero-scroll-arrow">&darr;</span>
+  </a>
+</section>
+<style id="hero-restored-css">
+.hero,.hero-section{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;background:#0E1B2C;margin:0}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;animation:heroZoom 18s ease-out forwards}
+@keyframes heroZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
+.hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(14,27,44,0.55) 0%,rgba(14,27,44,0.78) 60%,rgba(14,27,44,0.92) 100%);z-index:2}
+.hero-content{position:relative;z-index:5;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:880px;margin:0 auto;padding:6rem 1.5rem 4rem}
+.hero-crown{font-family:'Poppins',sans-serif;font-size:0.72rem;letter-spacing:0.32em;text-transform:uppercase;color:#C19A63;margin-bottom:1rem;font-weight:500;text-shadow:0 2px 12px rgba(0,0,0,0.7)}
+.hero-loc{font-family:'Poppins',sans-serif;font-size:0.78rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(247,244,237,0.78);margin-bottom:2.2rem;font-weight:400;text-shadow:0 2px 12px rgba(0,0,0,0.6)}
+.hero-title{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(3.5rem,8vw,7rem);line-height:1;color:#F7F4ED;margin:0 0 1rem 0;letter-spacing:-0.02em;text-shadow:0 4px 40px rgba(0,0,0,0.6)}
+.hero-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(1.1rem,1.8vw,1.5rem);color:rgba(247,244,237,0.88);margin:0 0 2.6rem 0;font-weight:300;text-shadow:0 2px 16px rgba(0,0,0,0.55)}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:0.9rem;justify-content:center;margin-bottom:2.4rem}
+.hero-btn{display:inline-block;padding:0.95rem 1.8rem;font-family:'Poppins',sans-serif;font-size:0.72rem;letter-spacing:0.22em;text-transform:uppercase;text-decoration:none;font-weight:500;border-radius:2px;transition:all 0.3s ease;border:1px solid rgba(247,244,237,0.45);cursor:pointer}
+.hero-btn-primary{background:transparent;color:#F7F4ED}
+.hero-btn-primary:hover{background:rgba(247,244,237,0.1);border-color:#F7F4ED}
+.hero-btn-secondary{background:transparent;color:#F7F4ED}
+.hero-btn-secondary:hover{background:rgba(247,244,237,0.1);border-color:#F7F4ED}
+.hero-btn-cta{background:#2C5F5D;color:#F7F4ED;border-color:#2C5F5D}
+.hero-btn-cta:hover{background:#356A6F;border-color:#356A6F}
+.hero-trust{font-family:'Poppins',sans-serif;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(247,244,237,0.7);margin:0;text-shadow:0 2px 12px rgba(0,0,0,0.7)}
+.hero-trust a{color:#C19A63;border-bottom:1px solid rgba(193,154,99,0.4);padding-bottom:1px;text-decoration:none}
+.hero-trust a:hover{border-bottom-color:#C19A63}
+.hero-scroll{position:absolute;bottom:2rem;left:50%;transform:translateX(-50%);z-index:5;color:rgba(247,244,237,0.7);text-decoration:none;text-align:center;font-family:'Poppins',sans-serif}
+.hero-scroll-text{display:block;font-size:0.6rem;letter-spacing:0.28em;text-transform:uppercase;margin-bottom:0.5rem;text-shadow:0 2px 8px rgba(0,0,0,0.7)}
+.hero-scroll-arrow{font-size:1.2rem;animation:bounceDown 2s ease-in-out infinite}
+@keyframes bounceDown{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+
+/* SLOW REVEAL animation for hero elements */
+.reveal-anim{opacity:0;transform:translateY(20px);animation:fadeUp 1.4s cubic-bezier(0.22,0.61,0.36,1) forwards}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:860px){
+  .hero,.hero-section{min-height:560px}
+  .hero-content{padding:5rem 1.2rem 3rem}
+  .hero-crown{font-size:0.62rem;letter-spacing:0.24em}
+  .hero-loc{font-size:0.66rem;letter-spacing:0.16em;margin-bottom:1.8rem}
+  .hero-title{font-size:clamp(2.8rem,15vw,4rem)}
+  .hero-tag{font-size:1rem;margin-bottom:2rem}
+  .hero-ctas{flex-direction:column;width:100%;max-width:280px;margin-left:auto;margin-right:auto}
+  .hero-btn{width:100%;padding:0.9rem 1.2rem;font-size:0.66rem}
+  .hero-trust{font-size:0.6rem;letter-spacing:0.1em}
+  .hero-scroll{bottom:1.2rem}
+  .hero-scroll-text{font-size:0.54rem}
+}
+</style>
+
+<style>
+.hero-section{position:relative;width:100%;height:100vh;min-height:600px;overflow:hidden;background:#0E1B2C;margin:0}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(14,27,44,0.35) 0%,rgba(14,27,44,0.15) 35%,rgba(14,27,44,0.55) 80%,rgba(14,27,44,0.85) 100%);z-index:2}
+.hero-content{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;text-align:center;width:92%;max-width:880px;padding:0 1rem}
+.hero-h1{font-family:'Cormorant Garamond',Georgia,serif;font-weight:300;font-size:clamp(2.2rem,5vw,4rem);line-height:1.1;color:#F7F4ED;margin:0 0 1.5rem 0;letter-spacing:-0.01em;text-shadow:0 2px 24px rgba(0,0,0,0.35)}
+.hero-sub{font-family:'Poppins',sans-serif;font-size:clamp(0.95rem,1.6vw,1.15rem);font-weight:300;color:#F7F4ED;opacity:0.92;margin:0 0 2rem 0;line-height:1.6;text-shadow:0 1px 12px rgba(0,0,0,0.4)}
+.hero-cta{display:inline-block;padding:16px 40px;background:#2C5F5D;color:#F7F4ED;text-decoration:none;font-family:'Poppins',sans-serif;font-weight:500;font-size:0.92rem;letter-spacing:0.18em;text-transform:uppercase;border:1px solid rgba(247,244,237,0.15);transition:all 0.35s cubic-bezier(0.16,0.84,0.34,1);min-height:48px;box-sizing:border-box}
+.hero-cta:hover{background:#23504E;letter-spacing:0.22em;transform:translateY(-1px);box-shadow:0 8px 24px rgba(0,0,0,0.3)}
+.hero-trust{font-family:'Poppins',sans-serif;font-size:0.72rem;color:#F7F4ED;opacity:0.7;margin:2rem 0 0 0;letter-spacing:0.08em;text-transform:uppercase}
+.hero-trust a{color:#F7F4ED;text-decoration:underline;text-decoration-color:rgba(247,244,237,0.4)}
+.hero-trust a:hover{text-decoration-color:#F7F4ED}
+.hero-scroll{position:absolute;left:50%;bottom:32px;transform:translateX(-50%);z-index:3;text-align:center;color:#F7F4ED;text-decoration:none;animation:scrollBounce 2.4s ease-in-out infinite;font-family:'Poppins',sans-serif}
+.hero-scroll-text{display:block;font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;opacity:0.85;margin-bottom:10px;font-weight:500}
+.hero-scroll-arrow{display:block;font-size:1.5rem;color:#C19A63;line-height:1}
+@keyframes scrollBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(-10px)}}
+@media(max-width:860px){
+  .hero-section{height:80vh;min-height:540px}
+  .hero-h1{font-size:clamp(1.9rem,7vw,2.4rem);line-height:1.15}
+  .hero-sub{font-size:0.92rem;margin-bottom:1.6rem}
+  .hero-cta{padding:14px 32px;font-size:0.82rem;letter-spacing:0.14em}
+  .hero-trust{font-size:0.65rem;margin-top:1.5rem}
+  .hero-scroll{bottom:24px}
+  .hero-scroll-text{font-size:0.62rem;max-width:240px;margin-left:auto;margin-right:auto;line-height:1.4}
+  .hero-overlay{background:linear-gradient(180deg,rgba(14,27,44,0.45) 0%,rgba(14,27,44,0.2) 30%,rgba(14,27,44,0.6) 75%,rgba(14,27,44,0.9) 100%)}
+}
+@media(max-width:480px){
+  .hero-content{width:94%;padding:0 0.5rem}
+  .hero-h1{font-size:1.85rem}
+  .hero-h1 br{display:none}
+}
+</style>
 
 <section class="orient"><div class="wrap"><div class="orow">
 <div class="oi"><span class="ol">The Project</span><span class="ov">Lakefront 3 &amp; 4 BHK Residences</span></div>
 <div class="oi"><span class="ol">Where</span><span class="ov">IDL Lake · Kukatpally, Hyderabad</span></div>
 <div class="oi"><span class="ol">The Build</span><span class="ov">G+24 Twin Towers · 2.8 Acres · 248 Homes</span></div>
 <div class="oi"><span class="ol">By</span><span class="ov">Makuta Developers</span></div>
-</div><div class="orera"><span>TS RERA P02200011012</span><a href="https://rera.telangana.gov.in" target="_blank" rel="noopener">Verify on the TS RERA portal →</a></div></div></section>
+</div><div class="orera"><span>TS RERA P02200011012</span></div></div></section>
 
 <section class="sstory" data-sec data-n="01" data-l="The Outdoors" data-rail="The Outdoors">
   <div class="sstory__stage">
@@ -926,7 +1148,7 @@ body{overflow-x:hidden}
 <div class="qform" id="qform"><input id="qn" placeholder="Your name"><input id="qp" placeholder="Phone"><select id="qc"><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select><a href="#" class="btn solid" onclick="quickSubmit();return false">Request a Visit</a></div>
 <div class="formnote" id="qnote">We respect your privacy. No spam — just a call back to plan your visit.</div>
 <div class="altcta">Prefer to read first? <a href="#" onclick="openModal('brochure');return false">Download the brochure</a> or <a href="#" onclick="openModal('price');return false">get the price sheet</a>.</div></div></section><footer><div class="wrap"><div class="ft">
-<div><img class="ft-logo" src="taranga_navy.png" alt="Makuta Taranga"><p style="margin-top:.9rem;max-width:34ch">A lakefront landmark by Makuta Developers — Crown of Excellence. Built around privacy, light and the calm of water.</p><span class="rera">TS RERA P02200011012</span><a class="rera-verify" href="https://rera.telangana.gov.in" target="_blank" rel="noopener">Verify on the TS RERA portal →</a><div class="by-makuta"><span>A project by</span><img src="makuta.png" alt="Makuta Developers — Crown of Excellence"></div></div>
+<div><img class="ft-logo" src="taranga_navy.png" alt="Makuta Taranga"><p style="margin-top:.9rem;max-width:34ch">A lakefront landmark by Makuta Developers — Crown of Excellence. Built around privacy, light and the calm of water.</p><span class="rera">TS RERA P02200011012</span><div class="by-makuta"><span>A project by</span><img src="makuta.png" alt="Makuta Developers — Crown of Excellence"></div></div>
 <div><h4>Explore</h4><a href="residences.html">Residences</a><a href="amenities.html">Amenities</a><a href="location.html">Location</a><a href="gallery.html">Gallery</a><a href="contact.html#faq">FAQ</a></div>
 <div><h4>Visit</h4><p>IDL Road, Opp. IDL Lake,<br>Moosapet, Hyderabad — 500072</p><a href="tel:+919059676464">+91 90596 76464</a><a href="mailto:sales@makutataranga.com">sales@makutataranga.com</a></div>
 </div><p class="disc">TS RERA Registration No. P02200011012 — project details available at rera.telangana.gov.in. Artist’s impressions and renders are for representation only and may vary from actuals. All plans, areas, specifications and amenities are indicative and subject to the sanctioned and RERA-approved plans. This does not constitute a legal offer or invitation; all transactions are governed solely by the registered Agreement of Sale. © Makuta Developers.</p></div></footer><a class="wa" href="https://wa.me/919059676464" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16.04 4C9.93 4 5 8.93 5 15.04c0 2.13.6 4.13 1.64 5.83L5 27l6.3-1.65a11 11 0 0 0 4.74 1.08h.01c6.1 0 11.04-4.93 11.04-11.04C27.09 8.93 22.15 4 16.04 4zm0 19.85h-.01a9.16 9.16 0 0 1-4.66-1.28l-.33-.2-3.46.91.92-3.37-.22-.35a9.13 9.13 0 0 1-1.4-4.86c0-5.05 4.11-9.16 9.17-9.16 2.45 0 4.75.96 6.48 2.69a9.1 9.1 0 0 1 2.68 6.48c0 5.05-4.11 9.14-9.17 9.14zm5.03-6.85c-.28-.14-1.63-.8-1.88-.9-.25-.09-.43-.14-.62.14-.18.27-.71.89-.87 1.07-.16.18-.32.2-.6.07-.28-.14-1.16-.43-2.22-1.37-.82-.73-1.37-1.64-1.53-1.91-.16-.28-.02-.43.12-.56.12-.12.28-.32.41-.48.14-.16.18-.27.28-.46.09-.18.05-.34-.02-.48-.07-.14-.62-1.5-.85-2.05-.22-.53-.45-.46-.62-.47l-.53-.01c-.18 0-.48.07-.73.34-.25.27-.96.94-.96 2.3s.98 2.66 1.12 2.85c.14.18 1.94 2.96 4.7 4.15.66.28 1.17.45 1.57.58.66.21 1.26.18 1.74.11.53-.08 1.63-.67 1.86-1.31.23-.64.23-1.19.16-1.31-.07-.12-.25-.18-.53-.32z"/></svg></a><nav class="mcall"><a href="tel:+919059676464"><svg viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z"/></svg><span>Call</span></a><a href="https://wa.me/919059676464" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.5 8.5 0 0 1-12.4 7.5L3 20l1.1-5.4A8.5 8.5 0 1 1 21 11.5z"/></svg><span>WhatsApp</span></a><a href="#" onclick="openModal('brochure');return false"><svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5M9.5 13h6M9.5 16.5h6"/></svg><span>Brochure</span></a><a class="mc-cta" href="#" onclick="openModal('visit');return false"><svg viewBox="0 0 24 24"><path d="M4 6h16v15H4zM4 10h16M8 3v4M16 3v4"/></svg><span>Book a Visit</span></a></nav><div class="modal" id="modal"><div class="box"><span class="x" onclick="closeModal()">&times;</span><div class="mbrand"><img src="taranga_navy.png" alt="Makuta Taranga"><svg class="mwave" viewBox="0 0 200 24" aria-hidden="true"><path d="M4,14 C40,2 80,24 112,12 S170,2 196,12"/></svg></div>
@@ -935,7 +1157,7 @@ body{overflow-x:hidden}
 <input id="mp" placeholder="Phone number"><div class="err" id="mep">Enter a valid 10-digit phone.</div>
 <input id="me" placeholder="Email address"><div class="err" id="mee">Enter a valid email.</div>
 <a href="#" class="btn solid" id="msb" onclick="submitModal();return false">Get the Brochure</a></div>
-<div id="msuccess" style="display:none" class="ok"><div class="tick">✓</div><h3 id="stitle">Thank you</h3><p id="sdesc" style="margin-top:.3rem">Your brochure is on its way.</p><a href="#" class="btn" onclick="closeModal();return false">Close</a></div></div></div>
+<div id="msuccess" style="display:none" class="ok"><div class="tick">✓</div><h3 id="stitle">Thank you. Our team will call you within 2 hours."sdesc" style="margin-top:.3rem">Your brochure is on its way.</p><a href="#" class="btn" onclick="closeModal();return false">Close</a></div></div></div>
 <div class="lightbox" id="lightbox" onclick="this.classList.remove('open')"><span class="x">&times;</span><img id="lbimg" src="" alt=""></div><script>
 var hdr=document.getElementById('hdr');addEventListener('scroll',function(){hdr.classList.toggle('solid',scrollY>40);});
 var hamb=document.getElementById('hamb'),nv=document.getElementById('nav');function tg(){nv.classList.toggle('open');}
@@ -1002,9 +1224,9 @@ function zoom(s,a){var lb=document.getElementById('lightbox');document.getElemen
 var mode='brochure';
 function openModal(m){mode=m||'brochure';document.getElementById('mform').style.display='block';document.getElementById('msuccess').style.display='none';
 var M={visit:['Book a Site Visit','Tell us how to reach you and we’ll arrange a private visit by the lake.','Request Visit','Visit requested','Our team will call you shortly to confirm a time.'],
-brochure:['Download Brochure','Share your details and we’ll send the brochure straight to you.','Get the Brochure','Thank you','Your brochure is on its way.'],
-price:['Get the Price Sheet','Leave your details and we’ll send current pricing for 3 & 4 BHK homes.','Send Price Sheet','Thank you','The price sheet is on its way to you.'],
-plan:['Download Floor Plan','Share your details and we’ll send the detailed floor plan straight to you.','Get the Plan','Thank you','Your floor plan is on its way.']};
+brochure:['Download Brochure','Share your details and we’ll send the brochure straight to you.','Get the Brochure','Thank you. Our team will call you within 2 hours.",'Your brochure is on its way.'],
+price:['Get the Price Sheet','Leave your details and we’ll send current pricing for 3 & 4 BHK homes.','Send Price Sheet','Thank you. Our team will call you within 2 hours.",'The price sheet is on its way to you.'],
+plan:['Download Floor Plan','Share your details and we’ll send the detailed floor plan straight to you.','Get the Plan','Thank you. Our team will call you within 2 hours.",'Your floor plan is on its way.']};
 var x=M[mode]||M.brochure;
 document.getElementById('mtitle').textContent=x[0];document.getElementById('mdesc').textContent=x[1];document.getElementById('msb').textContent=x[2];
 document.getElementById('stitle').textContent=x[3];document.getElementById('sdesc').textContent=x[4];
@@ -1025,7 +1247,7 @@ var _src=({visit:'Site Visit',brochure:'Brochure',price:'Price Sheet',plan:'Floo
 function day(k){document.querySelectorAll('.daypanel').forEach(function(p){p.classList.remove('on');});document.querySelectorAll('.daytab').forEach(function(t){t.classList.remove('on');});var dp=document.getElementById('dp_'+k),dt=document.getElementById('dt_'+k);if(dp)dp.classList.add('on');if(dt)dt.classList.add('on');}
 function quickSubmit(){var n=document.getElementById('qn').value.trim(),p=document.getElementById('qp').value.replace(/\D/g,''),note=document.getElementById('qnote');
 if(!n||p.length<10){note.textContent='Please enter your name and a valid phone number.';note.style.color='#b5562f';return;}
-sendLead(leadPayload('Quick enquiry',n,p,'',{config:((document.getElementById('qc')||{}).value||'')}),function(){});document.getElementById('qform').innerHTML='<div style="font-family:var(--display);font-style:italic;color:var(--line);font-size:1.4rem">Thank you, '+n.split(' ')[0]+'. We’ll call you shortly to plan your visit.</div>';note.style.display='none';}
+sendLead(leadPayload('Quick enquiry',n,p,'',{config:((document.getElementById('qc')||{}).value||'')}),function(){});document.getElementById('qform').innerHTML='<div style="font-family:var(--display);font-style:italic;color:var(--line);font-size:1.4rem">Thank you. Our team will call you within 2 hours."+n.split(' ')[0]+'. We’ll call you shortly to plan your visit.</div>';note.style.display='none';}
 /* Waterline — lakefront depth progress */
 (function(){var stops=[].slice.call(document.querySelectorAll('[data-rail]'));if(stops.length<3)return;
 var wl=document.createElement('div');wl.className='wl';wl.setAttribute('aria-hidden','true');
@@ -1114,4 +1336,124 @@ if(motionQ.addEventListener)motionQ.addEventListener('change',setMode);
 if(pinQ.addEventListener)pinQ.addEventListener('change',setMode);
 setMode();
 })();
-</script></body></html>
+
+function downloadPDF(type){
+  var pdfs={
+    brochure:'Makuta_Taranga_Brochure.pdf',
+    floorplans:'Makuta_Taranga_Floor_Plans.pdf'
+  };
+  var url=pdfs[type]||'#';
+  if(url.includes('.pdf')){window.open(url,'_blank');}
+  else{alert('Brochure not yet available. Please call us for details.');}
+}
+</script><div class="sticky-bar" id="sbar">
+  <a href="tel:+919059676464" class="sb-btn" title="Call us">
+    <span class="sb-icon">📞</span>
+    <span class="sb-label">CALL</span>
+  </a>
+  <a href="https://wa.me/919059676464?text=Hi%20Makuta%20Taranga%2C%20I%27d%20like%20to%20know%20more%20about%20the%20project." target="_blank" rel="noopener noreferrer" class="sb-btn" title="WhatsApp us">
+    <span class="sb-icon">💬</span>
+    <span class="sb-label">WHATSAPP</span>
+  </a>
+  <a href="javascript:downloadPDF('brochure')" class="sb-btn" title="Download brochure">
+    <span class="sb-icon">📄</span>
+    <span class="sb-label">BROCHURE</span>
+  </a>
+  <a href="javascript:openModal('price')" class="sb-btn" title="Get price sheet">
+    <span class="sb-icon">💰</span>
+    <span class="sb-label">PRICE</span>
+  </a>
+</div>
+
+<!-- Conversion tracking events -->
+<script>
+function trackLead(source) {
+  // GA4 event
+  gtag('event', 'generate_lead', {
+    'value': 1,
+    'currency': 'INR',
+    'lead_type': source || 'form'
+  });
+  
+  // Meta Pixel event
+  if(typeof fbq !== 'undefined') {
+    fbq('track', 'Lead', {'value': 1, 'currency': 'INR'});
+  }
+}
+
+function trackCall() {
+  gtag('event', 'click_call');
+  if(typeof fbq !== 'undefined') fbq('track', 'Contact');
+}
+
+function trackWhatsApp() {
+  gtag('event', 'click_whatsapp');
+  if(typeof fbq !== 'undefined') fbq('track', 'Contact');
+}
+
+function trackBrochureDownload() {
+  gtag('event', 'view_item', {'items': [{'item_name': 'brochure'}]});
+  if(typeof fbq !== 'undefined') fbq('track', 'ViewContent');
+}
+
+function trackPriceSheet() {
+  gtag('event', 'view_item', {'items': [{'item_name': 'price_sheet'}]});
+  if(typeof fbq !== 'undefined') fbq('track', 'ViewContent');
+}
+
+// Track form submissions handled via tracking hooks below
+
+// Wire up sticky bar clicks
+document.addEventListener('DOMContentLoaded', function(){
+  var callBtn = document.querySelector('a[href^="tel:"]');
+  if(callBtn) callBtn.addEventListener('click', trackCall);
+  
+  var waBtn = document.querySelector('a[href*="wa.me"]');
+  if(waBtn) waBtn.addEventListener('click', trackWhatsApp);
+  
+  var brochureBtn = document.querySelector('a[onclick*="brochure"]');
+  if(brochureBtn) brochureBtn.addEventListener('click', trackBrochureDownload);
+  
+  var priceBtn = document.querySelector('a[onclick*="price"]');
+  if(priceBtn) priceBtn.addEventListener('click', trackPriceSheet);
+});
+</script>
+
+<div id="form-modal" class="form-modal"><div class="form-container" id="form-content"></div></div>
+<script>
+/* Backup hamburger init - ensure clicks work */
+(function(){
+  function init(){
+    var h=document.getElementById('hamb');
+    var n=document.getElementById('nav');
+    if(!h||!n)return;
+    // Remove existing listeners by cloning
+    var nh=h.cloneNode(true);
+    h.parentNode.replaceChild(nh,h);
+    nh.addEventListener('click',function(e){e.stopPropagation();n.classList.toggle('open');});
+    nh.addEventListener('touchend',function(e){e.preventDefault();e.stopPropagation();n.classList.toggle('open');});
+    // Close on link click
+    n.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){n.classList.remove('open');});});
+  }
+  if(document.readyState!=='loading')init();
+  else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+<script>
+/* Backup: ensure header.solid toggles on scroll (in case original didn't bind) */
+(function(){
+  function init(){
+    var hdr=document.getElementById('hdr');
+    if(!hdr)return;
+    function check(){
+      if(window.scrollY>40)hdr.classList.add('solid');
+      else hdr.classList.remove('solid');
+    }
+    window.addEventListener('scroll',check,{passive:true});
+    check();
+  }
+  if(document.readyState!=='loading')init();
+  else document.addEventListener('DOMContentLoaded',init);
+})();
+</script>
+</body></html>

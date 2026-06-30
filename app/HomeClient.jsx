@@ -11,11 +11,14 @@ const MP_PINS = [
   [8, 50.3, 51], [9, 51.6, 32], [10, 52.9, 77], [11, 39.9, 24], [12, 88.2, 49], [13, 88.2, 70],
   [14, 41.2, 82], [15, 7.2, 63], [16, 7.8, 42], [17, 85.6, 34], [18, 60.8, 25],
 ];
+// Third element flags the ~8 headline points kept in the mobile legend
+// (the rest stay as interactive pins on the plan, but are hidden from the
+// small-screen list to cut it from 17 rows to the ones buyers care about).
 const MP_LEGEND = [
-  [1, 'Main Entrance Gate'], [3, 'Drop-off Zone'], [4, 'Basement Entry Ramp'], [5, 'Basement Exit Ramp'],
-  [6, 'Residential Block A'], [7, 'Residential Block B'], [8, 'Central Landscape Court'], [9, 'Internal Walkways'],
-  [10, 'Jogging Track'], [11, 'Kids Play Area'], [12, 'Tennis Court'], [13, 'Basketball Court'],
-  [14, 'Cricket Practice Net'], [15, 'Clubhouse · 30,000 sft'], [16, 'Pavilion Seating Area'], [17, 'Temple'],
+  [1, 'Main Entrance Gate', 1], [3, 'Drop-off Zone'], [4, 'Basement Entry Ramp'], [5, 'Basement Exit Ramp'],
+  [6, 'Residential Block A', 1], [7, 'Residential Block B', 1], [8, 'Central Landscape Court', 1], [9, 'Internal Walkways'],
+  [10, 'Jogging Track', 1], [11, 'Kids Play Area'], [12, 'Tennis Court', 1], [13, 'Basketball Court'],
+  [14, 'Cricket Practice Net'], [15, 'Clubhouse · 30,000 sft', 1], [16, 'Pavilion Seating Area'], [17, 'Temple', 1],
   [18, 'Ventilation Duct'],
 ];
 
@@ -28,6 +31,18 @@ function mpSet(n) {
 }
 
 export default function HomeClient() {
+  /* hero video: poster is the eager LCP; the video only mounts on capable,
+     non-data-saving desktop sessions so mobile/metered users never download it. */
+  const [showVideo, setShowVideo] = useState(false);
+  useEffect(() => {
+    const conn = navigator.connection || {};
+    const saveData = conn.saveData === true;
+    const reducedData = matchMedia('(prefers-reduced-data: reduce)').matches;
+    const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const bigScreen = matchMedia('(min-width: 768px)').matches;
+    if (bigScreen && !saveData && !reducedData && !reducedMotion) setShowVideo(true);
+  }, []);
+
   /* quick visit form */
   const [q, setQ] = useState({ n: '', p: '', c: '' });
   const [qDone, setQDone] = useState(false);
@@ -153,14 +168,26 @@ export default function HomeClient() {
   return (
     <>
       <section id="hero" className="hero hero-section">
-        <video className="hero-video" autoPlay muted playsInline loop poster="/assets/img/hero-poster.jpg">
-          <source src="/assets/video/hero-water.mp4" type="video/mp4" />
-        </video>
+        <img
+          className="hero-poster"
+          src="/assets/img/hero-poster.jpg"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          decoding="async"
+          width="1920"
+          height="1080"
+        />
+        {showVideo && (
+          <video className="hero-video" autoPlay muted playsInline loop preload="none" poster="/assets/img/hero-poster.jpg">
+            <source src="/assets/video/hero-water.mp4" type="video/mp4" />
+          </video>
+        )}
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-crown reveal-anim" style={{ animationDelay: '0.3s' }}>Makuta &middot; Crown of Excellence</div>
           <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Moosapet&ndash;Kukatpally, Hyderabad</div>
-          <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga</h1>
+          <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Moosapet&ndash;Kukatpally, Hyderabad</span></h1>
           <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Download Brochure</a>
@@ -348,7 +375,7 @@ export default function HomeClient() {
       <section className="assure" data-rail="The Fundamentals"><div className="wrap"><div className="assure-in reveal">
         <div className="kicker" style={{ justifyContent: 'center' }}><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" /><path d="M9 12l2 2 4-4" /></svg></span><div style={{ textAlign: 'left' }}><div className="kt">The fundamentals</div><div className="ks">Registered, financeable, built to last</div></div></div>
         <div className="agrid">
-          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5M9.5 14l2 2 4-4" /></svg></span><b>RERA-registered</b><p>TS RERA P02200011012. Every area is as per the approved plans, verifiable on the Telangana RERA portal.</p></div>
+          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5M9.5 14l2 2 4-4" /></svg></span><b>RERA-registered</b><p>TS RERA P02200011012. Every area is as per the approved plans.</p></div>
           <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01" /></svg></span><b>Construction-linked payments</b><p>You pay in step with progress on site — not in a single demand up front.</p></div>
           <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M9.2 8h5.6M9.2 11h5.6M13.6 8c.4 2.6-1.4 3.6-3.4 3.6h-1l4 4.4" /></svg></span><b>Bank-approved</b><p>Home loans available from leading banks and housing-finance companies.</p></div>
           <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1" /><path d="M3 10h9M12 3v18M12 14h9M3 16h5" /></svg></span><b>RCC shear-wall structure</b><p>Engineered for wind and seismic loads.</p></div>
@@ -373,8 +400,8 @@ export default function HomeClient() {
             ))}
           </div>
           <ol className="mplan2-legend">
-            {MP_LEGEND.map(([n, label]) => (
-              <li key={n} data-n={n} onMouseEnter={() => mpHi(n, true)} onMouseLeave={() => mpHi(n, false)} onClick={() => mpSet(n)}>
+            {MP_LEGEND.map(([n, label, primary]) => (
+              <li key={n} data-n={n} data-primary={primary ? '1' : undefined} onMouseEnter={() => mpHi(n, true)} onMouseLeave={() => mpHi(n, false)} onClick={() => mpSet(n)}>
                 <span className="ln">{n}</span>{label}
               </li>
             ))}
@@ -385,7 +412,7 @@ export default function HomeClient() {
           <div className="f2"><div className="n">2.8</div><div className="t">Acres</div></div>
           <div className="f2"><div className="n">248</div><div className="t">Homes · G+24</div></div>
           <div className="f2"><div className="n">3 &amp; 4</div><div className="t">BHK · 2480–3255 sft</div></div>
-          <div className="f2"><div className="n">40+</div><div className="t">Amenities</div></div>
+          <div className="f2"><div className="n">36</div><div className="t">Amenities</div></div>
         </div>
         <p className="mdisc">Master plan, elevations and renders are artist’s impressions for representation only, not to scale, and may vary from the sanctioned plans and actual construction. Areas shown are indicative; carpet areas are as per the RERA-approved plans. This does not constitute a legal offer; all transactions are governed solely by the registered Agreement of Sale.</p>
       </div></section>

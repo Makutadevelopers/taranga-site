@@ -1,4 +1,5 @@
 import PageClient from './PageClient';
+import { breadcrumb, ld } from '@/lib/schema';
 
 export const metadata = {
   title: 'Gallery | Makuta Taranga',
@@ -14,5 +15,13 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <PageClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ld(breadcrumb([{ name: 'Home', path: '/' }, { name: 'Gallery', path: '/gallery/' }]))}
+      />
+      <PageClient />
+    </>
+  );
 }

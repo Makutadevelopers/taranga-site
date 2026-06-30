@@ -98,7 +98,12 @@ export default function GlobalUI() {
               <div className="err" id="mee" style={{ display: errs.e ? 'block' : 'none' }}>Enter a valid email.</div>
               <label htmlFor="mconsent" style={{ display: 'flex', alignItems: 'flex-start', gap: '.55rem', margin: '.1rem 0 1.1rem', fontSize: '.76rem', lineHeight: 1.5, color: 'var(--ink-soft)', textAlign: 'left', cursor: 'pointer' }}>
                 <input type="checkbox" id="mconsent" checked={vals.consent} onChange={(e) => setVals((v) => ({ ...v, consent: e.target.checked }))} style={{ width: 16, height: 16, marginTop: '.2rem', flex: '0 0 auto', accentColor: '#1C2A38' }} />
-                <span>I agree to be contacted by Makuta Taranga on WhatsApp, phone or email about my enquiry.</span>
+                <span>
+                  I agree to be contacted by Makuta Taranga on WhatsApp, phone or email about my enquiry, and accept the{' '}
+                  <a href="/privacy/" target="_blank" rel="noopener" onClick={(e) => e.stopPropagation()} style={{ textDecoration: 'underline' }}>Privacy Policy</a>
+                  {' '}&amp;{' '}
+                  <a href="/terms/" target="_blank" rel="noopener" onClick={(e) => e.stopPropagation()} style={{ textDecoration: 'underline' }}>Terms</a>.
+                </span>
               </label>
               <div className="err" id="mecon" style={{ display: errs.con ? 'block' : 'none' }}>Please tick the box to continue.</div>
               <a href="#" className="btn solid" id="msb" onClick={(e) => { e.preventDefault(); submitModal(); }}>{m[2]}</a>

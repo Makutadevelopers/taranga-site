@@ -6,14 +6,14 @@ export default function Footer() {
       <div className="wrap">
         <div className="ft">
           <div>
-            <img className="ft-logo" src="/assets/img/taranga_navy.png" alt="Makuta Taranga" />
+            <img className="ft-logo" src="/assets/img/taranga_navy.png" alt="Makuta Taranga" width="160" height="48" loading="lazy" decoding="async" />
             <p style={{ marginTop: '.9rem', maxWidth: '34ch' }}>
               A lakefront landmark by Makuta Developers — Crown of Excellence. Built around privacy, light and the calm of water.
             </p>
             <span className="rera">TS RERA P02200011012</span>
             <div className="by-makuta">
               <span>A project by</span>
-              <img src="/assets/img/makuta.png" alt="Makuta Developers — Crown of Excellence" />
+              <img src="/assets/img/makuta.png" alt="Makuta Developers — Crown of Excellence" height="36" loading="lazy" decoding="async" />
             </div>
           </div>
           <div>
@@ -23,6 +23,8 @@ export default function Footer() {
             <Link href="/location/">Location</Link>
             <Link href="/gallery/">Gallery</Link>
             <Link href="/contact/#faq">FAQ</Link>
+            <Link href="/privacy/">Privacy Policy</Link>
+            <Link href="/terms/">Terms of Use</Link>
           </div>
           <div>
             <h4>Visit</h4>

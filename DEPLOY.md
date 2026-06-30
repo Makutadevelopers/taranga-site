@@ -18,6 +18,25 @@ with zero email downtime, then retire Wix.
 
 `_redirects` and `_headers` (in `public/`, emitted to `out/`) are applied automatically by Pages.
 
+## Environment variables (Pages → Settings → Environment variables)
+| Name | Value | Notes |
+|---|---|---|
+| `CLOVE_API_KEY` | _the Clove tpi website key_ | **Encrypted.** Required — the lead form posts to the same-origin `/api/lead` Pages Function (`functions/api/lead.js`), which attaches this key server-side. The key is no longer in client JS. |
+| `CLOVE_LEAD_ENDPOINT` | _(optional)_ | Override the upstream Clove URL; defaults to the production endpoint. |
+| `NODE_VERSION` | `20` | If not using `.nvmrc`. |
+
+> The `functions/` directory at the repo root is bundled automatically by `wrangler pages deploy out`
+> (Functions are read from the project root, not from `out/`). After setting `CLOVE_API_KEY`, redeploy
+> and submit a test lead — confirm it lands in Clove and that **no** API key appears in the browser
+> Network tab or page source.
+
+## Canonical domain (one-line flip)
+Canonical tags, OG URLs and JSON-LD all derive from `lib/site.js` (`SITE_URL`). It currently points at
+`https://taranga-site.pages.dev`. When the custom domain is live + SSL-active on Pages:
+1. Set `SITE_URL` in `lib/site.js` to `https://www.makutataranga.com`.
+2. Update `public/sitemap.xml` and `public/robots.txt` (static files) to the same host.
+3. Redeploy and resubmit the sitemap in Search Console.
+
 ---
 
 ## Phase 1 — Deploy & test (no DNS changes)

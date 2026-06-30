@@ -1,18 +1,27 @@
 import PageClient from './PageClient';
+import { breadcrumb, ld } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Amenities — 40+ Features for Play & Leisure | Makuta Taranga',
+  title: 'Amenities — 36 Features for Play & Leisure | Makuta Taranga',
   description:
-    "Over 40 amenities at Makuta Taranga — rooftop lounge, pool, courts, temple garden, sky bridge, kids' play and more across site, terrace and activity zones.",
+    "36 amenities at Makuta Taranga — rooftop lounge, pool, courts, temple garden, sky bridge, kids' play and more across site, terrace and activity zones.",
   alternates: { canonical: '/amenities/' },
   openGraph: {
-    title: 'Amenities — 40+ Features for Play & Leisure | Makuta Taranga',
+    title: 'Amenities — 36 Features for Play & Leisure | Makuta Taranga',
     description:
-      "Over 40 amenities at Makuta Taranga — rooftop lounge, pool, courts, temple garden, sky bridge, kids' play and more across site, terrace and activity zones.",
+      "36 amenities at Makuta Taranga — rooftop lounge, pool, courts, temple garden, sky bridge, kids' play and more across site, terrace and activity zones.",
     url: '/amenities/',
   },
 };
 
 export default function Page() {
-  return <PageClient />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ld(breadcrumb([{ name: 'Home', path: '/' }, { name: 'Amenities', path: '/amenities/' }]))}
+      />
+      <PageClient />
+    </>
+  );
 }

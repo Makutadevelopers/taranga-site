@@ -1,4 +1,5 @@
 import PageClient from './PageClient';
+import { ORGANIZATION, breadcrumb, ld } from '@/lib/schema';
 
 export const metadata = {
   title: 'About Makuta Developers — Crown of Excellence | Makuta Taranga',
@@ -14,5 +15,14 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <PageClient />;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={ld(ORGANIZATION)} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ld(breadcrumb([{ name: 'Home', path: '/' }, { name: 'About', path: '/about/' }]))}
+      />
+      <PageClient />
+    </>
+  );
 }

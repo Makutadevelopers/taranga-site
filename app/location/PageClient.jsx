@@ -64,6 +64,29 @@ export default function PageClient() {
             <div className="r"><span>Cyber Towers / HITEC City</span><b>6.5 km</b></div>
           </div>
         </div>
+
+        <div className="reveal" style={{ marginTop: '3.4rem' }}>
+          <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V9l9-6 9 6v12M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">The Neighbourhood</div><div className="ks">Moosapet &amp; Kukatpally, north-west Hyderabad</div></div></div>
+          <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 1rem' }}>An address that&rsquo;s already arrived</h2>
+          <p style={{ color: 'var(--ink-soft)', maxWidth: '60ch' }}>
+            Makuta Taranga sits on IDL Road in Moosapet, on the Kukatpally&ndash;Balanagar corridor of north-west Hyderabad &mdash;
+            one of the city&rsquo;s most established residential and retail belts. You&rsquo;re a short walk from the Hyderabad Metro
+            Red Line (Balanagar and Kukatpally stations), minutes from KPHB and JNTU, and a clean run down NH-65 to HITEC City and
+            the Financial District &mdash; without paying the price those micro-markets now command.
+          </p>
+
+          <div className="conn" style={{ marginTop: '1.6rem' }}>
+            <div className="r"><span><b>Metro &amp; transit</b> &mdash; Balanagar &amp; Kukatpally Red Line stations</span><b>≤ 800 m</b></div>
+            <div className="r"><span><b>Workplaces</b> &mdash; HITEC City, Cyber Towers, Financial District</span><b>6.5&ndash;14 km</b></div>
+            <div className="r"><span><b>Retail</b> &mdash; Ashoka One Mall, Forum Sujana, KPHB high street</span><b>0.1&ndash;3 km</b></div>
+            <div className="r"><span><b>Schools</b> &mdash; The Creek Planet, Euro International, Vidyaranya</span><b>1&ndash;3 km</b></div>
+            <div className="r"><span><b>Healthcare</b> &mdash; Omni, Yashoda &amp; Remedy Hospitals</span><b>1&ndash;6 km</b></div>
+            <div className="r"><span><b>Airport</b> &mdash; Rajiv Gandhi International (via ORR / PVNR)</span><b>~35 km</b></div>
+          </div>
+          <p style={{ color: 'var(--muted)', fontSize: '.78rem', marginTop: '1rem', maxWidth: '60ch' }}>
+            Distances are approximate, measured by road from the project gate, and may vary with route and traffic.
+          </p>
+        </div>
       </section>
 
       <div className="wavediv"><svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 C150,38 300,4 450,20 S750,38 900,20 1050,4 1200,20" /></svg></div>

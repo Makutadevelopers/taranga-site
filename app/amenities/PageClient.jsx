@@ -90,7 +90,7 @@ export default function PageClient() {
                 quietly go
               </h1>
               <p>
-                More than forty places to play, gather and slow down — across the gardens, the rooftops and a dedicated
+                Thirty-six places to play, gather and slow down — across the gardens, the rooftops and a dedicated
                 activity zone, for every age in the family.
               </p>
               <div className="hairline" style={{ marginTop: '1.6rem' }}></div>

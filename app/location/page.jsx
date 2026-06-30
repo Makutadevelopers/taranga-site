@@ -1,4 +1,6 @@
 import PageClient from './PageClient';
+import { SITE_URL, OG_IMAGE } from '@/lib/site';
+import { breadcrumb, ld } from '@/lib/schema';
 
 export const metadata = {
   title: 'Location & Map — IDL Lakefront, Moosapet | Makuta Taranga',
@@ -18,9 +20,9 @@ const JSON_LD = {
   '@type': 'ApartmentComplex',
   name: 'Makuta Taranga',
   description:
-    'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet-Kukatpally, Hyderabad. G+24 twin towers connected by a sky bridge, 10.35-ft ceilings, privacy foyers and 40+ amenities.',
-  url: 'https://www.makutataranga.com',
-  image: 'https://www.makutataranga.com/assets/img/og-image.jpg',
+    'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet-Kukatpally, Hyderabad. G+24 twin towers connected by a sky bridge, 10.35-ft ceilings, privacy foyers and 36 amenities.',
+  url: SITE_URL,
+  image: OG_IMAGE,
   numberOfAccommodationUnits: '248',
   petsAllowed: true,
   address: {
@@ -51,6 +53,10 @@ export default function Page() {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={ld(breadcrumb([{ name: 'Home', path: '/' }, { name: 'Location', path: '/location/' }]))}
+      />
       <PageClient />
     </>
   );

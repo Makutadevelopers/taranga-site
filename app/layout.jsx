@@ -7,8 +7,9 @@ import Footer from '@/components/Footer';
 import FloatingActions from '@/components/FloatingActions';
 import GlobalUI from '@/components/GlobalUI';
 import SharedEffects from '@/components/SharedEffects';
+import { SITE_URL } from '@/lib/site';
 
-const SITE = 'https://www.makutataranga.com';
+const SITE = SITE_URL;
 
 export const metadata = {
   metadataBase: new URL(SITE),

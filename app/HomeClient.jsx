@@ -258,13 +258,13 @@ export default function HomeClient() {
               </div>
             </article>
             <article className="scard flip">
-              <div className="scard__media" style={media('ext_lake_am.webp', 'center 58%')}></div>
+              <div className="scard__media" style={media('aerial-hero-wide.jpg', 'center 42%')}></div>
               <div className="scard__scrim" aria-hidden="true"></div>
               <span className="scard__num" aria-hidden="true">02</span>
               <div className="scard__body">
-                <span className="scard__kick">The lakefront</span>
-                <h3 className="scard__title">The lake stays <em>the view</em></h3>
-                <p className="scard__desc">An edge that can&rsquo;t be built out. Open water sits in front of the homes &mdash; in sight from the gardens and the glass.</p>
+                <span className="scard__kick">From above</span>
+                <h3 className="scard__title">Two towers, <em>by the lake</em></h3>
+                <p className="scard__desc">Wrapped in low-rise homes and open green &mdash; with the lake holding one whole edge that can never be built over.</p>
               </div>
             </article>
             <article className="scard">

@@ -170,7 +170,7 @@ export default function HomeClient() {
       <section id="hero" className="hero hero-section">
         <img
           className="hero-poster"
-          src="/assets/img/hero-poster.jpg"
+          src="/assets/img/water-6-poster.jpg"
           alt=""
           aria-hidden="true"
           fetchPriority="high"
@@ -179,8 +179,8 @@ export default function HomeClient() {
           height="1080"
         />
         {showVideo && (
-          <video className="hero-video" autoPlay muted playsInline loop preload="none" poster="/assets/img/hero-poster.jpg">
-            <source src="/assets/video/hero-water.mp4" type="video/mp4" />
+          <video className="hero-video" autoPlay muted playsInline loop preload="none" poster="/assets/img/water-6-poster.jpg">
+            <source src="/assets/video/water-6.mp4" type="video/mp4" />
           </video>
         )}
         <div className="hero-overlay"></div>

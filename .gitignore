@@ -1,12 +1,9 @@
-# OS / editor cruft
+/node_modules
+/.next
+/out
 .DS_Store
-Thumbs.db
 *.log
-*.tmp
-.vscode/
-.idea/
+.env*.local
 
-# Never commit secrets (use the serverless proxy + env vars instead)
-.env
-.env.*
-secrets.*
+# local backup of the original static site (not part of the app)
+/_original-site

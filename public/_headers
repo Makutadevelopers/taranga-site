@@ -7,3 +7,9 @@
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.facebook.com; media-src 'self'; connect-src 'self' https://portal-api.clove.build https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com; frame-src https://maps.google.com https://www.google.com https://www.facebook.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
+
+## Decap CMS editor — loads from unpkg and talks to the GitHub API, so it needs a
+## relaxed CSP. Scoped to /admin/* only; the rest of the site keeps the strict policy
+## above. This block is placed after /* so its Content-Security-Policy wins for /admin.
+/admin/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; font-src 'self' data: https://unpkg.com; img-src 'self' data: blob: https://*.githubusercontent.com https://avatars.githubusercontent.com; media-src 'self' blob:; connect-src 'self' https://unpkg.com https://api.github.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'

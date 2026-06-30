@@ -8,8 +8,8 @@
   Permissions-Policy: geolocation=(), microphone=(), camera=(), payment=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://www.google-analytics.com https://www.googletagmanager.com https://www.facebook.com https://*.facebook.com; media-src 'self'; connect-src 'self' https://portal-api.clove.build https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.googletagmanager.com https://connect.facebook.net https://www.facebook.com; frame-src https://maps.google.com https://www.google.com https://www.facebook.com; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests
 
-## Decap CMS editor — loads from unpkg and talks to the GitHub API, so it needs a
-## relaxed CSP. Scoped to /admin/* only; the rest of the site keeps the strict policy
-## above. This block is placed after /* so its Content-Security-Policy wins for /admin.
-/admin/*
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com; style-src 'self' 'unsafe-inline' https://unpkg.com; font-src 'self' data: https://unpkg.com; img-src 'self' data: blob: https://*.githubusercontent.com https://avatars.githubusercontent.com; media-src 'self' blob:; connect-src 'self' https://unpkg.com https://api.github.com; worker-src 'self' blob:; child-src 'self' blob:; frame-src 'self'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'
+## NOTE: The Decap CMS editor at /admin needs a more permissive CSP (unpkg + GitHub
+## API + blob workers). Cloudflare _headers APPENDS a second CSP rather than replacing,
+## and browsers enforce all CSP headers (most restrictive wins) — so a /admin/* rule
+## here would NOT work. The /admin CSP is set (replacing this one) by the Pages Function
+## middleware at functions/admin/_middleware.js instead.

@@ -20,7 +20,7 @@ const JSON_LD = {
   description:
     'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet-Kukatpally, Hyderabad. G+24 twin towers connected by a sky bridge, 10.35-ft ceilings, privacy foyers and 40+ amenities.',
   url: 'https://www.makutataranga.com',
-  image: 'https://www.makutataranga.com/og-image.jpg',
+  image: 'https://www.makutataranga.com/assets/img/og-image.jpg',
   numberOfAccommodationUnits: '248',
   petsAllowed: true,
   address: {

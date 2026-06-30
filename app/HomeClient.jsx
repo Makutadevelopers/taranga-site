@@ -170,7 +170,8 @@ export default function HomeClient() {
     <>
       <section id="hero" className="hero hero-section">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/assets/img/water-6-portrait-poster.jpg" />
+          {/* Mobile: static aerial render (no video download). Desktop: video poster. */}
+          <source media="(max-width: 767px)" srcSet="/assets/img/aerial-hero-portrait.jpg" />
           <source media="(min-width: 768px)" srcSet="/assets/img/water-6-wide-poster.jpg" />
           <img
             className="hero-poster"
@@ -183,18 +184,18 @@ export default function HomeClient() {
             height="1080"
           />
         </picture>
-        {showVideo && (
+        {/* Video plays on desktop only; mobile keeps the aerial image above. */}
+        {showVideo && !isMobile && (
           <video
-            key={isMobile ? 'm' : 'd'}
             className="hero-video"
             autoPlay
             muted
             playsInline
             loop
             preload="none"
-            poster={isMobile ? '/assets/img/water-6-portrait-poster.jpg' : '/assets/img/water-6-wide-poster.jpg'}
+            poster="/assets/img/water-6-wide-poster.jpg"
           >
-            <source src={isMobile ? '/assets/video/water-6-portrait.mp4' : '/assets/video/water-6-wide.mp4'} type="video/mp4" />
+            <source src="/assets/video/water-6-wide.mp4" type="video/mp4" />
           </video>
         )}
         <div className="hero-overlay"></div>

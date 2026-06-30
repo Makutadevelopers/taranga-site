@@ -34,13 +34,14 @@ export default function HomeClient() {
   /* hero video: poster is the eager LCP; the video only mounts on capable,
      non-data-saving desktop sessions so mobile/metered users never download it. */
   const [showVideo, setShowVideo] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const conn = navigator.connection || {};
     const saveData = conn.saveData === true;
     const reducedData = matchMedia('(prefers-reduced-data: reduce)').matches;
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const bigScreen = matchMedia('(min-width: 768px)').matches;
-    if (bigScreen && !saveData && !reducedData && !reducedMotion) setShowVideo(true);
+    setIsMobile(!matchMedia('(min-width: 768px)').matches);
+    if (!saveData && !reducedData && !reducedMotion) setShowVideo(true);
   }, []);
 
   /* quick visit form */
@@ -168,19 +169,32 @@ export default function HomeClient() {
   return (
     <>
       <section id="hero" className="hero hero-section">
-        <img
-          className="hero-poster"
-          src="/assets/img/water-6-poster.jpg"
-          alt=""
-          aria-hidden="true"
-          fetchPriority="high"
-          decoding="async"
-          width="1920"
-          height="1080"
-        />
+        <picture>
+          <source media="(max-width: 767px)" srcSet="/assets/img/water-6-portrait-poster.jpg" />
+          <source media="(min-width: 768px)" srcSet="/assets/img/water-6-wide-poster.jpg" />
+          <img
+            className="hero-poster"
+            src="/assets/img/water-6-wide-poster.jpg"
+            alt=""
+            aria-hidden="true"
+            fetchPriority="high"
+            decoding="async"
+            width="1920"
+            height="1080"
+          />
+        </picture>
         {showVideo && (
-          <video className="hero-video" autoPlay muted playsInline loop preload="none" poster="/assets/img/water-6-poster.jpg">
-            <source src="/assets/video/water-6.mp4" type="video/mp4" />
+          <video
+            key={isMobile ? 'm' : 'd'}
+            className="hero-video"
+            autoPlay
+            muted
+            playsInline
+            loop
+            preload="none"
+            poster={isMobile ? '/assets/img/water-6-portrait-poster.jpg' : '/assets/img/water-6-wide-poster.jpg'}
+          >
+            <source src={isMobile ? '/assets/video/water-6-portrait.mp4' : '/assets/video/water-6-wide.mp4'} type="video/mp4" />
           </video>
         )}
         <div className="hero-overlay"></div>

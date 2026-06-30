@@ -8,10 +8,9 @@ const openModal = (m) => window.openModal && window.openModal(m);
 
 /* EDIT PROJECTS: replace name/area/img/url with real ones. url "#" makes the card open the brochure. */
 const PROJECTS = [
-  { name: 'Makuta Patancheru', area: 'Patancheru', img: '/assets/img/hero_blue.webp', url: '#' },
-  { name: 'Makuta Horizon', area: 'Kompally', img: '/assets/img/d_roof.webp', url: '#' },
-  { name: 'Arena Arcade', area: 'Patancheruvu', img: '/assets/img/aerial.webp', url: '#' },
-  { name: 'Green Wood Villas', area: 'Villa community', img: '/assets/img/d_glass.webp', url: '#' },
+  { name: 'Makuta Horizon', area: 'Premium high-rise', img: '/assets/img/d_roof.webp', url: 'https://makutahorizon.com' },
+  { name: 'Makuta Nirvana', area: 'Gated community', img: '/assets/img/hero_blue.webp', url: 'https://makutanirvan.in' },
+  { name: 'Green Wood Villas', area: 'Villa community', img: '/assets/img/d_glass.webp', url: 'https://www.makutadevelopers.com/town-city-building-ca' },
 ];
 
 const TESTIMONIALS = [
@@ -185,6 +184,8 @@ export default function PageClient() {
                   key={i}
                   className="proj"
                   href={p.url}
+                  target={isBrochure ? undefined : '_blank'}
+                  rel={isBrochure ? undefined : 'noopener noreferrer'}
                   onClick={
                     isBrochure
                       ? (e) => {

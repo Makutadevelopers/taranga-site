@@ -584,6 +584,8 @@ body{overflow-x:hidden}
 .sstory__head .label{color:var(--muted)}
 .sstory__head h2{font-family:var(--display);font-weight:300;font-size:clamp(2rem,4vw,3.2rem);line-height:1.02;color:var(--ink);margin:.1rem 0}
 .sstory__head h2 em{font-style:italic;color:var(--gold-deep)}
+.sstory__head .sstory__sub{font-family:var(--display);font-weight:300;font-size:clamp(1.2rem,2.4vw,1.9rem);line-height:1.05;color:var(--ink);margin:.05rem 0}
+.sstory__head .sstory__sub em{font-style:italic;color:var(--gold-deep)}
 .sstory__head .hl-line{height:1px;width:54px;background:var(--line);opacity:.7}
 .sstory__deck{position:relative;flex:1 1 auto;z-index:2;margin-top:clamp(1rem,2.4vh,1.8rem)}
 .scard{position:absolute;inset:0;width:min(100%,76rem);margin-inline:auto;border-radius:2px;overflow:hidden;

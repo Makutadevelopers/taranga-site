@@ -226,8 +226,9 @@ export default function HomeClient() {
       <section className="sstory" data-sec data-n="01" data-l="The Outdoors" data-rail="The Outdoors" id="outdoors">
         <div className="sstory__stage">
           <div className="sstory__head">
-            <span className="label">The Outdoors &middot; open space, low density &amp; the lake</span>
-            <h2>More open <em>ground</em></h2>
+            <h2>The Outdoors</h2>
+            <span className="sstory__sub">More open <em>ground</em></span>
+            <span className="label">open space, low density &amp; the lake</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
           <div className="sstory__deck">

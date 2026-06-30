@@ -1,0 +1,8 @@
+# 301s from the old static-site URLs to the new clean URLs (preserves SEO + old links)
+/index.html        /              301
+/about.html        /about/        301
+/amenities.html    /amenities/    301
+/residences.html   /residences/   301
+/gallery.html      /gallery/      301
+/location.html     /location/     301
+/contact.html      /contact/      301

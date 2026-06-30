@@ -29,5 +29,5 @@ jobs:
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          accountId: bd9760f14968ea8ab1ed1f80b6e8cb48
           command: pages deploy out --project-name=taranga-site --branch=main --commit-dirty=true

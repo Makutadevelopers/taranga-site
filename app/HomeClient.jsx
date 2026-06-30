@@ -170,11 +170,12 @@ export default function HomeClient() {
     <>
       <section id="hero" className="hero hero-section">
         <picture>
-          <source media="(max-width: 767px)" srcSet="/assets/img/water-6-portrait-poster.jpg" />
-          <source media="(min-width: 768px)" srcSet="/assets/img/water-6-wide-poster.jpg" />
+          {/* Clean full-bleed posters — mobile portrait, desktop widescreen. */}
+          <source media="(max-width: 767px)" srcSet="/assets/img/hero-mobile-poster.jpg" />
+          <source media="(min-width: 768px)" srcSet="/assets/img/hero-desktop-poster.jpg" />
           <img
             className="hero-poster"
-            src="/assets/img/water-6-wide-poster.jpg"
+            src="/assets/img/hero-desktop-poster.jpg"
             alt=""
             aria-hidden="true"
             fetchPriority="high"
@@ -192,9 +193,9 @@ export default function HomeClient() {
             playsInline
             loop
             preload="none"
-            poster={isMobile ? '/assets/img/water-6-portrait-poster.jpg' : '/assets/img/water-6-wide-poster.jpg'}
+            poster={isMobile ? '/assets/img/hero-mobile-poster.jpg' : '/assets/img/hero-desktop-poster.jpg'}
           >
-            <source src={isMobile ? '/assets/video/water-6-portrait.mp4' : '/assets/video/water-6-wide.mp4'} type="video/mp4" />
+            <source src={isMobile ? '/assets/video/hero-mobile.mp4' : '/assets/video/hero-desktop.mp4'} type="video/mp4" />
           </video>
         )}
         <div className="hero-overlay"></div>

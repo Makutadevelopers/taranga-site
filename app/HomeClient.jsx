@@ -34,15 +34,28 @@ export default function HomeClient() {
   /* hero video: poster is the eager LCP; the video only mounts on capable,
      non-data-saving desktop sessions so mobile/metered users never download it. */
   const [showVideo, setShowVideo] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  // Responsive hero video: 'mobile' (portrait) | 'tablet' (square) | 'desktop' (wide).
+  const [tier, setTier] = useState('desktop');
   useEffect(() => {
     const conn = navigator.connection || {};
     const saveData = conn.saveData === true;
     const reducedData = matchMedia('(prefers-reduced-data: reduce)').matches;
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    setIsMobile(!matchMedia('(min-width: 768px)').matches);
+    const computeTier = () => {
+      if (matchMedia('(max-width: 767px)').matches) setTier('mobile');
+      else if (matchMedia('(max-width: 1024px)').matches) setTier('tablet');
+      else setTier('desktop');
+    };
+    computeTier();
     if (!saveData && !reducedData && !reducedMotion) setShowVideo(true);
+    window.addEventListener('resize', computeTier, { passive: true });
+    return () => window.removeEventListener('resize', computeTier);
   }, []);
+  const HERO = {
+    mobile: { mp4: '/assets/video/hero-mobile.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
+    tablet: { mp4: '/assets/video/hero-square.mp4', poster: '/assets/img/hero-square-poster.jpg' },
+    desktop: { mp4: '/assets/video/hero-desktop.mp4', poster: '/assets/img/hero-desktop-poster.jpg' },
+  };
 
   /* quick visit form */
   const [q, setQ] = useState({ n: '', p: '', c: '' });
@@ -170,9 +183,10 @@ export default function HomeClient() {
     <>
       <section id="hero" className="hero hero-section">
         <picture>
-          {/* Clean full-bleed posters — mobile portrait, desktop widescreen. */}
+          {/* Clean full-bleed posters — mobile portrait, tablet square, desktop widescreen. */}
           <source media="(max-width: 767px)" srcSet="/assets/img/hero-mobile-poster.jpg" />
-          <source media="(min-width: 768px)" srcSet="/assets/img/hero-desktop-poster.jpg" />
+          <source media="(min-width: 768px) and (max-width: 1024px)" srcSet="/assets/img/hero-square-poster.jpg" />
+          <source media="(min-width: 1025px)" srcSet="/assets/img/hero-desktop-poster.jpg" />
           <img
             className="hero-poster"
             src="/assets/img/hero-desktop-poster.jpg"
@@ -186,16 +200,16 @@ export default function HomeClient() {
         </picture>
         {showVideo && (
           <video
-            key={isMobile ? 'm' : 'd'}
+            key={tier}
             className="hero-video"
             autoPlay
             muted
             playsInline
             loop
             preload="none"
-            poster={isMobile ? '/assets/img/hero-mobile-poster.jpg' : '/assets/img/hero-desktop-poster.jpg'}
+            poster={HERO[tier].poster}
           >
-            <source src={isMobile ? '/assets/video/hero-mobile.mp4' : '/assets/video/hero-desktop.mp4'} type="video/mp4" />
+            <source src={HERO[tier].mp4} type="video/mp4" />
           </video>
         )}
         <div className="hero-overlay"></div>

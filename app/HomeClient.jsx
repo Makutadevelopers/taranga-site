@@ -285,8 +285,9 @@ export default function HomeClient() {
       <section className="sstory alt" data-sec data-n="02" data-l="The Homes" data-rail="The Homes">
         <div className="sstory__stage">
           <div className="sstory__head">
+            <h2>The Homes</h2>
+            <span className="sstory__sub">Light all <em>around</em></span>
             <span className="label">Inside the Homes &middot; 10.35-ft ceilings, glass &amp; foyers</span>
-            <h2>Light all <em>around</em></h2>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
           <div className="sstory__deck">
@@ -330,8 +331,9 @@ export default function HomeClient() {
       <section className="sstory" data-sec data-n="03" data-l="The Club" data-rail="The Club">
         <div className="sstory__stage">
           <div className="sstory__head">
+            <h2>The Club</h2>
+            <span className="sstory__sub">Where calm <em>is found</em></span>
             <span className="label">The Clubhouse &amp; Amenities &middot; 30,000 sft of leisure</span>
-            <h2>Where calm <em>is found</em></h2>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
           <div className="sstory__deck">

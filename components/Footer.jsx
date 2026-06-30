@@ -22,6 +22,7 @@ export default function Footer() {
             <Link href="/amenities/">Amenities</Link>
             <Link href="/location/">Location</Link>
             <Link href="/gallery/">Gallery</Link>
+            <Link href="/blog/">Journal</Link>
             <Link href="/contact/#faq">FAQ</Link>
             <Link href="/privacy/">Privacy Policy</Link>
             <Link href="/terms/">Terms of Use</Link>

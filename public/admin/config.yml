@@ -1,0 +1,46 @@
+# Decap CMS configuration — the visual editor at /admin.
+# Authors log in with GitHub; publishing commits a Markdown file to content/blog/,
+# which triggers the existing GitHub Action that deploys to Cloudflare Pages.
+
+backend:
+  name: github
+  repo: Makutadevelopers/taranga-site
+  branch: main
+  # OAuth handshake is served by our own Pages Functions (functions/api/auth.js
+  # + callback.js). base_url must be the live origin serving those routes.
+  # When the custom domain goes live, change base_url to https://www.makutataranga.com
+  base_url: https://taranga-site.pages.dev
+  auth_endpoint: /api/auth
+
+# Cover/inline images uploaded in the editor land here and are referenced by URL.
+media_folder: public/assets/img/blog
+public_folder: /assets/img/blog
+
+# Show a live preview path hint in the editor.
+site_url: https://taranga-site.pages.dev
+display_url: https://taranga-site.pages.dev
+
+collections:
+  - name: blog
+    label: Journal Posts
+    label_singular: Post
+    folder: content/blog
+    create: true
+    slug: '{{slug}}' # filename = URL slug, auto-generated from the title
+    summary: '{{title}} — {{date}}'
+    sortable_fields: [date, title]
+    preview_path: 'blog/{{slug}}'
+    fields:
+      - { name: title, label: 'Title (also the SEO page title)', widget: string }
+      - {
+          name: description,
+          label: 'Meta description (SEO summary, ~150 chars)',
+          widget: text,
+          pattern: ['^.{40,170}$', 'Aim for 40–170 characters for best SEO'],
+        }
+      - { name: date, label: 'Publish date', widget: datetime, date_format: 'YYYY-MM-DD', time_format: false, format: 'YYYY-MM-DD' }
+      - { name: author, label: Author, widget: string, default: 'Makuta Developers' }
+      - { name: cover, label: 'Cover image (also the social-share image)', widget: image, required: false }
+      - { name: tags, label: Tags, widget: list, required: false, default: ['Project Updates'] }
+      - { name: draft, label: 'Draft (hide from live site)', widget: boolean, default: false }
+      - { name: body, label: 'Post body', widget: markdown }

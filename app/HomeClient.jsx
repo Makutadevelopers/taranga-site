@@ -363,7 +363,7 @@ export default function HomeClient() {
               </div>
             </article>
             <article className="scard flip">
-              <div className="scard__media" style={media('am_pool.webp', 'center 55%')}></div>
+              <div className="scard__media" style={media('am_pool2.webp', 'center 60%')}></div>
               <div className="scard__scrim" aria-hidden="true"></div>
               <span className="scard__num" aria-hidden="true">02</span>
               <div className="scard__body">

@@ -225,24 +225,39 @@ export default function HomeClient() {
           </div>
           <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA <a href="https://ts-rera.telangana.gov.in/PublicSearch" target="_blank" rel="noopener">P02200011012</a></p>
         </div>
-        <a href="#outdoors" className="hero-scroll reveal-anim" style={{ animationDelay: '2.1s' }}>
-          <span className="hero-scroll-text">Scroll to see why 8 in 10 homes are corners</span>
+        <a href="#luxury" className="hero-scroll reveal-anim" style={{ animationDelay: '2.1s' }}>
+          <span className="hero-scroll-text">Scroll &mdash; what luxury really means</span>
           <span className="hero-scroll-arrow">&darr;</span>
         </a>
       </section>
 
-      <section className="orient"><div className="wrap"><div className="orow">
-        <div className="oi"><span className="ol">The Project</span><span className="ov">Lakefront 3 &amp; 4 BHK Residences</span></div>
-        <div className="oi"><span className="ol">Where</span><span className="ov">IDL Lake · Kukatpally, Hyderabad</span></div>
-        <div className="oi"><span className="ol">The Build</span><span className="ov">G+24 Twin Towers · 2.8 Acres · 248 Homes</span></div>
-        <div className="oi"><span className="ol">By</span><span className="ov">Makuta Developers</span></div>
-      </div><div className="orera"><span>TS RERA P02200011012</span></div></div></section>
+      <div className="roll-stage">
+      <section id="luxury" className="lux reveal" aria-label="What is luxury">
+        <div className="lux-inner">
+          <span className="lux-drop" aria-hidden="true"></span>
+          <h2 className="lux-q">What is <em>luxury?</em></h2>
+          <p className="lux-lead">Luxury is not what a home <em>displays</em>.<br />It is the peace it returns to you &mdash;<br />the moment you <em>walk in</em>.</p>
+          <span className="lux-rule" aria-hidden="true"></span>
+          <p className="lux-foot">And unlike all that glitters, it never <em>fades</em>.</p>
+          <div className="lux-perch">
+            <span className="lux-perch-line" aria-hidden="true"></span>
+            <span className="lux-perch-label">Step inside</span>
+          </div>
+        </div>
+      </section>
+
+      <div className="page-roll">
+      <div className="seam reveal" aria-hidden="true">
+        <span className="seam-line"></span>
+        <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
+        <span className="seam-line"></span>
+      </div>
 
       <section className="sstory" data-sec data-n="01" data-l="The Outdoors" data-rail="The Outdoors" id="outdoors">
         <div className="sstory__stage">
-          <div className="sstory__head">
+          <div className="sstory__head reveal">
             <h2>The Outdoors</h2>
-            <span className="sstory__sub">More open <em>ground</em></span>
+            <span className="sstory__sub">I &middot; the peace you arrive <em>through</em></span>
             <span className="label">open space, low density &amp; the lake</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -282,26 +297,13 @@ export default function HomeClient() {
         </div>
       </section>
 
-      <section className="figures reveal"><div className="wrap">
-        <div className="fig-head"><div className="label">Taranga, in figures</div><h2>The shape of low density</h2></div>
-        <div className="fig-grid">
-          <div className="fig"><span className="fig-n">2</span><span className="fig-l">G+24 towers,<br />one sky bridge</span></div>
-          <div className="fig"><span className="fig-n">248</span><span className="fig-l">lakefront homes,<br />3 &amp; 4 BHK</span></div>
-          <div className="fig"><span className="fig-n">4&ndash;6</span><span className="fig-l">families<br />per floor</span></div>
-          <div className="fig"><span className="fig-n">8<span className="fig-s">in 10</span></span><span className="fig-l">homes are<br />corner-facing</span></div>
-          <div className="fig"><span className="fig-n">10.35<span className="fig-s">ft</span></span><span className="fig-l">ceilings, in<br />every home</span></div>
-          <div className="fig"><span className="fig-n">30k</span><span className="fig-l">sft of club<br />&amp; leisure</span></div>
-        </div>
-        <p className="fig-foot">Two towers, joined high up by a sky bridge — and never more than six families to a floor.</p>
-      </div></section>
-
       <div className="bridge reveal"><p>The lake you just walked doesn't stay in the gardens. <b>It comes indoors — and becomes the view from your sofa.</b></p></div>
 
       <section className="sstory alt" data-sec data-n="02" data-l="The Homes" data-rail="The Homes">
         <div className="sstory__stage">
-          <div className="sstory__head">
+          <div className="sstory__head reveal">
             <h2>The Homes</h2>
-            <span className="sstory__sub">Light all <em>around</em></span>
+            <span className="sstory__sub">II &middot; the peace you live <em>inside</em></span>
             <span className="label">Inside the Homes &middot; 10.35-ft ceilings, glass &amp; foyers</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -345,9 +347,9 @@ export default function HomeClient() {
 
       <section className="sstory" data-sec data-n="03" data-l="The Club" data-rail="The Club">
         <div className="sstory__stage">
-          <div className="sstory__head">
+          <div className="sstory__head reveal">
             <h2>The Club</h2>
-            <span className="sstory__sub">Where calm <em>is found</em></span>
+            <span className="sstory__sub">III &middot; the peace you rise <em>to</em></span>
             <span className="label">The Clubhouse &amp; Amenities &middot; 30,000 sft of leisure</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -387,6 +389,25 @@ export default function HomeClient() {
         </div>
       </section>
 
+      <div className="seam reveal" aria-hidden="true">
+        <span className="seam-line"></span>
+        <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
+        <span className="seam-line"></span>
+      </div>
+
+      <section className="figures reveal"><div className="wrap">
+        <div className="fig-head"><div className="label">Taranga, in figures</div><h2>The shape of low density</h2></div>
+        <div className="fig-grid">
+          <div className="fig"><span className="fig-n">2</span><span className="fig-l">G+24 towers,<br />one sky bridge</span></div>
+          <div className="fig"><span className="fig-n">248</span><span className="fig-l">lakefront homes,<br />3 &amp; 4 BHK</span></div>
+          <div className="fig"><span className="fig-n">4&ndash;6</span><span className="fig-l">families<br />per floor</span></div>
+          <div className="fig"><span className="fig-n">8<span className="fig-s">in 10</span></span><span className="fig-l">homes are<br />corner-facing</span></div>
+          <div className="fig"><span className="fig-n">10.35<span className="fig-s">ft</span></span><span className="fig-l">ceilings, in<br />every home</span></div>
+          <div className="fig"><span className="fig-n">30k</span><span className="fig-l">sft of club<br />&amp; leisure</span></div>
+        </div>
+        <p className="fig-foot">Two towers, joined high up by a sky bridge — and never more than six families to a floor.</p>
+      </div></section>
+
       <section className="worth reveal" data-rail="The Value"><div className="wrap"><div className="worth-in">
         <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">Why Taranga</div><div className="ks">What the price actually buys</div></div></div>
         <p className="worth-lead">A home here isn't priced like the apartment next door — because it isn't one.</p>
@@ -419,7 +440,11 @@ export default function HomeClient() {
         <p style={{ color: 'var(--ink-soft)', maxWidth: '44ch', margin: '0 auto' }}>Everything you need to decide, sent the moment you ask.</p>
         <div className="row"><a className="btn solid" href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download Brochure</a><a className="btn" href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>Get Price Sheet</a></div></div></section>
 
-      <div className="wavediv"><svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 C150,38 300,4 450,20 S750,38 900,20 1050,4 1200,20" /></svg></div>
+      <div className="seam reveal" aria-hidden="true">
+        <span className="seam-line"></span>
+        <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
+        <span className="seam-line"></span>
+      </div>
       <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ padding: 'clamp(3.5rem,8vw,6rem) 0' }}><div className="reveal"><div className="label">Master Plan</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
         <div className="mplan2">
@@ -449,7 +474,11 @@ export default function HomeClient() {
         <p className="mdisc">Master plan, elevations and renders are artist’s impressions for representation only, not to scale, and may vary from the sanctioned plans and actual construction. Areas shown are indicative; carpet areas are as per the RERA-approved plans. This does not constitute a legal offer; all transactions are governed solely by the registered Agreement of Sale.</p>
       </div></section>
 
-      <div className="wavediv"><svg viewBox="0 0 1200 40" preserveAspectRatio="none"><path d="M0,20 C150,38 300,4 450,20 S750,38 900,20 1050,4 1200,20" /></svg></div>
+      <div className="seam reveal" aria-hidden="true">
+        <span className="seam-line"></span>
+        <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
+        <span className="seam-line"></span>
+      </div>
       <section className="projects" data-rail="Portfolio"><div className="wrap reveal"><div className="port-band"><div className="port-text"><div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">Selected Projects</div><div className="ks">More from Makuta Developers</div></div></div><h2 className="port-h2">A portfolio you can stand inside</h2><p className="port-p">A track record of homes built around light, space and the calm of good design &mdash; completed and ongoing developments by Makuta Developers.</p><Link className="btn solid" href="/about/#projects">See the full portfolio <span>&rarr;</span></Link></div><Link className="port-teaser" href="/about/#projects" aria-label="See the full portfolio on the About page"><span className="pt-img" style={{ backgroundImage: 'url(/assets/img/aerial.webp)' }}></span><span className="pt-cap">More from Makuta Developers <span>&rarr;</span></span></Link></div></div></section>
 
       <section className="enq wrap" data-rail="Visit" style={{ padding: 'clamp(4.5rem,10vw,7rem) 0' }}><div className="reveal"><div className="label" style={{ marginBottom: '1.3rem' }}>Come see the view that can’t be built out</div><h2>A private visit, by the lake.</h2><p>Leave your details and our team will call you back to arrange a viewing — no obligation.</p>
@@ -465,6 +494,8 @@ export default function HomeClient() {
         )}
         {!qDone && <div className="formnote" id="qnote" style={{ color: qNote.color || undefined }}>{qNote.text}</div>}
         <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>get the price sheet</a>.</div></div></section>
+      </div>
+      </div>
     </>
   );
 }

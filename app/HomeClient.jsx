@@ -177,10 +177,9 @@ export default function HomeClient() {
     })();
     if (story) cleanups.push(() => story.destroy());
 
-    /* ---- film section: tab switch + click-to-play (YouTube loads only on click) ---- */
+    /* ---- click-to-play films (YouTube loads only on click) — used by the
+           walkthrough beside "Why Taranga" and the construction film section ---- */
     (function () {
-      const sec = document.querySelector('.filmsec');
-      if (!sec) return;
       const playPane = (pane) => {
         if (pane.querySelector('iframe')) return;
         const id = (pane.getAttribute('data-yt') || '').trim();
@@ -196,22 +195,15 @@ export default function HomeClient() {
         const req = pane.requestFullscreen || pane.webkitRequestFullscreen || pane.msRequestFullscreen;
         if (req) { try { const r = req.call(pane); if (r && r.catch) r.catch(() => {}); } catch (e) { /* no-op */ } }
       };
-      const resetPane = (pane) => { const f = pane.querySelector('iframe'); if (f) f.remove(); pane.classList.remove('playing'); };
-      const setTab = (key) => {
-        sec.querySelectorAll('.film-tab').forEach((t) => { const a = t.getAttribute('data-film') === key; t.classList.toggle('is-active', a); t.setAttribute('aria-selected', a ? 'true' : 'false'); });
-        sec.querySelectorAll('.film-pane').forEach((p) => { const a = p.getAttribute('data-film') === key; p.classList.toggle('is-active', a); if (!a) resetPane(p); });
-        sec.querySelectorAll('.filmsec-cap').forEach((c) => { c.hidden = c.getAttribute('data-film') !== key; });
-      };
-      const onClick = (e) => {
-        const tab = e.target.closest('.film-tab');
-        if (tab) { setTab(tab.getAttribute('data-film')); return; }
-        const pane = e.target.closest('.film-pane');
-        if (pane) playPane(pane);
-      };
-      const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { const pane = e.target.closest('.film-pane'); if (pane) { e.preventDefault(); playPane(pane); } } };
-      sec.addEventListener('click', onClick);
-      sec.addEventListener('keydown', onKey);
-      cleanups.push(() => { sec.removeEventListener('click', onClick); sec.removeEventListener('keydown', onKey); });
+      // Bind click/keydown play to every film stage on the page (worth section + film section).
+      const stages = [].slice.call(document.querySelectorAll('.film-stage'));
+      stages.forEach((stage) => {
+        const onClick = (e) => { const pane = e.target.closest('.film-pane'); if (pane) playPane(pane); };
+        const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { const pane = e.target.closest('.film-pane'); if (pane) { e.preventDefault(); playPane(pane); } } };
+        stage.addEventListener('click', onClick);
+        stage.addEventListener('keydown', onKey);
+        cleanups.push(() => { stage.removeEventListener('click', onClick); stage.removeEventListener('keydown', onKey); });
+      });
     })();
 
     return () => cleanups.forEach((c) => c());
@@ -309,6 +301,7 @@ export default function HomeClient() {
             <span className="label">open space, low density &amp; the lake</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
+          <p className="whisper">Luxury begins as distance — the room the world gives you before you reach the door.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('garden_walk.webp', 'center 62%')}></div>
@@ -355,6 +348,7 @@ export default function HomeClient() {
             <span className="label">Inside the Homes &middot; 10.35-ft ceilings, glass &amp; foyers</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
+          <p className="whisper">Inside, distance becomes subtraction — the noise, the eyes, the weight, all left at the door.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('int_living.webp', 'center 56%')}></div>
@@ -401,6 +395,7 @@ export default function HomeClient() {
             <span className="label">The Clubhouse &amp; Amenities &middot; 30,000 sft of leisure</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
+          <p className="whisper">And even rising, you move away from the crowd — never into it.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('am_clubhouse.webp', 'center 46%')}></div>
@@ -456,10 +451,20 @@ export default function HomeClient() {
         <p className="fig-foot">Two towers, joined high up by a sky bridge — and never more than six families to a floor.</p>
       </div></section>
 
-      <section className="worth reveal" data-rail="The Value"><div className="wrap"><div className="worth-in">
-        <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">Why Taranga</div><div className="ks">What the price actually buys</div></div></div>
-        <p className="worth-lead">A home here isn't priced like the apartment next door — because it isn't one.</p>
-        <p className="worth-body">The lake in front can never be built over. Only four to six families share your floor. Eight in ten homes are corners — light on two sides, and a foyer that opens to no one else. Ceilings rise to 10.35 feet; floor-to-ceiling glass hands you the water. <b>None of this can be added later, at any price.</b> That is what your home secures here — not square feet, but a position on this lake that simply cannot be built again.</p>
+      <section className="worth reveal" data-rail="The Value"><div className="wrap"><div className="worth-grid">
+        <div className="worth-in">
+          <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">Why Taranga</div><div className="ks">What the price actually buys</div></div></div>
+          <p className="worth-lead">A home here isn't priced like the apartment next door — because it isn't one.</p>
+          <p className="worth-body">The lake in front can never be built over. Only four to six families share your floor. Eight in ten homes are corners — light on two sides, and a foyer that opens to no one else. Ceilings rise to 10.35 feet; floor-to-ceiling glass hands you the water. <b>None of this can be added later, at any price.</b> That is what your home secures here — not square feet, but a position on this lake that simply cannot be built again.</p>
+        </div>
+        <div className="worth-film">
+          <div className="film-stage">
+            <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
+              <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
+            </div>
+          </div>
+          <p className="worth-film-cap">Walkthrough — a cinematic tour of the homes, the club and the lakefront.</p>
+        </div>
       </div></div></section>
 
       <section className="wrap ess reveal" data-rail="The Essentials" style={{ padding: 'clamp(3rem,6vw,4.5rem) 0' }}>
@@ -511,24 +516,18 @@ export default function HomeClient() {
         <p className="mdisc">Master plan, elevations and renders are artist’s impressions for representation only, not to scale, and may vary from the sanctioned plans and actual construction. Areas shown are indicative; carpet areas are as per the RERA-approved plans. This does not constitute a legal offer; all transactions are governed solely by the registered Agreement of Sale.</p>
       </div></section>
 
-      <section className="filmsec reveal" data-rail="Film" id="film"><div className="wrap">
+      {/* Construction-update film — the walkthrough now lives beside "Why Taranga" above.
+          Section stays hidden until the construction video link is provided:
+          set data-yt + backgroundImage to the real id, then remove `hidden` from the <section>. */}
+      <section className="filmsec reveal" data-rail="Film" id="film" hidden><div className="wrap">
         <div className="label">Taranga in motion</div>
-        <h2 className="filmsec-h">Film of <em>Taranga</em></h2>
-        {/* Construction tab hidden until its video link is provided; re-show both when ready. */}
-        <div className="film-tabs" role="tablist" aria-label="Films" hidden>
-          <button type="button" className="film-tab is-active" data-film="walk" aria-selected="true">Walkthrough</button>
-          <button type="button" className="film-tab" data-film="cons" aria-selected="false">Construction update</button>
-        </div>
+        <h2 className="filmsec-h">Construction update</h2>
         <div className="film-stage">
-          <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-film="walk" data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
-            <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
-          </div>
-          <div className="ytfacade film-pane" role="button" tabIndex={0} data-film="cons" data-yt="CONSTRUCTION_ID" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/CONSTRUCTION_ID/maxresdefault.jpg)' }} aria-label="Play the construction progress update" hidden>
+          <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-film="cons" data-yt="CONSTRUCTION_ID" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/CONSTRUCTION_ID/maxresdefault.jpg)' }} aria-label="Play the construction progress update">
             <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
           </div>
         </div>
-        <p className="filmsec-cap" data-film="walk">A cinematic tour of the homes, the club and the lakefront.</p>
-        <p className="filmsec-cap" data-film="cons" hidden>Real progress on site &mdash; updated as the towers rise.</p>
+        <p className="filmsec-cap" data-film="cons">Real progress on site &mdash; updated as the towers rise.</p>
       </div></section>
 
       <div className="seam reveal" aria-hidden="true">

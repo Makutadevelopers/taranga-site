@@ -93,6 +93,9 @@ export default function PageClient() {
                 Thirty-six places to play, gather and slow down — across the gardens, the rooftops and a dedicated
                 activity zone, for every age in the family.
               </p>
+              <p className="whisper" style={{ textAlign: 'left', margin: '1.6rem 0 0', maxWidth: '38ch' }}>
+                Everything here exists so you never have to leave for it. Convenience, in the end, is only another word for peace.
+              </p>
               <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
             </div>
             <div className="ph-img">

@@ -456,7 +456,7 @@ export default function HomeClient() {
         </div>
         <div className="worth-film">
           <div className="film-stage">
-            <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
+            <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(/assets/img/aerial-hero-wide.jpg)' }} aria-label="Play the Taranga walkthrough film">
               <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
             </div>
           </div>

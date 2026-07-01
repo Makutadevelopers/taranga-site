@@ -807,7 +807,7 @@ a[href*='ts-rera']:hover{color:var(--line)!important;}
 
 
 .hero,.hero-section{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;background:#0E1B2C;margin:0}
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;animation:heroZoom 18s ease-out forwards}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1}
 @keyframes heroZoom{from{transform:scale(1.08)}to{transform:scale(1)}}
 .hero-overlay{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(14,27,44,0.55) 0%,rgba(14,27,44,0.78) 60%,rgba(14,27,44,0.92) 100%);z-index:2}
 .hero-content{position:relative;z-index:5;height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;max-width:880px;margin:0 auto;padding:6rem 1.5rem 4rem}
@@ -916,7 +916,7 @@ a[href*='ts-rera']:hover{color:var(--line)!important;}
 .sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 
 /* hero poster — eager LCP image under the (desktop-only) video; same framing + slow zoom */
-.hero-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1;animation:heroZoom 18s ease-out forwards}
+.hero-poster{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;z-index:1}
 
 /* master-plan legend — on phones, show only the ~8 headline points (pins for the rest stay on the plan) */
 @media(max-width:560px){.mplan2-legend li:not([data-primary]){display:none}}

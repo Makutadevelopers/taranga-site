@@ -233,11 +233,20 @@ export default function HomeClient() {
 
       <div className="roll-stage">
       <section id="luxury" className="lux reveal" aria-label="What is luxury">
+        <span className="lux-corner tl" aria-hidden="true"></span>
+        <span className="lux-corner tr" aria-hidden="true"></span>
+        <span className="lux-corner bl" aria-hidden="true"></span>
+        <span className="lux-corner br" aria-hidden="true"></span>
         <div className="lux-inner">
           <span className="lux-drop" aria-hidden="true"></span>
+          <span className="lux-kick">The finest form of luxury</span>
           <h2 className="lux-q">What is <em>luxury?</em></h2>
           <p className="lux-lead">Luxury is not what a home <em>displays</em>.<br />It is the peace it returns to you &mdash;<br />the moment you <em>walk in</em>.</p>
-          <span className="lux-rule" aria-hidden="true"></span>
+          <div className="lux-wave" aria-hidden="true">
+            <span></span>
+            <svg viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
+            <span></span>
+          </div>
           <p className="lux-foot">And unlike all that glitters, it never <em>fades</em>.</p>
           <div className="lux-perch">
             <span className="lux-perch-line" aria-hidden="true"></span>

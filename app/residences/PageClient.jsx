@@ -277,7 +277,7 @@ export default function PageClient() {
               </dl>
               <div className="ctarow">
                 <a className="btn sm solid" href="#" id="fpdl">
-                  Download this plan
+                  Save this plan
                 </a>
                 <a className="btn sm" href="#" id="fppp">
                   Get price sheet
@@ -354,7 +354,7 @@ export default function PageClient() {
                 <option>4 BHK</option>
               </select>
               <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>
-                Request a Visit
+                Come see it
               </a>
             </div>
           ) : (
@@ -372,11 +372,11 @@ export default function PageClient() {
           <div className="altcta">
             Prefer to read first?{' '}
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>
-              Download the brochure
+              Send me the brochure
             </a>{' '}
             or{' '}
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>
-              get the price sheet
+              the price sheet
             </a>
             .
           </div>

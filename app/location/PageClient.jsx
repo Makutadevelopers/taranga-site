@@ -33,6 +33,7 @@ export default function PageClient() {
           <div className="crumb"><Link href="/">Home</Link> / Location</div>
           <h1>Where the lake<br />meets the city</h1>
           <p>An established, connected address in north-west Hyderabad — and a lakefront calm you won’t find at the price anywhere near it.</p>
+          <p className="whisper" style={{ textAlign: 'left', margin: '1.6rem 0 0', maxWidth: '40ch' }}>The best thing about where Taranga stands is everything that can never stand in front of it.</p>
           <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
         </div>
         <div className="ph-img"><div className="ph" style={{ backgroundImage: 'url(/assets/img/ext_lake_day.webp)' }}></div></div>
@@ -52,6 +53,7 @@ export default function PageClient() {
         <div className="reveal" style={{ marginTop: '3.4rem' }}>
           <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M5 19c0-5 14-9 14-14" /><circle cx="5" cy="19" r="1.8" /><circle cx="19" cy="5" r="1.8" /></svg></span><div><div className="kt">Connectivity</div><div className="ks">How close everything already is</div></div></div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 1rem' }}>Your commute, already halved</h2>
+          <p className="whisper" style={{ textAlign: 'left', margin: '0 0 1.4rem', maxWidth: '46ch' }}>Near enough to reach the city in minutes. Far enough to leave its noise just as fast.</p>
           <div className="conn">
             <div className="r"><span>Ashoka One Mall</span><b>100 m</b></div>
             <div className="r"><span>Nearest metro store</span><b>550 m</b></div>
@@ -100,13 +102,13 @@ export default function PageClient() {
             <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
             <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
             <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select>
-            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Request a Visit</a>
+            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
           </div>
         ) : (
           <div className="qform" id="qform"><div style={{ fontFamily: 'var(--display)', fontStyle: 'italic', color: 'var(--line)', fontSize: '1.4rem' }}>Thank you, {qDone}. We’ll call you shortly to plan your visit.</div></div>
         )}
         {!qDone && <div className="formnote" id="qnote" style={{ color: qNote.color || undefined }}>{qNote.text}</div>}
-        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>get the price sheet</a>.</div>
+        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Send me the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>the price sheet</a>.</div>
       </div></section>
     </>
   );

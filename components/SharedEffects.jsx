@@ -21,7 +21,12 @@ export default function SharedEffects() {
       cleanups.push(() => io.disconnect());
 
       /* ---- waterline depth indicator ---- */
-      const stops = [].slice.call(document.querySelectorAll('[data-rail]'));
+      // Only rendered sections become rail stops — a `hidden`/display:none section
+      // (e.g. the not-yet-live construction film) returns no client rects, so it
+      // must never plant a phantom marker or corrupt the active-stop math.
+      const stops = [].slice
+        .call(document.querySelectorAll('[data-rail]'))
+        .filter((el) => el.getClientRects().length > 0);
       if (stops.length >= 3) {
         const wl = document.createElement('div');
         wl.className = 'wl';

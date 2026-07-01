@@ -795,6 +795,7 @@ export default function PageClient() {
             </div>
           </div>
         </div>
+        <p className="whisper whisper--close">None of it asks to be seen. It simply waits, a lift ride up.</p>
       </section>
 
       <div className="wavediv">
@@ -837,7 +838,7 @@ export default function PageClient() {
                   quickSubmit();
                 }}
               >
-                Request a Visit
+                Come see it
               </a>
             </div>
           ) : (
@@ -868,7 +869,7 @@ export default function PageClient() {
                 openModal('brochure');
               }}
             >
-              Download the brochure
+              Send me the brochure
             </a>{' '}
             or{' '}
             <a
@@ -878,7 +879,7 @@ export default function PageClient() {
                 openModal('price');
               }}
             >
-              get the price sheet
+              the price sheet
             </a>
             .
           </div>

@@ -57,7 +57,7 @@ export default function Header() {
               {n.label}
             </Link>
           ))}
-          <a href="#" className="nbtn" onClick={(e) => { e.preventDefault(); window.openModal && window.openModal('visit'); }}>Book a Visit</a>
+          <a href="#" className="nbtn" onClick={(e) => { e.preventDefault(); window.openModal && window.openModal('visit'); }}>Come see it</a>
         </nav>
       </div>
     </header>

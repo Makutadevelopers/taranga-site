@@ -15,7 +15,7 @@ export default function FloatingActions() {
           <svg viewBox="0 0 24 24"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5M9.5 13h6M9.5 16.5h6" /></svg><span>Brochure</span>
         </a>
         <a className="mc-cta" href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }}>
-          <svg viewBox="0 0 24 24"><path d="M4 6h16v15H4zM4 10h16M8 3v4M16 3v4" /></svg><span>Book a Visit</span>
+          <svg viewBox="0 0 24 24"><path d="M4 6h16v15H4zM4 10h16M8 3v4M16 3v4" /></svg><span>Come see it</span>
         </a>
       </nav>
 
@@ -23,7 +23,7 @@ export default function FloatingActions() {
         <a href="tel:+919059676464" className="sb-btn" title="Call us" onClick={trackCall}>
           <span className="sb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2z" /></svg></span><span className="sb-label">CALL</span>
         </a>
-        <a href="#" className="sb-btn" title="Download brochure" onClick={(e) => { e.preventDefault(); downloadPDF('brochure'); }}>
+        <a href="#" className="sb-btn" title="Send me the brochure" onClick={(e) => { e.preventDefault(); downloadPDF('brochure'); }}>
           <span className="sb-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l5 5v13H7z" /><path d="M14 3v5h5M9.5 13h6M9.5 16.5h6" /></svg></span><span className="sb-label">BROCHURE</span>
         </a>
         <a href="#" className="sb-btn" title="Get price sheet" onClick={(e) => { e.preventDefault(); openModal('price'); }}>

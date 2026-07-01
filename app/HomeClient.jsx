@@ -248,11 +248,14 @@ export default function HomeClient() {
           <div className="hero-crown reveal-anim" style={{ animationDelay: '0.3s' }}>Makuta &middot; Crown of Excellence</div>
           <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Moosapet&ndash;Kukatpally, Hyderabad</div>
           <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Moosapet&ndash;Kukatpally, Hyderabad</span></h1>
-          <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
+          {/* Tier 1 — Anchor: the 50-ms line, carried above the fold */}
+          <p className="hero-anchor reveal-anim" style={{ animationDelay: '1.15s' }}>Luxury you don&rsquo;t show. Luxury you live.</p>
+          {/* Tier 2 — Turn: the payoff, in the philosophy voice */}
+          <p className="hero-tag reveal-anim" style={{ animationDelay: '1.4s' }}>It is the peace a home returns to you &mdash; and it never fades.</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Brochure</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }} className="hero-btn hero-btn-secondary">Price Sheet</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Book a Visit</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Come see it</a>
           </div>
           <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA <a href="https://ts-rera.telangana.gov.in/PublicSearch" target="_blank" rel="noopener">P02200011012</a></p>
         </div>
@@ -270,19 +273,25 @@ export default function HomeClient() {
         <span className="lux-corner br" aria-hidden="true"></span>
         <div className="lux-inner">
           <span className="lux-drop" aria-hidden="true"></span>
-          <span className="lux-kick">The finest form of luxury</span>
-          <h2 className="lux-q">What is <em>luxury?</em></h2>
-          <p className="lux-lead">Luxury is not what a home <em>displays</em>.<br />It is the peace it returns to you &mdash;<br />the moment you <em>walk in</em>.</p>
+          {/* Tier 4 — Label: orientation, tiny by design */}
+          <span className="lux-kick">What is luxury?</span>
+          {/* Tier 1 — Anchor: the line read in 50 ms, the largest thing on the page */}
+          <h2 className="lux-q">Luxury you don&rsquo;t <em>show.</em><br />Luxury you <em>live.</em></h2>
+          {/* Tier 2 — Turn: the payoff, in the philosophy voice (italic teal) */}
+          <p className="lux-turn">It is the peace a home returns to you &mdash; and unlike all that glitters, it never fades.</p>
           <div className="lux-wave" aria-hidden="true">
             <span></span>
             <svg viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
             <span></span>
           </div>
-          <p className="lux-foot">And unlike all that glitters, it never <em>fades</em>.</p>
+          {/* Tier 3 — Body: the evidence, deliberately quiet and narrow */}
+          <p className="lux-body">Not what the house displays, but what it quietly takes away &mdash; the noise, the eyes, the weight &mdash; until what remains is calm, and in that calm, you.</p>
           <div className="lux-perch">
             <span className="lux-perch-line" aria-hidden="true"></span>
-            <span className="lux-perch-label">Step inside</span>
+            <span className="lux-perch-label">Step inside &darr;</span>
           </div>
+          {/* Tier 5 — Micro: required, never prominent */}
+          <p className="lux-micro">TS RERA P02200011012 &middot; Artist&rsquo;s impression</p>
         </div>
       </section>
 
@@ -331,7 +340,7 @@ export default function HomeClient() {
                 <span className="scard__kick">Green from every floor</span>
                 <h3 className="scard__title">More sky, more <em>space</em></h3>
                 <p className="scard__desc">Low density, by design &mdash; landscaped greens woven across the site, and more distance between you and everyone else.</p>
-                <Link className="scard__cta" href="/location/">Explore the location <span className="ar">&rarr;</span></Link>
+                <Link className="scard__cta" href="/location/">See the location <span className="ar">&rarr;</span></Link>
               </div>
             </article>
           </div>
@@ -378,14 +387,14 @@ export default function HomeClient() {
                 <span className="scard__kick">Privacy foyers</span>
                 <h3 className="scard__title">Arrival without an <em>audience</em></h3>
                 <p className="scard__desc">Step out of the lift into your own foyer &mdash; never a shared corridor, never a neighbour at the door.</p>
-                <Link className="scard__cta" href="/residences/">Explore residences <span className="ar">&rarr;</span></Link>
+                <Link className="scard__cta" href="/residences/">Step inside the residences <span className="ar">&rarr;</span></Link>
               </div>
             </article>
           </div>
         </div>
       </section>
 
-      <div className="bridge reveal"><p>And when four walls aren't enough, <b>the rest of Taranga is a lift ride up.</b></p></div>
+      <div className="bridge reveal"><p>The peace doesn't end at your door — it rises with you. <b>The rest of Taranga is a lift ride up.</b></p></div>
 
       <section className="sstory" data-sec data-n="03" data-l="The Club" data-rail="The Club">
         <div className="sstory__stage">
@@ -425,7 +434,7 @@ export default function HomeClient() {
                 <span className="scard__kick">Courts &amp; sky bridge</span>
                 <h3 className="scard__title">Joined high <em>above</em></h3>
                 <p className="scard__desc">Courts, quiet corners and a sky bridge linking the two towers &mdash; the long view, from the calmest place to stand.</p>
-                <Link className="scard__cta" href="/amenities/">Explore all amenities <span className="ar">&rarr;</span></Link>
+                <Link className="scard__cta" href="/amenities/">See the amenities <span className="ar">&rarr;</span></Link>
               </div>
             </article>
           </div>
@@ -468,7 +477,7 @@ export default function HomeClient() {
       </div></div></section>
 
       <section className="wrap ess reveal" data-rail="The Essentials" style={{ padding: 'clamp(3rem,6vw,4.5rem) 0' }}>
-        <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">The Essentials</div><div className="ks">The things buyers ask first — answered up front</div></div></div>
+        <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">The Essentials</div><div className="ks">The things you ask first — answered up front</div></div></div>
         <div className="essgrid">
           <div className="ess-i"><span className="el">Configurations</span><span className="ev">3 &amp; 4 BHK · 2480–3255 sft</span><span className="ed">80% corner homes, each with a privacy foyer</span></div>
           <div className="ess-i"><span className="el">Stage</span><span className="ev">Under construction</span><span className="ed">Construction-linked, staged payment plan</span></div>
@@ -479,7 +488,7 @@ export default function HomeClient() {
       </section>
 
       <section className="ctaband wrap" style={{ padding: 'clamp(2rem,5vw,4rem) 0' }}><div className="reveal"><div className="label">The full picture</div>
-        <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,4vw,2.8rem)', margin: '.3rem 0 .3rem', color: 'var(--ink)' }}>Brochure, plans &amp; pricing — in your inbox</h2>
+        <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,4vw,2.8rem)', lineHeight: 1.08, margin: '.3rem 0 .3rem', color: 'var(--ink)' }}>Brochure, plans &amp; pricing — in your inbox</h2>
         <p style={{ color: 'var(--ink-soft)', maxWidth: '44ch', margin: '0 auto' }}>Everything you need to decide, sent the moment you ask.</p>
         <div className="row"><a className="btn solid" href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Brochure</a><a className="btn" href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>Get Price Sheet</a></div></div></section>
 
@@ -488,8 +497,8 @@ export default function HomeClient() {
         <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
         <span className="seam-line"></span>
       </div>
-      <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ padding: 'clamp(3.5rem,8vw,6rem) 0' }}><div className="reveal"><div className="label">Master Plan</div>
-        <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
+      <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ padding: 'clamp(3.5rem,8vw,6rem) 0 clamp(2rem,4vw,3rem)' }}><div className="reveal"><div className="label">Master Plan</div>
+        <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', lineHeight: 1.05, margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
         <div className="mplan2 mplan2--stack">
           <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
             <img src="/assets/img/masterplan_plan.jpg" width="2460" height="1125" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
@@ -503,7 +512,7 @@ export default function HomeClient() {
             ))}
           </ol>
           <div className="mp-plans-cta">
-            <Link className="btn solid" href="/residences/#floor-plans">Explore the unit plans <span>&rarr;</span></Link>
+            <Link className="btn solid" href="/residences/#floor-plans">See the unit plans <span>&rarr;</span></Link>
             <span className="mp-plans-note">See every 3 &amp; 4 BHK layout, floor by floor</span>
           </div>
         </div>
@@ -543,13 +552,13 @@ export default function HomeClient() {
             <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
             <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
             <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select>
-            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Request a Visit</a>
+            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
           </div>
         ) : (
           <div className="qform" id="qform"><div style={{ fontFamily: 'var(--display)', fontStyle: 'italic', color: 'var(--line)', fontSize: '1.4rem' }}>Thank you, {qDone}. We’ll call you shortly to plan your visit.</div></div>
         )}
         {!qDone && <div className="formnote" id="qnote" style={{ color: qNote.color || undefined }}>{qNote.text}</div>}
-        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>get the price sheet</a>.</div></div></section>
+        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Send me the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>the price sheet</a>.</div></div></section>
       </div>
       </div>
     </>

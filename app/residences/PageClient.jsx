@@ -180,7 +180,7 @@ export default function PageClient() {
                 by the lake
               </h1>
               <p>
-                Generous 3 and 4 BHK homes built around light, air and privacy — with the one view in
+                Three and four BHK homes built around light, air and privacy — with the one view in
                 the neighbourhood that can’t be built out.
               </p>
               <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
@@ -209,6 +209,7 @@ export default function PageClient() {
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>
             Ten layouts. Two towers. One sky bridge.
           </h2>
+          <p className="whisper">A plan is not a list of rooms. It is a measure of how far the world is kept from you.</p>
           <div className="rip-line">
             <svg viewBox="0 0 90 16">
               <path d="M2,9 C18,2 30,15 46,8 S74,2 88,8" />
@@ -307,6 +308,7 @@ export default function PageClient() {
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4vw,3rem)', marginTop: '.4rem' }}>
             Designed around how you live
           </h2>
+          <p className="whisper">Arrival without an audience.</p>
           <div className="flist">
             <div className="f">
               <h4>A foyer of your own</h4>

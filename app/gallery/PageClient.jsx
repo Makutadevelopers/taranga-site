@@ -53,6 +53,7 @@ export default function PageClient() {
           <div className="crumb"><Link href="/">Home</Link> / Gallery</div>
           <h1>Take a closer<br />look</h1>
           <p>Step through the towers, the water&rsquo;s edge and the rooftops. Tap any image to enlarge.</p>
+          <p className="whisper" style={{ textAlign: 'left', margin: '1.6rem 0 0', maxWidth: '34ch' }}>Look for what isn&rsquo;t in the frame. The space is the subject.</p>
           <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
         </div>
         <div className="ph-img"><div className="ph" style={{ backgroundImage: 'url(/assets/img/ext_entrance.webp)' }}></div></div>
@@ -81,13 +82,13 @@ export default function PageClient() {
             <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
             <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
             <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select>
-            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Request a Visit</a>
+            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
           </div>
         ) : (
           <div className="qform" id="qform"><div style={{ fontFamily: 'var(--display)', fontStyle: 'italic', color: 'var(--line)', fontSize: '1.4rem' }}>Thank you, {qDone}. We&rsquo;ll call you shortly to plan your visit.</div></div>
         )}
         {!qDone && <div className="formnote" id="qnote" style={{ color: qNote.color || undefined }}>{qNote.text}</div>}
-        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>get the price sheet</a>.</div>
+        <div className="altcta">Prefer to read first? <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Send me the brochure</a> or <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>the price sheet</a>.</div>
       </div></section>
     </>
   );

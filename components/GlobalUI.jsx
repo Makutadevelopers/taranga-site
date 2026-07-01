@@ -3,10 +3,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate } from '@/lib/lead';
 
 const MODES = {
-  visit: ['Book a Site Visit', 'Tell us how to reach you and we’ll arrange a private visit by the lake.', 'Request Visit', 'Visit requested', 'Thank you — our team will call you to confirm a time by the lake.'],
-  brochure: ['Download Brochure', 'Share your details and we’ll send the brochure to your WhatsApp.', 'Get the Brochure', 'Thank you', 'We’ll share the brochure with you on WhatsApp shortly.'],
-  price: ['Get the Price Sheet', 'Leave your details and we’ll send the price sheet to your WhatsApp.', 'Send Price Sheet', 'Thank you', 'We’ll share the price sheet with you on WhatsApp shortly.'],
-  plan: ['Download Floor Plan', 'Share your details and we’ll send the detailed floor plan straight to you.', 'Get the Plan', 'Thank you', 'Your floor plan is on its way.'],
+  visit: ['A private visit, by the lake', 'Tell us how to reach you and we’ll arrange a private visit by the lake.', 'Come see it', 'Visit requested', 'Thank you — our team will call you to confirm a time by the lake.'],
+  brochure: ['The Brochure', 'Share your details and we’ll send the brochure to your WhatsApp.', 'Send it to me', 'Thank you', 'We’ll share the brochure with you on WhatsApp shortly.'],
+  price: ['The Price Sheet', 'Leave your details and we’ll send the price sheet to your WhatsApp.', 'Send it to me', 'Thank you', 'We’ll share the price sheet with you on WhatsApp shortly.'],
+  plan: ['The Floor Plan', 'Share your details and we’ll send the detailed floor plan straight to you.', 'Send it to me', 'Thank you', 'Your floor plan is on its way.'],
 };
 const SRC = { visit: 'Site Visit', brochure: 'Brochure', price: 'Price Sheet', plan: 'Floor Plan' };
 

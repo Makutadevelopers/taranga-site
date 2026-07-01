@@ -8,7 +8,7 @@ const openModal = (m) => window.openModal && window.openModal(m);
 
 /* EDIT PROJECTS: replace name/area/img/url with real ones. url "#" makes the card open the brochure. */
 const PROJECTS = [
-  { name: 'Makuta Horizon', area: 'Premium high-rise', img: '/assets/img/d_roof.webp', url: 'https://makutahorizon.com' },
+  { name: 'Makuta Horizon', area: 'High-rise residences', img: '/assets/img/d_roof.webp', url: 'https://makutahorizon.com' },
   { name: 'Makuta Nirvana', area: 'Gated community', img: '/assets/img/hero_blue.webp', url: 'https://makutanirvan.in' },
   { name: 'Green Wood Villas', area: 'Villa community', img: '/assets/img/d_glass.webp', url: 'https://www.makutadevelopers.com/town-city-building-ca' },
 ];
@@ -16,21 +16,21 @@ const PROJECTS = [
 const TESTIMONIALS = [
   {
     name: 'Arjun & Priya',
-    role: 'Residents, Block A',
+    role: 'At home in Block A',
     excerpt: 'The privacy and light here is unmatched. Every morning, we wake up to the lake view.',
     videoUrl: '[PLACEHOLDER: testimonial-1.mp4]',
     posterImg: '[PLACEHOLDER: testimonial-1-poster.jpg]',
   },
   {
     name: 'Deepak Mehta',
-    role: 'Resident, Block B',
+    role: 'At home in Block B',
     excerpt: "10.35-foot ceilings make this feel like a penthouse, not an apartment. That's the difference.",
     videoUrl: '[PLACEHOLDER: testimonial-2.mp4]',
     posterImg: '[PLACEHOLDER: testimonial-2-poster.jpg]',
   },
   {
     name: 'Neha & Rohit',
-    role: 'Residents, Block A',
+    role: 'At home in Block A',
     excerpt: "Only 4–6 families per floor. We genuinely know our neighbors. It's a community, not a tower.",
     videoUrl: '[PLACEHOLDER: testimonial-3.mp4]',
     posterImg: '[PLACEHOLDER: testimonial-3-poster.jpg]',
@@ -82,6 +82,9 @@ export default function PageClient() {
                 Taranga is the latest chapter in a long Makuta story — homes built on trust, finish and the feeling of
                 belonging.
               </p>
+              <p className="whisper" style={{ textAlign: 'left', margin: '1.6rem 0 0', maxWidth: '42ch' }}>
+                We measure our work not by what we add to a site, but by what we&rsquo;re willing to leave open.
+              </p>
               <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
             </div>
             <div className="ph-img">
@@ -101,6 +104,9 @@ export default function PageClient() {
             For years, Makuta Developers has shaped homes and communities across Hyderabad — measured by how they feel to
             live in a decade later, not just how they show on launch day. “Crown of Excellence” is the standard we hold
             every project to: honest build quality, a RERA-clean process, and finishes that age well.
+          </p>
+          <p className="whisper" style={{ textAlign: 'left', margin: '1.8rem 0 0', maxWidth: '40ch', fontSize: 'clamp(1.3rem,2.6vw,1.8rem)' }}>
+            The 552 homes we didn&rsquo;t build are the reason you&rsquo;ll love living here.
           </p>
         </div>
         <div className="reveal" style={{ marginTop: '3rem' }}>
@@ -234,7 +240,7 @@ export default function PageClient() {
                   quickSubmit();
                 }}
               >
-                Request a Visit
+                Come see it
               </a>
             </div>
           ) : (
@@ -258,7 +264,7 @@ export default function PageClient() {
                 openModal('brochure');
               }}
             >
-              Download the brochure
+              Send me the brochure
             </a>{' '}
             or{' '}
             <a
@@ -268,7 +274,7 @@ export default function PageClient() {
                 openModal('price');
               }}
             >
-              get the price sheet
+              the price sheet
             </a>
             .
           </div>
@@ -277,7 +283,7 @@ export default function PageClient() {
 
       <section className="socproof-sec" data-rail="Testimonials" style={{ background: 'var(--canvas)', padding: 'clamp(3rem,7vw,5rem) 0' }}>
         <div className="wrap reveal">
-          <div className="label">What our residents say</div>
+          <div className="label">What families here say</div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', margin: '.3rem 0 2.2rem' }}>
             Life at Taranga, in their words
           </h2>

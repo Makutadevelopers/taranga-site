@@ -448,21 +448,28 @@ export default function HomeClient() {
         <p className="fig-foot">Two towers, joined high up by a sky bridge — and never more than six families to a floor.</p>
       </div></section>
 
-      <section className="worth reveal" data-rail="The Value"><div className="wrap"><div className="worth-grid">
-        <div className="worth-in">
-          <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">Why Taranga</div><div className="ks">What the price actually buys</div></div></div>
-          <p className="worth-lead">A home here isn't priced like the apartment next door — because it isn't one.</p>
-          <p className="worth-body">The lake in front can never be built over. Only four to six families share your floor. Eight in ten homes are corners — light on two sides, and a foyer that opens to no one else. Ceilings rise to 10.35 feet; floor-to-ceiling glass hands you the water. <b>None of this can be added later, at any price.</b> That is what your home secures here — not square feet, but a position on this lake that simply cannot be built again.</p>
+      <section className="worth reveal" data-rail="The Value"><div className="wrap">
+        <div className="worth-top">
+          <div className="worth-head">
+            <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">Why Taranga</div><div className="ks">What the price actually buys</div></div></div>
+            <p className="worth-lead">A home here isn't priced like the apartment next door &mdash; <em>because it isn't one.</em></p>
+          </div>
+          <div className="worth-copy">
+            <p className="worth-body">The lake in front can never be built over. Only four to six families share your floor. Eight in ten homes are corners &mdash; light on two sides, and a foyer that opens to no one else. Ceilings rise to 10.35 feet; floor-to-ceiling glass hands you the water.</p>
+            <blockquote className="worth-quote">
+              <p><b>None of this can be added later, at any price.</b> Not square feet, but a position on this lake that simply cannot be built again.</p>
+            </blockquote>
+          </div>
         </div>
-        <div className="worth-film">
+        <figure className="worth-film">
           <div className="film-stage">
             <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(/assets/img/aerial-hero-wide.jpg)' }} aria-label="Play the Taranga walkthrough film">
               <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
             </div>
           </div>
-          <p className="worth-film-cap">Walkthrough — a cinematic tour of the homes, the club and the lakefront.</p>
-        </div>
-      </div></div></section>
+          <figcaption className="worth-film-cap">Walkthrough &mdash; a cinematic tour of the homes, the club and the lakefront.</figcaption>
+        </figure>
+      </div></section>
 
       <section className="wrap ess reveal" data-rail="The Essentials" style={{ padding: 'clamp(3rem,6vw,4.5rem) 0' }}>
         <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l1.8 4.8L19 9l-4.2 2.6L16 17l-4-3-4 3 1.2-5.4L5 9l5.2-1.2z" /></svg></span><div><div className="kt">The Essentials</div><div className="ks">The things you ask first — answered up front</div></div></div>

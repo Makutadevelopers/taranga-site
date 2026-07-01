@@ -82,7 +82,7 @@ export default function PageClient() {
             <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
             <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
             <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select>
-            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
+            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Book a site visit</a>
           </div>
         ) : (
           <div className="qform" id="qform"><div style={{ fontFamily: 'var(--display)', fontStyle: 'italic', color: 'var(--line)', fontSize: '1.4rem' }}>Thank you, {qDone}. We&rsquo;ll call you shortly to plan your visit.</div></div>

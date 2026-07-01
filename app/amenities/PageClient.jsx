@@ -94,7 +94,7 @@ export default function PageClient() {
                 activity zone, for every age in the family.
               </p>
               <p className="whisper" style={{ textAlign: 'left', margin: '1.6rem 0 0', maxWidth: '38ch' }}>
-                Everything here exists so you never have to leave for it. Convenience, in the end, is only another word for peace.
+                Everything here exists so you never have to leave for it.
               </p>
               <div className="hairline" style={{ marginTop: '1.6rem' }}></div>
             </div>
@@ -838,7 +838,7 @@ export default function PageClient() {
                   quickSubmit();
                 }}
               >
-                Come see it
+                Book a site visit
               </a>
             </div>
           ) : (

@@ -75,7 +75,7 @@ export default function PageClient() {
                   <option>3 BHK</option>
                   <option>4 BHK</option>
                 </select>
-                <a href="#" className="btn solid" style={{ textAlign: 'center' }} onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
+                <a href="#" className="btn solid" style={{ textAlign: 'center' }} onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Book a site visit</a>
               </div>
             ) : (
               <div className="qform" id="qform" style={{ flexDirection: 'column', maxWidth: '400px', margin: 0 }}>
@@ -104,7 +104,7 @@ export default function PageClient() {
             <div className="q"><button>Is the project RERA registered?</button><div className="a"><p>Yes — TS RERA P02200011012, verifiable on the Telangana RERA portal.</p></div></div>
             <div className="q"><button>What is the possession timeline?</button><div className="a"><p>Construction is progressing on schedule; the committed possession timeline is shared on request and stated in your agreement.</p></div></div>
             <div className="q"><button>Can I get a home loan? Which banks are approved?</button><div className="a"><p>Yes — the project is supported by leading banks and housing-finance companies. Our team will share the approved-financier list and help with the process.</p></div></div>
-            <div className="q"><button>How do I book a site visit?</button><div className="a"><p>Fill the form above or tap &ldquo;Come see it&rdquo; anywhere on the site, and we&rsquo;ll call you to arrange a convenient time. Visits are private and no-obligation.</p></div></div>
+            <div className="q"><button>How do I book a site visit?</button><div className="a"><p>Fill the form above or tap &ldquo;Book a site visit&rdquo; anywhere on the site, and we&rsquo;ll call you to arrange a convenient time. Visits are private and no-obligation.</p></div></div>
           </div>
         </div>
       </section>

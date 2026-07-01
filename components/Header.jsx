@@ -3,15 +3,14 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
+// Trimmed to the six things a buyer navigates to (logo = Home; Contact lives in
+// the CTA + footer; Journal is thin for now and lives in the footer).
 const NAV = [
-  { href: '/', label: 'Home' },
   { href: '/residences/', label: 'Residences' },
   { href: '/amenities/', label: 'Amenities' },
   { href: '/location/', label: 'Location' },
   { href: '/gallery/', label: 'Gallery' },
-  { href: '/blog/', label: 'Journal' },
   { href: '/about/', label: 'About' },
-  { href: '/contact/', label: 'Contact' },
 ];
 
 export default function Header() {
@@ -57,7 +56,7 @@ export default function Header() {
               {n.label}
             </Link>
           ))}
-          <a href="#" className="nbtn" onClick={(e) => { e.preventDefault(); window.openModal && window.openModal('visit'); }}>Come see it</a>
+          <a href="#" className="nbtn" onClick={(e) => { e.preventDefault(); window.openModal && window.openModal('visit'); }}>Book a site visit</a>
         </nav>
       </div>
     </header>

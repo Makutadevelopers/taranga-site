@@ -38,7 +38,7 @@ const FAQ = [
   },
   {
     q: 'How do I book a site visit?',
-    a: 'Fill the enquiry form or tap “Come see it” anywhere on the site, and we will call you to arrange a convenient time. Visits are private and no-obligation.',
+    a: 'Fill the enquiry form or tap “Book a site visit” anywhere on the site, and we will call you to arrange a convenient time. Visits are private and no-obligation.',
   },
 ];
 

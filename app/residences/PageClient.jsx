@@ -356,7 +356,7 @@ export default function PageClient() {
                 <option>4 BHK</option>
               </select>
               <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>
-                Come see it
+                Book a site visit
               </a>
             </div>
           ) : (

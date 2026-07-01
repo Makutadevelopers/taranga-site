@@ -130,7 +130,7 @@ export default function PageClient() {
           </div>
         </div>
         <div className="reveal" style={{ marginTop: '3rem' }}>
-          <div className="label">Peace of mind</div>
+          <div className="label">Assurance</div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.8rem,3.6vw,2.6rem)', margin: '.3rem 0 1rem' }}>
             Why families trust the process
           </h2>
@@ -240,7 +240,7 @@ export default function PageClient() {
                   quickSubmit();
                 }}
               >
-                Come see it
+                Book a site visit
               </a>
             </div>
           ) : (

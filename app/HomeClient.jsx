@@ -248,14 +248,11 @@ export default function HomeClient() {
           <div className="hero-crown reveal-anim" style={{ animationDelay: '0.3s' }}>Makuta &middot; Crown of Excellence</div>
           <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Moosapet&ndash;Kukatpally, Hyderabad</div>
           <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Moosapet&ndash;Kukatpally, Hyderabad</span></h1>
-          {/* Tier 1 — Anchor: the 50-ms line, carried above the fold */}
-          <p className="hero-anchor reveal-anim" style={{ animationDelay: '1.15s' }}>Luxury you don&rsquo;t show. Luxury you live.</p>
-          {/* Tier 2 — Turn: the payoff, in the philosophy voice */}
-          <p className="hero-tag reveal-anim" style={{ animationDelay: '1.4s' }}>It is the peace a home returns to you &mdash; and it never fades.</p>
+          <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Brochure</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }} className="hero-btn hero-btn-secondary">Price Sheet</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Come see it</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Book a site visit</a>
           </div>
           <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA <a href="https://ts-rera.telangana.gov.in/PublicSearch" target="_blank" rel="noopener">P02200011012</a></p>
         </div>
@@ -273,25 +270,19 @@ export default function HomeClient() {
         <span className="lux-corner br" aria-hidden="true"></span>
         <div className="lux-inner">
           <span className="lux-drop" aria-hidden="true"></span>
-          {/* Tier 4 — Label: orientation, tiny by design */}
-          <span className="lux-kick">What is luxury?</span>
-          {/* Tier 1 — Anchor: the line read in 50 ms, the largest thing on the page */}
-          <h2 className="lux-q">Luxury you don&rsquo;t <em>show.</em><br />Luxury you <em>live.</em></h2>
-          {/* Tier 2 — Turn: the payoff, in the philosophy voice (italic teal) */}
-          <p className="lux-turn">It is the peace a home returns to you &mdash; and unlike all that glitters, it never fades.</p>
+          <span className="lux-kick">The finest form of luxury</span>
+          <h2 className="lux-q">What is <em>luxury?</em></h2>
+          <p className="lux-lead">Luxury is not what a home <em>displays</em>.<br />It is the peace it returns to you &mdash;<br />the moment you <em>walk in</em>.</p>
           <div className="lux-wave" aria-hidden="true">
             <span></span>
             <svg viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
             <span></span>
           </div>
-          {/* Tier 3 — Body: the evidence, deliberately quiet and narrow */}
-          <p className="lux-body">Not what the house displays, but what it quietly takes away &mdash; the noise, the eyes, the weight &mdash; until what remains is calm, and in that calm, you.</p>
+          <p className="lux-foot">And unlike all that glitters, it never <em>fades</em>.</p>
           <div className="lux-perch">
             <span className="lux-perch-line" aria-hidden="true"></span>
-            <span className="lux-perch-label">Step inside &darr;</span>
+            <span className="lux-perch-label">Step inside</span>
           </div>
-          {/* Tier 5 — Micro: required, never prominent */}
-          <p className="lux-micro">TS RERA P02200011012 &middot; Artist&rsquo;s impression</p>
         </div>
       </section>
 
@@ -306,11 +297,10 @@ export default function HomeClient() {
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Outdoors</h2>
-            <span className="sstory__sub">The peace you arrive <em>through</em></span>
+            <span className="sstory__sub">The <em>approach</em></span>
             <span className="label">open space, low density &amp; the lake</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
-          <p className="whisper">Luxury begins as distance — the room the world gives you before you reach the door.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('garden_walk.webp', 'center 62%')}></div>
@@ -353,11 +343,10 @@ export default function HomeClient() {
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Homes</h2>
-            <span className="sstory__sub">The peace you live <em>inside</em></span>
+            <span className="sstory__sub">The <em>interiors</em></span>
             <span className="label">Inside the Homes &middot; 10.35-ft ceilings, glass &amp; foyers</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
-          <p className="whisper">Inside, distance becomes subtraction — the noise, the eyes, the weight, all left at the door.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('int_living.webp', 'center 56%')}></div>
@@ -394,17 +383,16 @@ export default function HomeClient() {
         </div>
       </section>
 
-      <div className="bridge reveal"><p>The peace doesn't end at your door — it rises with you. <b>The rest of Taranga is a lift ride up.</b></p></div>
+      <div className="bridge reveal"><p>Home is only where it begins — <b>the rest of Taranga is a lift ride up.</b></p></div>
 
       <section className="sstory" data-sec data-n="03" data-l="The Club" data-rail="The Club">
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Club</h2>
-            <span className="sstory__sub">The peace you rise <em>to</em></span>
+            <span className="sstory__sub">The <em>heights</em></span>
             <span className="label">The Clubhouse &amp; Amenities &middot; 30,000 sft of leisure</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
-          <p className="whisper">And even rising, you move away from the crowd — never into it.</p>
           <div className="sstory__deck">
             <article className="scard">
               <div className="scard__media" style={media('am_clubhouse.webp', 'center 46%')}></div>
@@ -497,7 +485,7 @@ export default function HomeClient() {
         <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
         <span className="seam-line"></span>
       </div>
-      <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ padding: 'clamp(3.5rem,8vw,6rem) 0 clamp(2rem,4vw,3rem)' }}><div className="reveal"><div className="label">Master Plan</div>
+      <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ paddingTop: 'clamp(3.5rem,8vw,6rem)', paddingBottom: 'clamp(2rem,4vw,3rem)' }}><div className="reveal"><div className="label">Master Plan</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', lineHeight: 1.05, margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
         <div className="mplan2 mplan2--stack">
           <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
@@ -552,7 +540,7 @@ export default function HomeClient() {
             <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
             <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
             <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}><option value="">Interested in…</option><option>3 BHK</option><option>4 BHK</option></select>
-            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Come see it</a>
+            <a href="#" className="btn solid" onClick={(e) => { e.preventDefault(); quickSubmit(); }}>Book a site visit</a>
           </div>
         ) : (
           <div className="qform" id="qform"><div style={{ fontFamily: 'var(--display)', fontStyle: 'italic', color: 'var(--line)', fontSize: '1.4rem' }}>Thank you, {qDone}. We’ll call you shortly to plan your visit.</div></div>

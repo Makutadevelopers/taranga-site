@@ -20,7 +20,15 @@ export const metadata = {
     'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet–Kukatpally, Hyderabad. G+24 towers, 10.35-ft ceilings, privacy foyers. TS RERA P02200011012.',
   authors: [{ name: 'Makuta Developers' }],
   robots: { index: true, follow: true },
-  icons: { icon: '/favicon.svg', apple: '/favicon.svg' },
+  icons: {
+    icon: [
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+      { url: '/favicon.png', type: 'image/png' },
+    ],
+    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.png',
+  },
   referrer: 'strict-origin-when-cross-origin',
   openGraph: {
     type: 'website',

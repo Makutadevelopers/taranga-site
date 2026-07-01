@@ -46,9 +46,9 @@ export default function PageClient() {
         </div>
         <div className="reveal">
           <div className="mapcap"><b>◍</b>&nbsp; Makuta Taranga · IDL Road, Opp. IDL Lake, Moosapet</div>
-          <div className="mapwrap"><iframe loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=IDL%20Lake%20Kukatpally%20Hyderabad&z=15&output=embed" title="Makuta Taranga location"></iframe></div>
+          <div className="mapwrap"><iframe loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=17.4792373,78.4162829(Makuta+Taranga)&z=16&output=embed" title="Makuta Taranga location"></iframe></div>
         </div>
-        <div style={{ marginTop: '1rem' }}><a className="more" href="https://www.google.com/maps/dir/?api=1&destination=IDL+Lake+Moosapet+Hyderabad" target="_blank" rel="noopener noreferrer">Get directions</a></div>
+        <div style={{ marginTop: '1rem' }}><a className="more" href="https://www.google.com/maps/dir/?api=1&destination=17.4792373,78.4162829" target="_blank" rel="noopener noreferrer">Get directions</a></div>
         <div className="reveal" style={{ marginTop: '3.4rem' }}>
           <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M5 19c0-5 14-9 14-14" /><circle cx="5" cy="19" r="1.8" /><circle cx="19" cy="5" r="1.8" /></svg></span><div><div className="kt">Connectivity</div><div className="ks">How close everything already is</div></div></div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 1rem' }}>Your commute, already halved</h2>

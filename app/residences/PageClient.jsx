@@ -192,7 +192,7 @@ export default function PageClient() {
         </div>
       </section>
 
-      <section className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(4rem,8vw,6rem)' }}>
+      <section id="floor-plans" className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(4rem,8vw,6rem)', scrollMarginTop: '90px' }}>
         <div className="reveal">
           <div className="kicker">
             <span className="kn">

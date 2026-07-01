@@ -47,9 +47,13 @@ export default function SharedEffects() {
           const y = window.scrollY, vh = window.innerHeight, mid = y + vh * 0.42;
           const hero = document.querySelector('.hero');
           const hb = hero ? hero.offsetHeight : vh;
-          wl.classList.toggle('show', y > hb * 0.6);
-          let act = 0;
+          let act = -1;
           for (let i = 0; i < n; i++) { if (top(stops[i]) - 90 <= mid) act = i; }
+          // Don't reveal the rail (or a stale first-stop label like "The Outdoors")
+          // until the reader has actually reached the first chapter — the intro /
+          // "What is luxury?" section sits above every data-rail stop.
+          wl.classList.toggle('show', act >= 0 && y > hb * 0.6);
+          if (act < 0) { water.style.height = '0%'; mks.forEach((m) => m.classList.remove('on')); return; }
           let frac = 0;
           if (act < n - 1) { const a = top(stops[act]), b = top(stops[act + 1]); if (b > a) frac = Math.max(0, Math.min(1, (mid - a) / (b - a))); }
           const ratio = n > 1 ? (act + frac) / (n - 1) : 1;

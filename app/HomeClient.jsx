@@ -1,39 +1,26 @@
 'use client';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { leadPayload, sendLead, trackLead } from '@/lib/lead';
 
 const media = (file, pos) => ({ backgroundImage: `url(/assets/img/${file})`, backgroundPosition: pos });
 const openModal = (m) => window.openModal && window.openModal(m);
 
-const MP_PINS = [
-  [1, 9.8, 32], [3, 16.3, 24], [4, 33.3, 34], [5, 19.6, 46], [6, 33.3, 53], [7, 64.7, 51],
-  [8, 50.3, 51], [9, 51.6, 32], [10, 52.9, 77], [11, 39.9, 24], [12, 88.2, 49], [13, 88.2, 70],
-  [14, 41.2, 82], [15, 7.2, 63], [16, 7.8, 42], [17, 85.6, 34], [18, 60.8, 25],
-];
-// Third element flags the ~8 headline points kept in the mobile legend
-// (the rest stay as interactive pins on the plan, but are hidden from the
-// small-screen list to cut it from 17 rows to the ones buyers care about).
+// Numbered key for the master-plan render. The plan image carries the printed
+// numbers; this legend is the matching reference key below it.
 const MP_LEGEND = [
-  [1, 'Main Entrance Gate', 1], [3, 'Drop-off Zone'], [4, 'Basement Entry Ramp'], [5, 'Basement Exit Ramp'],
-  [6, 'Residential Block A', 1], [7, 'Residential Block B', 1], [8, 'Central Landscape Court', 1], [9, 'Internal Walkways'],
-  [10, 'Jogging Track', 1], [11, 'Kids Play Area'], [12, 'Tennis Court', 1], [13, 'Basketball Court'],
-  [14, 'Cricket Practice Net'], [15, 'Clubhouse · 30,000 sft', 1], [16, 'Pavilion Seating Area'], [17, 'Temple', 1],
-  [18, 'Ventilation Duct'],
+  [1, 'Main Entrance Gate', 1], [2, 'Drop-off Zone'], [3, 'Basement Entry Ramp'], [4, 'Basement Exit Ramp'],
+  [5, 'Residential Block A', 1], [6, 'Residential Block B', 1], [7, 'Central Landscape Court', 1], [8, 'Internal Walkways'],
+  [9, 'Jogging Track', 1], [10, 'Kids Play Area'], [11, 'Tennis Court', 1], [12, 'Basketball Court'],
+  [13, 'Cricket Practice Net'], [14, 'Clubhouse · 30,000 sft', 1], [15, 'Pavilion Seating Area'], [16, 'Temple', 1],
+  [17, 'Ventilation Duct'],
 ];
-
-function mpHi(n, o) {
-  document.querySelectorAll('.mplan2 [data-n="' + n + '"]').forEach((s) => s.classList.toggle('on', o));
-}
-function mpSet(n) {
-  document.querySelectorAll('.mplan2 .on').forEach((a) => a.classList.remove('on'));
-  mpHi(n, true);
-}
 
 export default function HomeClient() {
   /* hero video: poster is the eager LCP; the video only mounts on capable,
      non-data-saving desktop sessions so mobile/metered users never download it. */
   const [showVideo, setShowVideo] = useState(false);
+  const heroVideoRef = useRef(null);
   // Responsive hero video: 'mobile' (portrait) | 'tablet' (square) | 'desktop' (wide).
   const [tier, setTier] = useState('desktop');
   useEffect(() => {
@@ -51,6 +38,20 @@ export default function HomeClient() {
     window.addEventListener('resize', computeTier, { passive: true });
     return () => window.removeEventListener('resize', computeTier);
   }, []);
+  // iOS/Safari: React's `muted` attribute doesn't set the muted PROPERTY reliably,
+  // and without it (or with preload=none) muted-autoplay is blocked and a play button
+  // appears. Force the property + kick off playback once the video is mounted.
+  useEffect(() => {
+    const v = heroVideoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    const tryPlay = () => { const p = v.play(); if (p && p.catch) p.catch(() => {}); };
+    tryPlay();
+    v.addEventListener('loadeddata', tryPlay, { once: true });
+    v.addEventListener('canplay', tryPlay, { once: true });
+    return () => { v.removeEventListener('loadeddata', tryPlay); v.removeEventListener('canplay', tryPlay); };
+  }, [showVideo, tier]);
   const HERO = {
     mobile: { mp4: '/assets/video/hero-mobile.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
     tablet: { mp4: '/assets/video/hero-square.mp4', poster: '/assets/img/hero-square-poster.jpg' },
@@ -176,6 +177,43 @@ export default function HomeClient() {
     })();
     if (story) cleanups.push(() => story.destroy());
 
+    /* ---- film section: tab switch + click-to-play (YouTube loads only on click) ---- */
+    (function () {
+      const sec = document.querySelector('.filmsec');
+      if (!sec) return;
+      const playPane = (pane) => {
+        if (pane.querySelector('iframe')) return;
+        const id = (pane.getAttribute('data-yt') || '').trim();
+        if (!/^[\w-]{11}$/.test(id)) return; // ignore placeholder / invalid ids
+        const iframe = document.createElement('iframe');
+        iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&playsinline=1';
+        iframe.title = pane.getAttribute('aria-label') || 'Video';
+        iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen');
+        iframe.setAttribute('allowfullscreen', '');
+        pane.appendChild(iframe);
+        pane.classList.add('playing');
+        // open fullscreen on the click gesture (desktop); mobile falls back to inline
+        const req = pane.requestFullscreen || pane.webkitRequestFullscreen || pane.msRequestFullscreen;
+        if (req) { try { const r = req.call(pane); if (r && r.catch) r.catch(() => {}); } catch (e) { /* no-op */ } }
+      };
+      const resetPane = (pane) => { const f = pane.querySelector('iframe'); if (f) f.remove(); pane.classList.remove('playing'); };
+      const setTab = (key) => {
+        sec.querySelectorAll('.film-tab').forEach((t) => { const a = t.getAttribute('data-film') === key; t.classList.toggle('is-active', a); t.setAttribute('aria-selected', a ? 'true' : 'false'); });
+        sec.querySelectorAll('.film-pane').forEach((p) => { const a = p.getAttribute('data-film') === key; p.classList.toggle('is-active', a); if (!a) resetPane(p); });
+        sec.querySelectorAll('.filmsec-cap').forEach((c) => { c.hidden = c.getAttribute('data-film') !== key; });
+      };
+      const onClick = (e) => {
+        const tab = e.target.closest('.film-tab');
+        if (tab) { setTab(tab.getAttribute('data-film')); return; }
+        const pane = e.target.closest('.film-pane');
+        if (pane) playPane(pane);
+      };
+      const onKey = (e) => { if (e.key === 'Enter' || e.key === ' ') { const pane = e.target.closest('.film-pane'); if (pane) { e.preventDefault(); playPane(pane); } } };
+      sec.addEventListener('click', onClick);
+      sec.addEventListener('keydown', onKey);
+      cleanups.push(() => { sec.removeEventListener('click', onClick); sec.removeEventListener('keydown', onKey); });
+    })();
+
     return () => cleanups.forEach((c) => c());
   }, []);
 
@@ -201,12 +239,13 @@ export default function HomeClient() {
         {showVideo && (
           <video
             key={tier}
+            ref={heroVideoRef}
             className="hero-video"
             autoPlay
             muted
             playsInline
             loop
-            preload="none"
+            preload="auto"
             poster={HERO[tier].poster}
           >
             <source src={HERO[tier].mp4} type="video/mp4" />
@@ -219,7 +258,7 @@ export default function HomeClient() {
           <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Moosapet&ndash;Kukatpally, Hyderabad</span></h1>
           <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
-            <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Download Brochure</a>
+            <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Brochure</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }} className="hero-btn hero-btn-secondary">Price Sheet</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Book a Visit</a>
           </div>
@@ -266,7 +305,7 @@ export default function HomeClient() {
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Outdoors</h2>
-            <span className="sstory__sub">I &middot; the peace you arrive <em>through</em></span>
+            <span className="sstory__sub">The peace you arrive <em>through</em></span>
             <span className="label">open space, low density &amp; the lake</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -312,7 +351,7 @@ export default function HomeClient() {
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Homes</h2>
-            <span className="sstory__sub">II &middot; the peace you live <em>inside</em></span>
+            <span className="sstory__sub">The peace you live <em>inside</em></span>
             <span className="label">Inside the Homes &middot; 10.35-ft ceilings, glass &amp; foyers</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -358,7 +397,7 @@ export default function HomeClient() {
         <div className="sstory__stage">
           <div className="sstory__head reveal">
             <h2>The Club</h2>
-            <span className="sstory__sub">III &middot; the peace you rise <em>to</em></span>
+            <span className="sstory__sub">The peace you rise <em>to</em></span>
             <span className="label">The Clubhouse &amp; Amenities &middot; 30,000 sft of leisure</span>
             <span className="hl-line" aria-hidden="true"></span>
           </div>
@@ -434,20 +473,10 @@ export default function HomeClient() {
         <div className="ess-cta"><a className="btn solid" href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>Get price sheet &amp; payment plan <span className="ar">→</span></a><Link className="more" href="/location/">See full connectivity →</Link></div>
       </section>
 
-      <section className="assure" data-rail="The Fundamentals"><div className="wrap"><div className="assure-in reveal">
-        <div className="kicker" style={{ justifyContent: 'center' }}><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 3l7 3v5c0 4.4-3 7.6-7 9-4-1.4-7-4.6-7-9V6z" /><path d="M9 12l2 2 4-4" /></svg></span><div style={{ textAlign: 'left' }}><div className="kt">The fundamentals</div><div className="ks">Registered, financeable, built to last</div></div></div>
-        <div className="agrid">
-          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M4 11l8-7 8 7M6 9.5V20h12V9.5M9.5 14l2 2 4-4" /></svg></span><b>RERA-registered</b><p>TS RERA P02200011012. Every area is as per the approved plans.</p></div>
-          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01" /></svg></span><b>Construction-linked payments</b><p>You pay in step with progress on site — not in a single demand up front.</p></div>
-          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="9" /><path d="M9.2 8h5.6M9.2 11h5.6M13.6 8c.4 2.6-1.4 3.6-3.4 3.6h-1l4 4.4" /></svg></span><b>Bank-approved</b><p>Home loans available from leading banks and housing-finance companies.</p></div>
-          <div className="ai"><span className="aic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="3" width="18" height="18" rx="1" /><path d="M3 10h9M12 3v18M12 14h9M3 16h5" /></svg></span><b>RCC shear-wall structure</b><p>Engineered for wind and seismic loads.</p></div>
-        </div>
-      </div></div></section>
-
       <section className="ctaband wrap" style={{ padding: 'clamp(2rem,5vw,4rem) 0' }}><div className="reveal"><div className="label">The full picture</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,4vw,2.8rem)', margin: '.3rem 0 .3rem', color: 'var(--ink)' }}>Brochure, plans &amp; pricing — in your inbox</h2>
         <p style={{ color: 'var(--ink-soft)', maxWidth: '44ch', margin: '0 auto' }}>Everything you need to decide, sent the moment you ask.</p>
-        <div className="row"><a className="btn solid" href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Download Brochure</a><a className="btn" href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>Get Price Sheet</a></div></div></section>
+        <div className="row"><a className="btn solid" href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }}>Brochure</a><a className="btn" href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }}>Get Price Sheet</a></div></div></section>
 
       <div className="seam reveal" aria-hidden="true">
         <span className="seam-line"></span>
@@ -456,24 +485,23 @@ export default function HomeClient() {
       </div>
       <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ padding: 'clamp(3.5rem,8vw,6rem) 0' }}><div className="reveal"><div className="label">Master Plan</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
-        <div className="mplan2">
+        <div className="mplan2 mplan2--stack">
           <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
-            <img src="/assets/img/masterplan_plan.jpg" width="1224" height="858" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
-            {MP_PINS.map(([n, left, top]) => (
-              <span key={n} className="mp-pin" data-n={n} style={{ left: left + '%', top: top + '%' }}
-                onMouseEnter={() => mpHi(n, true)} onMouseLeave={() => mpHi(n, false)}
-                onClick={(e) => { e.stopPropagation(); mpSet(n); }} />
-            ))}
+            <img src="/assets/img/masterplan_plan.jpg" width="2460" height="1125" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
           </div>
+          <div className="mp-cap"><span>Tap the plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
           <ol className="mplan2-legend">
             {MP_LEGEND.map(([n, label, primary]) => (
-              <li key={n} data-n={n} data-primary={primary ? '1' : undefined} onMouseEnter={() => mpHi(n, true)} onMouseLeave={() => mpHi(n, false)} onClick={() => mpSet(n)}>
+              <li key={n} data-n={n} data-primary={primary ? '1' : undefined}>
                 <span className="ln">{n}</span>{label}
               </li>
             ))}
           </ol>
+          <div className="mp-plans-cta">
+            <Link className="btn solid" href="/residences/#floor-plans">Explore the unit plans <span>&rarr;</span></Link>
+            <span className="mp-plans-note">See every 3 &amp; 4 BHK layout, floor by floor</span>
+          </div>
         </div>
-        <div className="mp-cap"><span>Hover a point or list item &middot; tap plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
         <div className="facts">
           <div className="f2"><div className="n">2.8</div><div className="t">Acres</div></div>
           <div className="f2"><div className="n">248</div><div className="t">Homes · G+24</div></div>
@@ -481,6 +509,26 @@ export default function HomeClient() {
           <div className="f2"><div className="n">36</div><div className="t">Amenities</div></div>
         </div>
         <p className="mdisc">Master plan, elevations and renders are artist’s impressions for representation only, not to scale, and may vary from the sanctioned plans and actual construction. Areas shown are indicative; carpet areas are as per the RERA-approved plans. This does not constitute a legal offer; all transactions are governed solely by the registered Agreement of Sale.</p>
+      </div></section>
+
+      <section className="filmsec reveal" data-rail="Film" id="film"><div className="wrap">
+        <div className="label">Taranga in motion</div>
+        <h2 className="filmsec-h">Film of <em>Taranga</em></h2>
+        {/* Construction tab hidden until its video link is provided; re-show both when ready. */}
+        <div className="film-tabs" role="tablist" aria-label="Films" hidden>
+          <button type="button" className="film-tab is-active" data-film="walk" aria-selected="true">Walkthrough</button>
+          <button type="button" className="film-tab" data-film="cons" aria-selected="false">Construction update</button>
+        </div>
+        <div className="film-stage">
+          <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-film="walk" data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
+            <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
+          </div>
+          <div className="ytfacade film-pane" role="button" tabIndex={0} data-film="cons" data-yt="CONSTRUCTION_ID" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/CONSTRUCTION_ID/maxresdefault.jpg)' }} aria-label="Play the construction progress update" hidden>
+            <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
+          </div>
+        </div>
+        <p className="filmsec-cap" data-film="walk">A cinematic tour of the homes, the club and the lakefront.</p>
+        <p className="filmsec-cap" data-film="cons" hidden>Real progress on site &mdash; updated as the towers rise.</p>
       </div></section>
 
       <div className="seam reveal" aria-hidden="true">

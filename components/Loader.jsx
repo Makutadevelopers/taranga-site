@@ -4,12 +4,10 @@ import { useEffect, useState } from 'react';
 export default function Loader() {
   const [done, setDone] = useState(false);
   useEffect(() => {
-    const t1 = setTimeout(() => setDone(true), 700);
-    const t2 = setTimeout(() => setDone(true), 1500); // hard fallback
-    const onLoad = () => setTimeout(() => setDone(true), 300);
-    if (document.readyState === 'complete') setDone(true);
-    else window.addEventListener('load', onLoad);
-    return () => { clearTimeout(t1); clearTimeout(t2); window.removeEventListener('load', onLoad); };
+    // Hold long enough for the wordmark + wave intro to play out (~1.7s),
+    // then fade — never dismiss instantly, so it doesn't flash away on fast loads.
+    const t = setTimeout(() => setDone(true), 1900);
+    return () => clearTimeout(t);
   }, []);
   return (
     <div className={'loader' + (done ? ' done' : '')} id="loader">

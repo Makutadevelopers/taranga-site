@@ -1,9 +1,9 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { leadPayload, sendLead, trackLead } from '@/lib/lead';
+import { leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate } from '@/lib/lead';
 
 const MODES = {
-  visit: ['Book a Site Visit', 'Tell us how to reach you and we’ll arrange a private visit by the lake.', 'Request Visit', 'Visit requested', 'Our team will call you shortly to confirm a time.'],
+  visit: ['Book a Site Visit', 'Tell us how to reach you and we’ll arrange a private visit by the lake.', 'Request Visit', 'Visit requested', 'Thank you — our team will call you to confirm a time by the lake.'],
   brochure: ['Download Brochure', 'Share your details and we’ll send the brochure to your WhatsApp.', 'Get the Brochure', 'Thank you', 'We’ll share the brochure with you on WhatsApp shortly.'],
   price: ['Get the Price Sheet', 'Leave your details and we’ll send the price sheet to your WhatsApp.', 'Send Price Sheet', 'Thank you', 'We’ll share the price sheet with you on WhatsApp shortly.'],
   plan: ['Download Floor Plan', 'Share your details and we’ll send the detailed floor plan straight to you.', 'Get the Plan', 'Thank you', 'Your floor plan is on its way.'],
@@ -69,10 +69,20 @@ export default function GlobalUI() {
     setErrs(next);
     if (next.n || next.p || next.e || next.con) return;
     const src = SRC[mode] || 'Enquiry';
-    sendLead(leadPayload(src, n, p, em, extra), function () {
-      trackLead('modal');
-      setSuccess(true);
-    });
+    // Brochure/Price: send the file to the lead's WhatsApp from the business account
+    // (api-wa.co template) via our server function — the customer receives it directly.
+    if (mode === 'brochure' || mode === 'price') {
+      sendWhatsAppTemplate(mode, n, p);
+      trackWhatsApp();
+    }
+    sendLead(
+      leadPayload(src, n, p, em, extra),
+      function () {
+        trackLead('modal');
+        setSuccess(true);
+      },
+      { mail: false } // Clove endpoint currently 500s; don't pop open Mail on failure
+    );
   }
 
   const m = MODES[mode] || MODES.brochure;

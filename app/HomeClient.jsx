@@ -274,7 +274,7 @@ export default function HomeClient() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-crown reveal-anim" style={{ animationDelay: '0.3s' }}>Makuta &middot; Crown of Excellence</div>
-          <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Kukatpally, Hyderabad</div>
+          <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lake Road &middot; Kukatpally, Hyderabad</div>
           <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Kukatpally, Hyderabad</span></h1>
           <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
@@ -282,7 +282,7 @@ export default function HomeClient() {
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }} className="hero-btn hero-btn-secondary">Price Sheet</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Book a site visit</a>
           </div>
-          <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA <a href="https://ts-rera.telangana.gov.in/PublicSearch" target="_blank" rel="noopener">P02200011012</a></p>
+          <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA P02200011012</p>
         </div>
         <a href="#luxury" className="hero-scroll reveal-anim" style={{ animationDelay: '2.1s' }}>
           <span className="hero-scroll-text">Scroll &mdash; what luxury really means</span>

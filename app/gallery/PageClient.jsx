@@ -7,7 +7,6 @@ import { leadPayload, sendLead, trackLead } from '@/lib/lead';
 const openModal = (m) => window.openModal && window.openModal(m);
 
 const GALLERY = [
-  ['ext_lake_am.webp', 'Golden hour over the lake', 'Twin towers over the lake at golden hour', 'Golden hour'],
   ['int_living2.webp', 'Living room', 'Living room interior', 'Living room'],
   ['int_bedroom.webp', 'Master bedroom', 'Master bedroom interior', 'Master bedroom'],
   ['int_kitchen.webp', 'Kitchen & dining', 'Kitchen with dining area', 'Kitchen & dining'],
@@ -19,7 +18,6 @@ const GALLERY = [
   ['am_pool.webp', 'The pool', 'Swimming pool and landscape', 'The pool'],
   ['ext_aerial_dusk.webp', 'Aerial, at dusk', 'Aerial of the towers at dusk', 'Aerial, at dusk'],
   ['r_aerial2.webp', 'From above', 'Aerial of the twin towers', 'From above'],
-  ['lake.webp', 'The lakefront', 'Lakefront view', 'The lakefront'],
   ['d_green.webp', 'In bloom', 'Jacaranda in bloom across the grounds', 'In bloom'],
   ['d_foyer.webp', 'Private foyer', 'Private entrance foyer', 'Private foyer'],
   ['r_cam36.webp', 'At sunset', 'Towers at sunset over the lake', 'At sunset'],

@@ -4,20 +4,24 @@
 // `authorization:github:success:{...}` envelope Decap listens for, and close.
 
 function page(status, payload, origin) {
-  // Post the token ONLY to our own origin (the CMS runs same-origin at /admin),
-  // never '*', so a malicious opener on another origin can't capture a repo-scoped
-  // token. Also clear the one-time CSRF state cookie.
-  const target = JSON.stringify(origin || '*');
+  // Decap/Netlify CMS popup handshake (order matters):
+  //   1. popup posts 'authorizing:github' to the opener,
+  //   2. opener registers its success listener and posts a message back,
+  //   3. THEN the popup posts 'authorization:github:success:{...}' with the token.
+  // Sending the token before step 2 (as we did before) leaves the CMS stuck on the
+  // login screen. The token goes to e.origin — the opener's real origin, which is
+  // our own /admin (same-origin), so a foreign opener can't capture a repo token.
+  const message = JSON.stringify(`authorization:github:${status}:${JSON.stringify(payload)}`);
   const body = `<!doctype html><html><body><script>
     (function () {
-      function send(){
-        window.opener && window.opener.postMessage(
-          'authorization:github:${status}:${JSON.stringify(payload)}',
-          ${target}
-        );
+      var message = ${message};
+      function receive(e){
+        if (!e.data || String(e.data).indexOf('authorizing:github') !== 0) return;
+        window.removeEventListener('message', receive, false);
+        e.source.postMessage(message, e.origin);
       }
-      window.addEventListener('message', send, false);
-      send();
+      window.addEventListener('message', receive, false);
+      window.opener && window.opener.postMessage('authorizing:github', '*');
     })();
   </script><p>Completing sign-in… you can close this window.</p></body></html>`;
   return new Response(body, {

@@ -50,10 +50,25 @@ export default function HomeClient() {
     tryPlay();
     v.addEventListener('loadeddata', tryPlay, { once: true });
     v.addEventListener('canplay', tryPlay, { once: true });
-    return () => { v.removeEventListener('loadeddata', tryPlay); v.removeEventListener('canplay', tryPlay); };
+    // Safari fallback: if muted-autoplay is deferred (Low Power Mode, per-site
+    // Auto-Play setting), kick playback off on the first user gesture. Self-removes
+    // once the video is actually rolling so we don't fight the browser afterward.
+    const kick = () => { v.muted = true; tryPlay(); };
+    const gestures = ['pointerdown', 'touchstart', 'keydown', 'scroll'];
+    gestures.forEach((e) => window.addEventListener(e, kick, { passive: true }));
+    // Reveal the video only once it's genuinely playing. Until then the poster shows
+    // through and iOS never gets a chance to paint its start-button over a paused frame.
+    const onPlaying = () => { v.classList.add('is-playing'); gestures.forEach((e) => window.removeEventListener(e, kick)); };
+    v.addEventListener('playing', onPlaying, { once: true });
+    return () => {
+      v.removeEventListener('loadeddata', tryPlay);
+      v.removeEventListener('canplay', tryPlay);
+      v.removeEventListener('playing', onPlaying);
+      gestures.forEach((e) => window.removeEventListener(e, kick));
+    };
   }, [showVideo, tier]);
   const HERO = {
-    mobile: { mp4: '/assets/video/hero-mobile.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
+    mobile: { mp4: '/assets/video/water-6-portrait.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
     tablet: { mp4: '/assets/video/hero-square.mp4', poster: '/assets/img/hero-square-poster.jpg' },
     desktop: { mp4: '/assets/video/hero-desktop.mp4', poster: '/assets/img/hero-desktop-poster.jpg' },
   };
@@ -246,8 +261,8 @@ export default function HomeClient() {
         <div className="hero-overlay"></div>
         <div className="hero-content">
           <div className="hero-crown reveal-anim" style={{ animationDelay: '0.3s' }}>Makuta &middot; Crown of Excellence</div>
-          <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Moosapet&ndash;Kukatpally, Hyderabad</div>
-          <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Moosapet&ndash;Kukatpally, Hyderabad</span></h1>
+          <div className="hero-loc reveal-anim" style={{ animationDelay: '0.6s' }}>IDL Lakefront &middot; Kukatpally, Hyderabad</div>
+          <h1 className="hero-title reveal-anim" style={{ animationDelay: '0.9s' }}>Taranga<span className="sr-only"> — Lakefront 3 &amp; 4 BHK Luxury Residences at IDL Lake, Kukatpally, Hyderabad</span></h1>
           <p className="hero-tag reveal-anim" style={{ animationDelay: '1.2s' }}>The Finest Form of Luxury</p>
           <div className="hero-ctas reveal-anim" style={{ animationDelay: '1.5s' }}>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('brochure'); }} className="hero-btn hero-btn-primary">Brochure</a>
@@ -463,7 +478,7 @@ export default function HomeClient() {
         </div>
         <figure className="worth-film">
           <div className="film-stage">
-            <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(/assets/img/aerial-hero-wide.jpg)' }} aria-label="Play the Taranga walkthrough film">
+            <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
               <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
             </div>
           </div>
@@ -494,21 +509,25 @@ export default function HomeClient() {
       </div>
       <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ paddingTop: 'clamp(3.5rem,8vw,6rem)', paddingBottom: 'clamp(2rem,4vw,3rem)' }}><div className="reveal"><div className="label">Master Plan</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', lineHeight: 1.05, margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
-        <div className="mplan2 mplan2--stack">
-          <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
-            <img src="/assets/img/masterplan_plan.jpg" width="2460" height="1125" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
+        <div className="mplan2 mplan2--split">
+          <div className="mplan2-figure">
+            <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
+              <img src="/assets/img/masterplan_plan.jpg" width="2460" height="1125" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
+            </div>
+            <div className="mp-cap"><span>Tap the plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
           </div>
-          <div className="mp-cap"><span>Tap the plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
-          <ol className="mplan2-legend">
-            {MP_LEGEND.map(([n, label, primary]) => (
-              <li key={n} data-n={n} data-primary={primary ? '1' : undefined}>
-                <span className="ln">{n}</span>{label}
-              </li>
-            ))}
-          </ol>
-          <div className="mp-plans-cta">
-            <Link className="btn solid" href="/residences/#floor-plans">See the unit plans <span>&rarr;</span></Link>
-            <span className="mp-plans-note">See every 3 &amp; 4 BHK layout, floor by floor</span>
+          <div className="mplan2-side">
+            <ol className="mplan2-legend">
+              {MP_LEGEND.map(([n, label, primary]) => (
+                <li key={n} data-n={n} data-primary={primary ? '1' : undefined}>
+                  <span className="ln">{n}</span>{label}
+                </li>
+              ))}
+            </ol>
+            <div className="mp-plans-cta">
+              <Link className="btn solid" href="/residences/#floor-plans">See the unit plans <span>&rarr;</span></Link>
+              <span className="mp-plans-note">See every 3 &amp; 4 BHK layout, floor by floor</span>
+            </div>
           </div>
         </div>
         <div className="facts">
@@ -539,7 +558,7 @@ export default function HomeClient() {
         <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
         <span className="seam-line"></span>
       </div>
-      <section className="projects" data-rail="Portfolio"><div className="wrap reveal"><div className="port-band"><div className="port-text"><div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">Selected Projects</div><div className="ks">More from Makuta Developers</div></div></div><h2 className="port-h2">A portfolio you can stand inside</h2><p className="port-p">A track record of homes built around light, space and the calm of good design &mdash; completed and ongoing developments by Makuta Developers.</p><Link className="btn solid" href="/about/#projects">See the full portfolio <span>&rarr;</span></Link></div><Link className="port-teaser" href="/about/#projects" aria-label="See the full portfolio on the About page"><span className="pt-img" style={{ backgroundImage: 'url(/assets/img/aerial.webp)' }}></span><span className="pt-cap">More from Makuta Developers <span>&rarr;</span></span></Link></div></div></section>
+      <section className="projects" data-rail="Portfolio"><div className="wrap reveal"><div className="port-band"><div className="port-text"><div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">Selected Projects</div><div className="ks">More from Makuta Projects LLP</div></div></div><h2 className="port-h2">A portfolio you can stand inside</h2><p className="port-p">A track record of homes built around light, space and the calm of good design &mdash; completed and ongoing developments by Makuta Projects LLP.</p><Link className="btn solid" href="/about/#projects">See the full portfolio <span>&rarr;</span></Link></div><Link className="port-teaser" href="/about/#projects" aria-label="See the full portfolio on the About page"><span className="pt-img" style={{ backgroundImage: 'url(/assets/img/aerial.webp)' }}></span><span className="pt-cap">More from Makuta Projects LLP <span>&rarr;</span></span></Link></div></div></section>
 
       <section className="enq wrap" data-rail="Visit" style={{ padding: 'clamp(4.5rem,10vw,7rem) 0' }}><div className="reveal"><div className="label" style={{ marginBottom: '1.3rem' }}>Come see the view that can’t be built out</div><h2>A private visit, by the lake.</h2><p>Leave your details and our team will call you back to arrange a viewing — no obligation.</p>
         {!qDone ? (

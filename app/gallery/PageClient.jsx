@@ -5,7 +5,6 @@ import pageCss from './page-styles';
 import { leadPayload, sendLead, trackLead } from '@/lib/lead';
 
 const openModal = (m) => window.openModal && window.openModal(m);
-const zoom = (src, alt) => window.zoom && window.zoom(src, alt);
 
 const GALLERY = [
   ['ext_lake_am.webp', 'Golden hour over the lake', 'Twin towers over the lake at golden hour', 'Golden hour'],
@@ -25,6 +24,10 @@ const GALLERY = [
   ['d_foyer.webp', 'Private foyer', 'Private entrance foyer', 'Private foyer'],
   ['r_cam36.webp', 'At sunset', 'Towers at sunset over the lake', 'At sunset'],
 ];
+
+// Lightbox items: title = short caption, desc = the fuller description shown under the image.
+const GAL_ITEMS = GALLERY.map(([file, zoomAlt, alt, cap]) => ({ src: '/assets/img/' + file, title: cap, desc: zoomAlt }));
+const openGallery = (i) => window.zoomGallery && window.zoomGallery(GAL_ITEMS, i);
 
 export default function PageClient() {
   /* quick visit form */
@@ -61,8 +64,8 @@ export default function PageClient() {
 
       <section className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(5rem,9vw,7rem)' }}>
         <div className="gal reveal">
-          {GALLERY.map(([file, zoomAlt, alt, cap]) => (
-            <figure key={file} onClick={() => zoom('/assets/img/' + file, zoomAlt)}>
+          {GALLERY.map(([file, zoomAlt, alt, cap], i) => (
+            <figure key={file} onClick={() => openGallery(i)}>
               <img src={'/assets/img/' + file} alt={alt} loading="lazy" decoding="async" />
               <figcaption>{cap}</figcaption>
             </figure>

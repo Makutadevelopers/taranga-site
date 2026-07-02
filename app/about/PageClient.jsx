@@ -8,38 +8,16 @@ const openModal = (m) => window.openModal && window.openModal(m);
 
 /* EDIT PROJECTS: replace name/area/img/url with real ones. url "#" makes the card open the brochure. */
 const PROJECTS = [
-  { name: 'Makuta Horizon', area: 'High-rise residences', img: '/assets/img/d_roof.webp', url: 'https://makutahorizon.com' },
-  { name: 'Makuta Nirvana', area: 'Gated community', img: '/assets/img/hero_blue.webp', url: 'https://makutanirvan.in' },
-  { name: 'Green Wood Villas', area: 'Villa community', img: '/assets/img/d_glass.webp', url: 'https://www.makutadevelopers.com/town-city-building-ca' },
+  { name: 'Makuta Horizon', area: 'Residential · Under construction', img: '/assets/img/d_roof.webp', url: 'https://www.makutahorizon.com/' },
+  { name: 'Makuta Nirvana', area: 'Residential · Under construction', img: '/assets/img/hero_blue.webp', url: 'https://www.makutanirvana.in/' },
+  // TODO: add a card for "myspace2" once its real name, link and image are confirmed.
+  { name: 'Makuta Aruna Arcade', area: 'Commercial', img: '/assets/img/d_glass.webp', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
+  { name: 'Makuta Prime', area: 'Commercial', img: '/assets/img/ext_facade_dusk.webp', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
 ];
+// NOTE: images for Aruna Arcade & Prime are Taranga renders used as placeholders — swap for real project photos when available.
 
-const TESTIMONIALS = [
-  {
-    name: 'Arjun & Priya',
-    role: 'At home in Block A',
-    excerpt: 'The privacy and light here is unmatched. Every morning, we wake up to the lake view.',
-    videoUrl: '[PLACEHOLDER: testimonial-1.mp4]',
-    posterImg: '[PLACEHOLDER: testimonial-1-poster.jpg]',
-  },
-  {
-    name: 'Deepak Mehta',
-    role: 'At home in Block B',
-    excerpt: "10.35-foot ceilings make this feel like a penthouse, not an apartment. That's the difference.",
-    videoUrl: '[PLACEHOLDER: testimonial-2.mp4]',
-    posterImg: '[PLACEHOLDER: testimonial-2-poster.jpg]',
-  },
-  {
-    name: 'Neha & Rohit',
-    role: 'At home in Block A',
-    excerpt: "Only 4–6 families per floor. We genuinely know our neighbors. It's a community, not a tower.",
-    videoUrl: '[PLACEHOLDER: testimonial-3.mp4]',
-    posterImg: '[PLACEHOLDER: testimonial-3-poster.jpg]',
-  },
-];
-
-function playTestimonial(idx) {
-  alert('Video player placeholder. Replace with actual video modal when testimonials are ready.');
-}
+// Company testimonial film (YouTube). Replace the id if the video changes.
+const TESTIMONIAL_YT = 'UKv6I6OjLOI';
 
 export default function PageClient() {
   /* quick visit form */
@@ -49,6 +27,7 @@ export default function PageClient() {
     text: 'We respect your privacy. No spam — just a call back to plan your visit.',
     color: '',
   });
+  const [playTest, setPlayTest] = useState(false);
 
   function quickSubmit() {
     const n = q.n.trim();
@@ -73,11 +52,10 @@ export default function PageClient() {
               <div className="crumb">
                 <Link href="/">Home</Link> / About
               </div>
-              <h1>
-                Crown of
-                <br />
-                Excellence
-              </h1>
+              <div className="label" style={{ color: 'var(--gold-deep)', marginBottom: '.9rem' }}>
+                Crown of Excellence
+              </div>
+              <h1>Makuta</h1>
               <p>
                 Taranga is the latest chapter in a long Makuta story — homes built on trust, finish and the feeling of
                 belonging.
@@ -96,12 +74,12 @@ export default function PageClient() {
 
       <section className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(4rem,8vw,6rem)' }}>
         <div className="reveal" style={{ maxWidth: '64ch' }}>
-          <div className="label">About Makuta Developers</div>
+          <div className="label">About Makuta Projects LLP</div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.4rem 0 1rem' }}>
             We build for the long quiet, not the quick sale
           </h2>
           <p style={{ color: 'var(--ink-soft)' }}>
-            For years, Makuta Developers has shaped homes and communities across Hyderabad — measured by how they feel to
+            For years, Makuta Projects LLP has shaped homes and communities across Hyderabad — measured by how they feel to
             live in a decade later, not just how they show on launch day. “Crown of Excellence” is the standard we hold
             every project to: honest build quality, a RERA-clean process, and finishes that age well.
           </p>
@@ -152,6 +130,9 @@ export default function PageClient() {
               <b>On request</b>
             </div>
           </div>
+          <p style={{ marginTop: '1.5rem' }}>
+            <Link className="more" href="/blog/#faq">Read the full FAQ &rarr;</Link>
+          </p>
         </div>
       </section>
 
@@ -171,7 +152,7 @@ export default function PageClient() {
             </span>
             <div>
               <div className="kt">Selected Projects</div>
-              <div className="ks">More from Makuta Developers</div>
+              <div className="ks">More from Makuta Projects LLP</div>
             </div>
           </div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>
@@ -283,23 +264,39 @@ export default function PageClient() {
 
       <section className="socproof-sec" data-rail="Testimonials" style={{ background: 'var(--canvas)', padding: 'clamp(3rem,7vw,5rem) 0' }}>
         <div className="wrap reveal">
-          <div className="label">What families here say</div>
-          <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', margin: '.3rem 0 2.2rem' }}>
-            Life at Taranga, in their words
+          <div className="label">In their words</div>
+          <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(1.9rem,3.6vw,2.8rem)', margin: '.3rem 0 1.6rem' }}>
+            Life at Makuta, in their words
           </h2>
-          <div className="testimonials-grid" id="testGrid">
-            {TESTIMONIALS.map((t, i) => (
-              <div key={i} className="test-card" onClick={() => playTestimonial(i)}>
-                <div className="test-video" style={{ backgroundImage: `url(${t.posterImg})` }}>
-                  <span className="test-play">▶</span>
-                </div>
-                <div className="test-meta">
-                  <div className="test-name">{t.name}</div>
-                  <div className="test-role">{t.role}</div>
-                  <p className="test-quote">{t.excerpt}</p>
-                </div>
-              </div>
-            ))}
+          <div
+            className="test-film"
+            role="button"
+            tabIndex={0}
+            aria-label="Play the Makuta testimonial film"
+            onClick={() => setPlayTest(true)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                setPlayTest(true);
+              }
+            }}
+            style={!playTest ? { backgroundImage: `url(https://i.ytimg.com/vi/${TESTIMONIAL_YT}/maxresdefault.jpg)` } : undefined}
+          >
+            {playTest ? (
+              <iframe
+                src={`https://www.youtube.com/embed/${TESTIMONIAL_YT}?autoplay=1&rel=0&playsinline=1`}
+                title="Makuta testimonial film"
+                allow="autoplay; encrypted-media; picture-in-picture; fullscreen"
+                allowFullScreen
+              />
+            ) : (
+              <span className="test-film-play" aria-hidden="true">
+                <svg viewBox="0 0 68 48">
+                  <path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" />
+                  <path className="yt-tri" d="M45 24 27 14v20z" />
+                </svg>
+              </span>
+            )}
           </div>
         </div>
       </section>

@@ -273,7 +273,18 @@ nav .nbtn:hover{background:var(--ink);color:var(--canvas);border-color:var(--ink
 @media(hover:none){.gal figcaption{opacity:1;transform:none}}
 .lightbox{position:fixed;inset:0;z-index:210;display:none;align-items:center;justify-content:center;background:rgba(20,16,12,.92);padding:2rem}
 .lightbox.open{display:flex}.lightbox img{max-width:92vw;max-height:88vh;border-radius:2px}
-.lightbox .x{position:absolute;top:1.2rem;right:1.6rem;color:#F7F4ED;font-size:2rem;cursor:pointer}
+.lightbox .x{position:absolute;top:1.2rem;right:1.6rem;color:#F7F4ED;font-size:2rem;cursor:pointer;z-index:3}
+/* lightbox: caption + prev/next (gallery) */
+.lightbox .lb-figure{margin:0;max-width:92vw;max-height:88vh;display:flex;flex-direction:column;align-items:center;gap:.9rem}
+.lightbox .lb-figure img{max-width:92vw;max-height:78vh;border-radius:2px}
+.lb-cap{text-align:center;max-width:60ch;display:flex;flex-direction:column;gap:.25rem}
+.lb-cap b{font-family:var(--display);font-weight:400;font-size:1.15rem;color:#F7F4ED}
+.lb-cap span{font-size:.85rem;color:rgba(247,244,237,.8);line-height:1.5}
+.lb-cap .lb-count{font-style:normal;font-size:.62rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(247,244,237,.55);margin-top:.35rem}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;background:rgba(20,16,12,.35);border:1px solid rgba(247,244,237,.35);color:#F7F4ED;width:clamp(42px,5vw,56px);height:clamp(42px,5vw,56px);border-radius:50%;font-size:2rem;line-height:1;display:grid;place-items:center;cursor:pointer;transition:.3s var(--ease)}
+.lb-nav:hover{background:rgba(20,16,12,.6);border-color:var(--line);color:var(--line)}
+.lb-prev{left:clamp(.8rem,3vw,2rem)}.lb-next{right:clamp(.8rem,3vw,2rem)}
+@media(max-width:560px){.lb-nav{width:40px;height:40px;font-size:1.6rem}.lb-prev{left:.5rem}.lb-next{right:.5rem}}
 /* faq */
 .faq{max-width:820px}
 .q{border-bottom:1px solid var(--hair)}
@@ -817,6 +828,11 @@ body{overflow-x:clip}
   .mp-plans-cta .btn{width:100%;justify-content:center}}
 @media(max-width:560px){.mp-cap{font-size:.56rem;letter-spacing:.12em}}
 @media(max-width:400px){.mplan2--stack .mplan2-legend{column-count:1}}
+/* side-by-side variant: image + caption left, legend + CTA right */
+.mplan2--split{align-items:start}
+.mplan2--split .mplan2-side{display:flex;flex-direction:column}
+.mplan2--split .mp-plans-cta{align-items:flex-start;text-align:left;margin-top:clamp(1.4rem,3vw,2rem)}
+@media(max-width:820px){.mplan2--split{grid-template-columns:1fr}.mplan2--split .mp-plans-cta{align-items:center;text-align:center}}
 
 
 
@@ -1009,6 +1025,20 @@ a[href*='ts-rera']:hover{color:var(--line)!important;}
   linear-gradient(rgba(16,36,66,.20),rgba(16,36,66,.20))!important}
 /* brighten + gently boost contrast so the footage keeps depth instead of going murky */
 #hero .hero-poster,#hero .hero-video{filter:brightness(1.07) contrast(1.05) saturate(1.06)}
+/* Safari/WebKit paints a native centre "start" button over an inline video when it
+   defers muted-autoplay (Low Power Mode, per-site Auto-Play setting, muted-prop race).
+   This is a silent decorative background video, so suppress all native media chrome. */
+.hero-video::-webkit-media-controls,
+.hero-video::-webkit-media-controls-enclosure,
+.hero-video::-webkit-media-controls-panel,
+.hero-video::-webkit-media-controls-start-playback-button,
+.hero-video::-webkit-media-controls-overlay-play-button{display:none!important;-webkit-appearance:none;appearance:none}
+/* iOS draws its start-button as part of the video element itself, so the pseudo-
+   element rules above aren't enough on their own. Keep the video invisible until it
+   is actually playing — the <picture> poster shows through cleanly (no button), and
+   the video fades in only once playback begins (autoplay, or first-gesture fallback). */
+.hero-video{opacity:0;transition:opacity .8s ease}
+.hero-video.is-playing{opacity:1}
 #hero .hero-content::before{content:none}
 #hero .hero-crown{font-family:'Poppins',sans-serif!important;color:rgba(247,244,237,.9)!important;font-weight:400!important;font-size:clamp(.66rem,.9vw,.8rem)!important;letter-spacing:.3em!important;text-transform:uppercase!important;margin:0 0 1.5rem!important;text-shadow:0 1px 10px rgba(0,0,0,.35)!important}
 #hero .hero-loc{font-family:'Poppins',sans-serif!important;color:rgba(247,244,237,.78)!important;font-weight:400!important;font-size:clamp(.76rem,1.05vw,.94rem)!important;letter-spacing:.24em!important;text-transform:uppercase!important;margin:0 0 2.4rem!important;text-shadow:0 1px 10px rgba(0,0,0,.35)!important}

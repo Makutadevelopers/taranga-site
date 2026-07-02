@@ -40,7 +40,7 @@ export default function Page() {
       <section className="wrap legal" style={{ padding: 'clamp(1rem,4vw,2rem) 0 clamp(4rem,8vw,6rem)', maxWidth: '760px' }}>
         <h2>Acceptance</h2>
         <p>
-          By accessing this website you agree to these Terms of Use. The site is operated by Makuta Developers to market the
+          By accessing this website you agree to these Terms of Use. The site is operated by Makuta Projects LLP to market the
           project <strong>Makuta Taranga</strong> (TS RERA P02200011012). If you do not agree, please do not use the site.
         </p>
 
@@ -61,7 +61,7 @@ export default function Page() {
 
         <h2>Intellectual property</h2>
         <p>
-          All text, images, renders, logos and design on this site are the property of Makuta Developers or its licensors and are
+          All text, images, renders, logos and design on this site are the property of Makuta Projects LLP or its licensors and are
           protected by law. You may not reproduce, distribute or use them without our prior written permission.
         </p>
 
@@ -73,7 +73,7 @@ export default function Page() {
 
         <h2>Limitation of liability</h2>
         <p>
-          The website is provided &ldquo;as is&rdquo; without warranties of any kind. To the extent permitted by law, Makuta Developers
+          The website is provided &ldquo;as is&rdquo; without warranties of any kind. To the extent permitted by law, Makuta Projects LLP
           is not liable for any loss arising from reliance on the indicative information presented here. Always verify particulars
           with our sales team and in your Agreement of Sale before making a decision.
         </p>
@@ -86,7 +86,7 @@ export default function Page() {
 
         <h2>Contact</h2>
         <p>
-          Makuta Developers &mdash; IDL Road, Opp. IDL Lake, Habeeb Nagar, Moosapet, Hyderabad &mdash; 500072.{' '}
+          Makuta Projects LLP &mdash; IDL Road, Opp. IDL Lake, Hyderabad &mdash; 500072.{' '}
           <a className="more" href="mailto:sales@makutataranga.com">sales@makutataranga.com</a> &middot;{' '}
           <a className="more" href="tel:+919059676464">+91&nbsp;90596&nbsp;76464</a>.
         </p>

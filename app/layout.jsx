@@ -18,7 +18,7 @@ export const metadata = {
   title: 'Makuta Taranga — The Finest Form of Luxury | IDL Lakefront, Hyderabad',
   description:
     'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet–Kukatpally, Hyderabad. G+24 towers, 10.35-ft ceilings, privacy foyers. TS RERA P02200011012.',
-  authors: [{ name: 'Makuta Developers' }],
+  authors: [{ name: 'Makuta Projects LLP' }],
   robots: { index: true, follow: true },
   icons: {
     icon: [

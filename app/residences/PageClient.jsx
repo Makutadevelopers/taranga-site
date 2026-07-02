@@ -30,18 +30,18 @@ export default function PageClient() {
   useEffect(() => {
     const FP = {
       '3': [
-        { t: 'Type 1', code: 'A-03', name: '3 BHK · Type 1', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a03.webp' },
-        { t: 'Type 2', code: 'A-04', name: '3 BHK · Type 2', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a04.webp' },
+        { t: 'A-03', code: 'A-03', name: '3 BHK · A-03', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a03.webp' },
+        { t: 'A-04', code: 'A-04', name: '3 BHK · A-04', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a04.webp' },
       ],
       '4': [
-        { t: 'Type 1', code: 'A-01', name: '4 BHK · Type 1', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a01.webp' },
-        { t: 'Type 2', code: 'A-02', name: '4 BHK · Type 2', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a02.webp' },
-        { t: 'Type 3', code: 'A-05', name: '4 BHK · Type 3', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a05.webp' },
-        { t: 'Type 4', code: 'A-06', name: '4 BHK · Type 4', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a06.webp' },
-        { t: 'Type 5', code: 'B-01', name: '4 BHK · Type 5', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b01.webp' },
-        { t: 'Type 6', code: 'B-02', name: '4 BHK · Type 6', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b02.webp' },
-        { t: 'Type 7', code: 'B-03', name: '4 BHK · Type 7', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b03.webp' },
-        { t: 'Type 8', code: 'B-04', name: '4 BHK · Type 8', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b04.webp' },
+        { t: 'A-01', code: 'A-01', name: '4 BHK · A-01', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a01.webp' },
+        { t: 'A-02', code: 'A-02', name: '4 BHK · A-02', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a02.webp' },
+        { t: 'A-05', code: 'A-05', name: '4 BHK · A-05', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a05.webp' },
+        { t: 'A-06', code: 'A-06', name: '4 BHK · A-06', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a06.webp' },
+        { t: 'B-01', code: 'B-01', name: '4 BHK · B-01', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b01.webp' },
+        { t: 'B-02', code: 'B-02', name: '4 BHK · B-02', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b02.webp' },
+        { t: 'B-03', code: 'B-03', name: '4 BHK · B-03', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b03.webp' },
+        { t: 'B-04', code: 'B-04', name: '4 BHK · B-04', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b04.webp' },
       ],
     };
     let fpC = '3';
@@ -68,21 +68,6 @@ export default function PageClient() {
           fpUnit(parseInt(b.getAttribute('data-i'), 10));
         });
       });
-    }
-    function dlPlan() {
-      const u = FP[fpC][fpIdx];
-      const img = document.getElementById('fpimg');
-      if (!img) return;
-      const fn =
-        ('Makuta Taranga ' + u.code + ' ' + u.name + ' ' + u.area)
-          .replace(/[^0-9A-Za-z]+/g, '-')
-          .replace(/^-|-$/g, '') + '.webp';
-      const a = document.createElement('a');
-      a.href = img.getAttribute('src');
-      a.download = fn;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
     }
     function planPrice(m) {
       const u = FP[fpC][fpIdx];
@@ -135,7 +120,7 @@ export default function PageClient() {
     const pp = document.getElementById('fppp');
     const dlH = function (e) {
       e.preventDefault();
-      dlPlan();
+      planPrice('visit');
     };
     const ppH = function (e) {
       e.preventDefault();
@@ -192,6 +177,14 @@ export default function PageClient() {
         </div>
       </section>
 
+      <section className="philo-band" aria-label="What a plan really measures">
+        <div className="wrap">
+          <p className="philo-quote">
+            A plan is not a list of rooms. <em>It is a measure of how far the world is kept from you.</em>
+          </p>
+        </div>
+      </section>
+
       <section id="floor-plans" className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(4rem,8vw,6rem)', scrollMarginTop: '90px' }}>
         <div className="reveal">
           <div className="kicker">
@@ -207,9 +200,8 @@ export default function PageClient() {
             </div>
           </div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>
-            Ten layouts. Two towers. One sky bridge.
+            Ten ways to be left alone with the lake.
           </h2>
-          <p className="whisper">A plan is not a list of rooms. It is a measure of how far the world is kept from you.</p>
           <div className="rip-line">
             <svg viewBox="0 0 90 16">
               <path d="M2,9 C18,2 30,15 46,8 S74,2 88,8" />
@@ -281,7 +273,7 @@ export default function PageClient() {
                   Save this plan
                 </a>
                 <a className="btn sm" href="#" id="fppp">
-                  Get price sheet
+                  Get the exact plan
                 </a>
               </div>
             </div>
@@ -289,8 +281,8 @@ export default function PageClient() {
         </div>
 
         <p className="indic">
-          Layouts shown are indicative. Exact carpet/built-up areas, tower allocation and pricing are
-          shared on enquiry — all areas as per RERA-approved plans.
+          These are typical floor plans, shown for representation. Exact carpet/built-up areas, tower
+          allocation and pricing are shared on enquiry — all areas as per RERA-approved plans.
         </p>
 
         <div className="reveal" style={{ marginTop: '3.5rem' }}>

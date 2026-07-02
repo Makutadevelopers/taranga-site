@@ -43,10 +43,10 @@ export default function PageClient() {
         <div className="reveal">
           <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s7-6.2 7-11a7 7 0 0 0-14 0c0 4.8 7 11 7 11z" /><circle cx="12" cy="11" r="2.4" /></svg></span><div><div className="kt">The Address</div><div className="ks">Where Taranga sits on the map</div></div></div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .6rem' }}>See exactly where you’ll be</h2>
-          <p style={{ color: 'var(--ink-soft)', maxWidth: '46ch' }}>IDL Road, opposite IDL Lake, Moosapet — between Kukatpally and Balanagar. Drag the map to trace your own commute.</p>
+          <p style={{ color: 'var(--ink-soft)', maxWidth: '46ch' }}>IDL Road, opposite IDL Lake — between Kukatpally and Balanagar. Drag the map to trace your own commute.</p>
         </div>
         <div className="reveal">
-          <div className="mapcap"><b>◍</b>&nbsp; Makuta Taranga · IDL Road, Opp. IDL Lake, Moosapet</div>
+          <div className="mapcap"><b>◍</b>&nbsp; Makuta Taranga · IDL Road, Opp. IDL Lake</div>
           <div className="mapwrap"><iframe loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=17.4792373,78.4162829(Makuta+Taranga)&z=16&output=embed" title="Makuta Taranga location"></iframe></div>
         </div>
         <div style={{ marginTop: '1rem' }}><a className="more" href="https://www.google.com/maps/dir/?api=1&destination=17.4792373,78.4162829" target="_blank" rel="noopener noreferrer">Get directions</a></div>
@@ -68,10 +68,10 @@ export default function PageClient() {
         </div>
 
         <div className="reveal" style={{ marginTop: '3.4rem' }}>
-          <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V9l9-6 9 6v12M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">The Neighbourhood</div><div className="ks">Moosapet &amp; Kukatpally, north-west Hyderabad</div></div></div>
+          <div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V9l9-6 9 6v12M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">The Neighbourhood</div><div className="ks">Kukatpally &amp; Balanagar, north-west Hyderabad</div></div></div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 1rem' }}>An address that&rsquo;s already arrived</h2>
           <p style={{ color: 'var(--ink-soft)', maxWidth: '60ch' }}>
-            Makuta Taranga sits on IDL Road in Moosapet, on the Kukatpally&ndash;Balanagar corridor of north-west Hyderabad &mdash;
+            Makuta Taranga sits on IDL Road, on the Kukatpally&ndash;Balanagar corridor of north-west Hyderabad &mdash;
             one of the city&rsquo;s most established residential and retail belts. You&rsquo;re a short walk from the Hyderabad Metro
             Red Line (Balanagar and Kukatpally stations), minutes from KPHB and JNTU, and a clean run down NH-65 to HITEC City and
             the Financial District &mdash; without paying the price those micro-markets now command.

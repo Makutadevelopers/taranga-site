@@ -168,6 +168,10 @@ nav .nbtn:hover{background:var(--ink);color:var(--canvas);border-color:var(--ink
 .unit .uimg{aspect-ratio:16/10;margin:1.3rem 0;overflow:hidden;border-radius:2px;background-size:cover;background-position:center}
 .unit .ctarow{display:flex;gap:1.3rem;align-items:center;margin-top:.4rem}
 .indic{font-size:.72rem;color:var(--line-deep);font-style:italic;margin-top:1.6rem}
+/* philosophy band — lands before the plan picker (feeling before the tool) */
+.philo-band{background:var(--canvas-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:clamp(3.2rem,8vw,5.5rem) 0;text-align:center}
+.philo-band .philo-quote{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,4vw,2.9rem);line-height:1.28;max-width:22ch;margin:0 auto;color:var(--ink)}
+.philo-band .philo-quote em{font-style:italic;color:var(--teal)}
 /* feature list */
 .flist{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem 3rem;margin-top:2rem}@media(max-width:680px){.flist{grid-template-columns:1fr}}
 .flist .f{border-top:1px solid var(--hair);padding-top:.9rem}

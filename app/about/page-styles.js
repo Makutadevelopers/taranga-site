@@ -613,6 +613,16 @@ body{overflow-x:hidden}
 .test-role{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.7rem}
 .test-quote{color:var(--ink-soft);font-size:.92rem;line-height:1.5;margin:0;font-style:italic}
 @media(max-width:860px){.testimonials-grid{grid-template-columns:1fr;gap:1.3rem}}
+/* company testimonial film (single YouTube video) */
+.test-film{position:relative;max-width:920px;aspect-ratio:16/9;border-radius:4px;overflow:hidden;cursor:pointer;background-size:cover;background-position:center;background-color:#0E1B2C;box-shadow:0 18px 46px rgba(14,27,44,.22)}
+.test-film::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,18,26,.5),rgba(12,18,26,.05) 60%,transparent);transition:opacity .3s var(--ease);pointer-events:none}
+.test-film:hover::after{opacity:.7}
+.test-film iframe{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:2}
+.test-film-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;width:clamp(64px,9vw,92px);height:auto;transition:transform .3s var(--ease)}
+.test-film:hover .test-film-play{transform:translate(-50%,-50%) scale(1.08)}
+.test-film-play svg{width:100%;height:auto;display:block;filter:drop-shadow(0 6px 18px rgba(0,0,0,.4))}
+.test-film-play .yt-bg{fill:#1C2A38;opacity:.92}
+.test-film-play .yt-tri{fill:#F7F4ED}
 
 .form-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(14,27,44,.7);
   display:none;z-index:1000;align-items:center;justify-content:center;backdrop-filter:blur(2px)}

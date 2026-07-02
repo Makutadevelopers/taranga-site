@@ -4,7 +4,7 @@ import { breadcrumb, ld } from '@/lib/schema';
 export const metadata = {
   title: 'Privacy Policy | Makuta Taranga',
   description:
-    'How Makuta Taranga (Makuta Developers) collects, uses and protects the details you share through enquiry forms, calls and WhatsApp.',
+    'How Makuta Taranga (Makuta Projects LLP) collects, uses and protects the details you share through enquiry forms, calls and WhatsApp.',
   alternates: { canonical: '/privacy/' },
   robots: { index: true, follow: true },
   openGraph: {
@@ -40,8 +40,8 @@ export default function Page() {
       <section className="wrap legal" style={{ padding: 'clamp(1rem,4vw,2rem) 0 clamp(4rem,8vw,6rem)', maxWidth: '760px' }}>
         <h2>Who we are</h2>
         <p>
-          This website is operated by Makuta Developers (&ldquo;Makuta&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) to market the residential
-          project <strong>Makuta Taranga</strong>, TS RERA P02200011012, at IDL Road, Opp. IDL Lake, Habeeb Nagar, Moosapet,
+          This website is operated by Makuta Projects LLP (&ldquo;Makuta&rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) to market the residential
+          project <strong>Makuta Taranga</strong>, TS RERA P02200011012, at IDL Road, Opp. IDL Lake,
           Hyderabad &mdash; 500072. For any privacy question, contact us at{' '}
           <a className="more" href="mailto:sales@makutataranga.com">sales@makutataranga.com</a> or{' '}
           <a className="more" href="tel:+919059676464">+91&nbsp;90596&nbsp;76464</a>.

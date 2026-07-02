@@ -18,8 +18,8 @@ export default function GlobalUI() {
   const [vals, setVals] = useState({ n: '', p: '', e: '', consent: false });
   const [errs, setErrs] = useState({ n: false, p: false, e: false, con: false });
 
-  // lightbox state
-  const [lb, setLb] = useState({ open: false, src: '', alt: '' });
+  // lightbox state — items: [{ src, title, desc }], index points at the visible one
+  const [lb, setLb] = useState({ open: false, items: [], index: 0 });
 
   const openModal = useCallback((m, ex) => {
     setMode(m || 'brochure');
@@ -30,26 +30,39 @@ export default function GlobalUI() {
     setOpen(true);
   }, []);
   const closeModal = useCallback(() => setOpen(false), []);
-  const zoom = useCallback((src, alt) => setLb({ open: true, src, alt: alt || '' }), []);
+  // Single image (masterplan, floor plans): one-item list, no navigation.
+  const zoom = useCallback((src, alt) => setLb({ open: true, items: [{ src, title: '', desc: alt || '' }], index: 0 }), []);
+  // Gallery: a list of { src, title, desc } with prev/next + captions.
+  const zoomGallery = useCallback((items, index) => setLb({ open: true, items: Array.isArray(items) ? items : [], index: index || 0 }), []);
+  const lbStep = useCallback(
+    (dir) => setLb((s) => (s.open && s.items.length > 1 ? { ...s, index: (s.index + dir + s.items.length) % s.items.length } : s)),
+    []
+  );
 
   // expose to converted markup + per-page effects (parity with original globals)
   useEffect(() => {
     window.openModal = openModal;
     window.closeModal = closeModal;
     window.zoom = zoom;
+    window.zoomGallery = zoomGallery;
     return () => {
       if (window.openModal === openModal) delete window.openModal;
       if (window.closeModal === closeModal) delete window.closeModal;
       if (window.zoom === zoom) delete window.zoom;
+      if (window.zoomGallery === zoomGallery) delete window.zoomGallery;
     };
-  }, [openModal, closeModal, zoom]);
+  }, [openModal, closeModal, zoom, zoomGallery]);
 
-  // Esc closes modal + lightbox
+  // Esc closes modal + lightbox; ←/→ step through gallery images
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         setOpen(false);
         setLb((s) => ({ ...s, open: false }));
+      } else if (e.key === 'ArrowRight') {
+        setLb((s) => (s.open && s.items.length > 1 ? { ...s, index: (s.index + 1) % s.items.length } : s));
+      } else if (e.key === 'ArrowLeft') {
+        setLb((s) => (s.open && s.items.length > 1 ? { ...s, index: (s.index - 1 + s.items.length) % s.items.length } : s));
       }
     };
     window.addEventListener('keydown', onKey);
@@ -130,8 +143,45 @@ export default function GlobalUI() {
       </div>
 
       <div className={'lightbox' + (lb.open ? ' open' : '')} id="lightbox" onClick={() => setLb((s) => ({ ...s, open: false }))}>
-        <span className="x">&times;</span>
-        <img id="lbimg" src={lb.src} alt={lb.alt} />
+        {(() => {
+          const cur = lb.items[lb.index] || { src: '', title: '', desc: '' };
+          const multi = lb.items.length > 1;
+          return (
+            <>
+              <span className="x">&times;</span>
+              {multi && (
+                <button
+                  type="button"
+                  className="lb-nav lb-prev"
+                  aria-label="Previous image"
+                  onClick={(e) => { e.stopPropagation(); lbStep(-1); }}
+                >
+                  &lsaquo;
+                </button>
+              )}
+              <figure className="lb-figure" onClick={(e) => e.stopPropagation()}>
+                <img id="lbimg" src={cur.src} alt={cur.desc || cur.title} />
+                {(cur.title || cur.desc) && (
+                  <figcaption className="lb-cap">
+                    {cur.title && <b>{cur.title}</b>}
+                    {cur.desc && <span>{cur.desc}</span>}
+                    {multi && <em className="lb-count">{lb.index + 1} / {lb.items.length}</em>}
+                  </figcaption>
+                )}
+              </figure>
+              {multi && (
+                <button
+                  type="button"
+                  className="lb-nav lb-next"
+                  aria-label="Next image"
+                  onClick={(e) => { e.stopPropagation(); lbStep(1); }}
+                >
+                  &rsaquo;
+                </button>
+              )}
+            </>
+          );
+        })()}
       </div>
     </>
   );

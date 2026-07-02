@@ -16,6 +16,16 @@ const MP_LEGEND = [
   [17, 'Ventilation Duct'],
 ];
 
+// Pin positions as % of the master-plan image, aligned to the printed 01–17
+// badges on masterplan_plan.jpg (2460×1125). Clicking/hovering a legend item
+// pulses the matching pin. Nudge a value here if a ring sits slightly off.
+const MP_PINS = {
+  1: [17.5, 18.6], 2: [22.6, 8.5], 3: [38.8, 22.4], 4: [24.9, 42.6], 5: [39.2, 50.6],
+  6: [69.4, 47.5], 7: [55.5, 48.6], 8: [56.4, 17.8], 9: [54.0, 87.2], 10: [44.8, 8.5],
+  11: [89.8, 49.0], 12: [92.9, 79.0], 13: [44.4, 94.2], 14: [13.1, 69.4], 15: [15.1, 41.7],
+  16: [88.6, 23.8], 17: [67.4, 10.8],
+};
+
 export default function HomeClient() {
   /* hero video: poster is the eager LCP; the video only mounts on capable,
      non-data-saving desktop sessions so mobile/metered users never download it. */
@@ -72,6 +82,9 @@ export default function HomeClient() {
     tablet: { mp4: '/assets/video/hero-square.mp4', poster: '/assets/img/hero-square-poster.jpg' },
     desktop: { mp4: '/assets/video/hero-desktop.mp4', poster: '/assets/img/hero-desktop-poster.jpg' },
   };
+
+  /* master-plan: which numbered point is highlighted (from legend or pin) */
+  const [mpHot, setMpHot] = useState(null);
 
   /* quick visit form */
   const [q, setQ] = useState({ n: '', p: '', c: '' });
@@ -509,17 +522,41 @@ export default function HomeClient() {
       </div>
       <section className="wrap" data-sec data-n="04" data-l="The Plan" data-rail="The Plan" style={{ paddingTop: 'clamp(3.5rem,8vw,6rem)', paddingBottom: 'clamp(2rem,4vw,3rem)' }}><div className="reveal"><div className="label">Master Plan</div>
         <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', lineHeight: 1.05, margin: '.3rem 0 .2rem' }}>The whole of Taranga,<br />at a glance</h2>
-        <div className="mplan2 mplan2--split">
+        <div className="mplan2 mplan2--stack">
           <div className="mplan2-figure">
             <div className="mplan2-map" onClick={() => window.zoom && window.zoom('/assets/img/masterplan.jpg', 'Makuta Taranga — Master Plan')}>
               <img src="/assets/img/masterplan_plan.jpg" width="2460" height="1125" loading="lazy" decoding="async" alt="Makuta Taranga master plan — Residential Blocks A & B, clubhouse, courts, temple, jogging track" />
+              {MP_LEGEND.map(([n]) => {
+                const p = MP_PINS[n];
+                if (!p) return null;
+                return (
+                  <span
+                    key={n}
+                    className={'mp-pin' + (mpHot === n ? ' on' : '')}
+                    data-n={n}
+                    style={{ left: p[0] + '%', top: p[1] + '%' }}
+                    aria-hidden="true"
+                    onMouseEnter={() => setMpHot(n)}
+                    onMouseLeave={() => setMpHot((h) => (h === n ? null : h))}
+                    onClick={(e) => { e.stopPropagation(); setMpHot(n); }}
+                  ></span>
+                );
+              })}
             </div>
-            <div className="mp-cap"><span>Tap the plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
+            <div className="mp-cap"><span>Hover a point or list item &middot; tap plan to enlarge</span><span>Artist&rsquo;s impression &middot; not to scale &middot; N&uarr;</span></div>
           </div>
           <div className="mplan2-side">
             <ol className="mplan2-legend">
               {MP_LEGEND.map(([n, label, primary]) => (
-                <li key={n} data-n={n} data-primary={primary ? '1' : undefined}>
+                <li
+                  key={n}
+                  data-n={n}
+                  data-primary={primary ? '1' : undefined}
+                  className={mpHot === n ? 'is-hot' : undefined}
+                  onMouseEnter={() => setMpHot(n)}
+                  onMouseLeave={() => setMpHot((h) => (h === n ? null : h))}
+                  onClick={() => setMpHot(n)}
+                >
                   <span className="ln">{n}</span>{label}
                 </li>
               ))}

@@ -798,10 +798,10 @@ body{overflow-x:clip}
 .mplan2-map{position:relative;border-radius:3px;overflow:hidden;cursor:zoom-in;pointer-events:auto;z-index:5;
   box-shadow:0 30px 70px -44px rgba(14,27,44,.6),0 8px 24px -18px rgba(14,27,44,.4)}
 .mplan2-map>img{display:block;width:100%;height:auto}
-.mp-pin{position:absolute;transform:translate(-50%,-50%);width:clamp(18px,2.1vw,26px);height:clamp(18px,2.1vw,26px);
-  border-radius:50%;border:1.5px solid rgba(193,154,99,.55);background:transparent;cursor:pointer;
-  box-sizing:border-box;transition:border-color .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
-.mp-pin:hover,.mp-pin.on{border-color:var(--line);background:rgba(193,154,99,.22);transform:translate(-50%,-50%) scale(1.18);
+.mp-pin{position:absolute;transform:translate(-50%,-50%);width:clamp(20px,2.3vw,30px);height:clamp(20px,2.3vw,30px);
+  border-radius:50%;border:2px solid rgba(193,154,99,.55);background:transparent;cursor:pointer;opacity:0;
+  box-sizing:border-box;transition:opacity .3s var(--ease),border-color .3s var(--ease),background .3s var(--ease),transform .3s var(--ease)}
+.mp-pin:hover,.mp-pin.on{opacity:1;border-color:var(--line);background:rgba(193,154,99,.22);transform:translate(-50%,-50%) scale(1.18);
   animation:mp-pulse 1.6s var(--ease) infinite}
 @keyframes mp-pulse{0%{box-shadow:0 0 0 0 rgba(193,154,99,.5)}100%{box-shadow:0 0 0 13px rgba(193,154,99,0)}}
 .mplan2-legend{list-style:none;margin:0;padding:0}
@@ -809,7 +809,11 @@ body{overflow-x:clip}
   font-family:var(--body);font-size:.85rem;color:var(--ink-soft)}
 .mplan2-legend li:last-child{border-bottom:0}
 .mplan2-legend .ln{flex:0 0 auto;width:25px;height:25px;border-radius:50%;border:1px solid var(--line);
-  display:grid;place-items:center;font-size:.66rem;color:var(--gold-deep)}
+  display:grid;place-items:center;font-size:.66rem;color:var(--gold-deep);
+  transition:background .25s var(--ease),color .25s var(--ease),border-color .25s var(--ease)}
+.mplan2-legend li{cursor:pointer}
+.mplan2-legend li:hover,.mplan2-legend li.is-hot{color:var(--ink)}
+.mplan2-legend li:hover .ln,.mplan2-legend li.is-hot .ln{background:var(--line);border-color:var(--line);color:#fff}
 .mp-cap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;margin-top:.9rem;
   font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
 .mp-cap span:first-child{color:var(--gold-deep)}
@@ -828,14 +832,13 @@ body{overflow-x:clip}
   .mp-plans-cta .btn{width:100%;justify-content:center}}
 @media(max-width:560px){.mp-cap{font-size:.56rem;letter-spacing:.12em}}
 @media(max-width:400px){.mplan2--stack .mplan2-legend{column-count:1}}
-/* side-by-side variant: image + caption left, legend (2 balanced columns) + CTA right */
-.mplan2--split{grid-template-columns:1.5fr 1.15fr;align-items:center}
-.mplan2--split .mplan2-side{display:flex;flex-direction:column}
-.mplan2--split .mplan2-legend{column-count:2;column-gap:clamp(1.1rem,2vw,1.8rem)}
-.mplan2--split .mplan2-legend li{break-inside:avoid;-webkit-column-break-inside:avoid}
-.mplan2--split .mp-plans-cta{align-items:flex-start;text-align:left;margin-top:clamp(1.4rem,3vw,2rem)}
-@media(max-width:900px){.mplan2--split{grid-template-columns:1fr;align-items:start}.mplan2--split .mp-plans-cta{align-items:center;text-align:center}}
-@media(max-width:520px){.mplan2--split .mplan2-legend{column-count:1}}
+/* mobile: hide the numbered key (too small to read) — the plan is tap-to-zoom */
+@media(max-width:640px){
+  .mplan2--stack .mplan2-legend{display:none}
+  .mplan2--stack .mp-cap{justify-content:center;text-align:center;margin-top:1rem}
+  .mplan2--stack .mp-cap span:nth-child(2){display:none}
+  .mplan2--stack .mp-cap span:first-child{font-weight:600;letter-spacing:.16em;color:var(--gold-deep)}
+}
 
 
 

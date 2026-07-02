@@ -24,7 +24,7 @@ const PRODUCT_LD = {
   image: OG_IMAGE,
   url: `${SITE_URL}/residences/`,
   category: 'Residential Apartment',
-  brand: { '@type': 'Brand', name: 'Makuta Projects LLP' },
+  brand: { '@type': 'Brand', name: 'Makuta' },
   offers: {
     '@type': 'AggregateOffer',
     priceCurrency: 'INR',

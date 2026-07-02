@@ -2,14 +2,14 @@ import PageClient from './PageClient';
 import { ORGANIZATION, breadcrumb, ld } from '@/lib/schema';
 
 export const metadata = {
-  title: 'About Makuta Projects LLP — Crown of Excellence | Makuta Taranga',
+  title: 'About Makuta — Crown of Excellence | Makuta Taranga',
   description:
-    'About Makuta Projects LLP — the team behind Makuta Taranga. RERA-clean process, trusted build quality and a portfolio across Hyderabad.',
+    'About Makuta — the team behind Makuta Taranga. RERA-clean process, trusted build quality and a portfolio across Hyderabad.',
   alternates: { canonical: '/about/' },
   openGraph: {
-    title: 'About Makuta Projects LLP — Crown of Excellence | Makuta Taranga',
+    title: 'About Makuta — Crown of Excellence | Makuta Taranga',
     description:
-      'About Makuta Projects LLP — the team behind Makuta Taranga. RERA-clean process, trusted build quality and a portfolio across Hyderabad.',
+      'About Makuta — the team behind Makuta Taranga. RERA-clean process, trusted build quality and a portfolio across Hyderabad.',
     url: '/about/',
   },
 };

@@ -45,8 +45,8 @@ const JSON_LD = {
     { '@type': 'Apartment', name: '3 BHK', numberOfRooms: 3 },
     { '@type': 'Apartment', name: '4 BHK', numberOfRooms: 4 },
   ],
-  developer: { '@type': 'Organization', name: 'Makuta Projects LLP', url: 'https://www.makutadevelopers.com' },
-  branchOf: { '@type': 'RealEstateAgent', name: 'Makuta Projects LLP', telephone: '+91-90596-76464' },
+  developer: { '@type': 'Organization', name: 'Makuta', url: 'https://www.makutadevelopers.com' },
+  branchOf: { '@type': 'RealEstateAgent', name: 'Makuta', telephone: '+91-90596-76464' },
 };
 
 export default function Page() {

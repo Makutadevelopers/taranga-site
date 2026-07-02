@@ -539,10 +539,11 @@ body{overflow-x:hidden}
 @media(max-width:760px){.mcall{display:flex}}
 .projects{background:var(--canvas-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
 .projects .wrap{padding-top:clamp(3.4rem,7vw,5.5rem);padding-bottom:clamp(3.4rem,7vw,5.5rem)}
-.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:clamp(1rem,2.4vw,1.8rem);margin-top:clamp(2rem,4vw,3rem)}
-@media(max-width:820px){.proj-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:520px){.proj-grid{grid-template-columns:1fr}}
-.proj{position:relative;display:block;height:clamp(380px,40vw,460px);border-radius:2px;overflow:hidden;background:linear-gradient(135deg,#1C2A38,#234B50)}
+/* flex-wrap + centre so an odd count (5) reads as a tidy 3 + 2, last row centred */
+.proj-grid{display:flex;flex-wrap:wrap;justify-content:center;gap:clamp(1rem,2.4vw,1.8rem);margin-top:clamp(2rem,4vw,3rem)}
+.proj{flex:1 1 300px;max-width:360px;position:relative;display:block;height:clamp(340px,34vw,440px);border-radius:2px;overflow:hidden;background:linear-gradient(135deg,#1C2A38,#234B50)}
+@media(max-width:820px){.proj{flex:1 1 calc(50% - 1rem);max-width:none}}
+@media(max-width:520px){.proj{flex:1 1 100%}}
 .proj .pimg{position:absolute;inset:0;background-size:cover;background-position:center;transform:scale(1.02);transition:transform 1.2s var(--ease)}
 .proj:hover .pimg{transform:scale(1.08)}
 .proj::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(12,18,26,.84),rgba(12,18,26,.12) 55%,transparent)}

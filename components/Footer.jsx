@@ -8,12 +8,12 @@ export default function Footer() {
           <div>
             <img className="ft-logo" src="/assets/img/taranga_navy.png" alt="Makuta Taranga" width="160" height="48" loading="lazy" decoding="async" />
             <p style={{ marginTop: '.9rem', maxWidth: '34ch' }}>
-              A lakefront landmark by Makuta Projects LLP — Crown of Excellence. Built around privacy, light and the calm of water.
+              A lakefront landmark by Makuta — Crown of Excellence. Built around privacy, light and the calm of water.
             </p>
             <span className="rera">TS RERA P02200011012</span>
             <div className="by-makuta">
               <span>A project by</span>
-              <img src="/assets/img/makuta.png" alt="Makuta Projects LLP — Crown of Excellence" height="36" loading="lazy" decoding="async" />
+              <img src="/assets/img/makuta.png" alt="Makuta — Crown of Excellence" height="36" loading="lazy" decoding="async" />
             </div>
           </div>
           <div>
@@ -35,7 +35,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="disc">
-          TS RERA Registration No. P02200011012 — project details available at rera.telangana.gov.in. Artist’s impressions and renders are for representation only and may vary from actuals. All plans, areas, specifications and amenities are indicative and subject to the sanctioned and RERA-approved plans. This does not constitute a legal offer or invitation; all transactions are governed solely by the registered Agreement of Sale. © Makuta Projects LLP.
+          TS RERA Registration No. P02200011012 — project details available at rera.telangana.gov.in. Artist’s impressions and renders are for representation only and may vary from actuals. All plans, areas, specifications and amenities are indicative and subject to the sanctioned and RERA-approved plans. This does not constitute a legal offer or invitation; all transactions are governed solely by the registered Agreement of Sale. © Makuta.
         </p>
       </div>
     </footer>

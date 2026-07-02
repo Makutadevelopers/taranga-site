@@ -24,6 +24,11 @@ export async function onRequestPost({ request, env }) {
   const key = env.CLOVE_API_KEY;
   if (!key) return json({ ok: false, error: 'lead proxy not configured' }, 500);
 
+  // Reject oversized bodies before parsing — a lead payload is a few hundred bytes;
+  // anything past 8 KB is abuse. (Full bot protection = Cloudflare Turnstile.)
+  const len = Number(request.headers.get('content-length') || 0);
+  if (len > 8192) return json({ ok: false, error: 'payload too large' }, 413);
+
   let payload;
   try {
     payload = await request.json();

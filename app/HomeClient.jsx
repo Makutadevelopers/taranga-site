@@ -68,7 +68,7 @@ export default function HomeClient() {
     };
   }, [showVideo, tier]);
   const HERO = {
-    mobile: { mp4: '/assets/video/water-6-portrait.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
+    mobile: { mp4: '/assets/video/hero-mobile.mp4', poster: '/assets/img/hero-mobile-poster.jpg' },
     tablet: { mp4: '/assets/video/hero-square.mp4', poster: '/assets/img/hero-square-poster.jpg' },
     desktop: { mp4: '/assets/video/hero-desktop.mp4', poster: '/assets/img/hero-desktop-poster.jpg' },
   };
@@ -477,12 +477,12 @@ export default function HomeClient() {
           </div>
         </div>
         <figure className="worth-film">
+          <figcaption className="worth-film-cap">Walkthrough &mdash; a cinematic tour of the homes, the club and the lakefront.</figcaption>
           <div className="film-stage">
             <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-yt="dg4nnlX_Ubk" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/dg4nnlX_Ubk/maxresdefault.jpg)' }} aria-label="Play the Taranga walkthrough film">
               <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
             </div>
           </div>
-          <figcaption className="worth-film-cap">Walkthrough &mdash; a cinematic tour of the homes, the club and the lakefront.</figcaption>
         </figure>
       </div></section>
 
@@ -558,7 +558,7 @@ export default function HomeClient() {
         <svg className="seam-wave" viewBox="0 0 48 14" fill="none"><path d="M2 8 C 9 2, 15 2, 22 8 C 29 14, 35 14, 46 6" /></svg>
         <span className="seam-line"></span>
       </div>
-      <section className="projects" data-rail="Portfolio"><div className="wrap reveal"><div className="port-band"><div className="port-text"><div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">Selected Projects</div><div className="ks">More from Makuta Projects LLP</div></div></div><h2 className="port-h2">A portfolio you can stand inside</h2><p className="port-p">A track record of homes built around light, space and the calm of good design &mdash; completed and ongoing developments by Makuta Projects LLP.</p><Link className="btn solid" href="/about/#projects">See the full portfolio <span>&rarr;</span></Link></div><Link className="port-teaser" href="/about/#projects" aria-label="See the full portfolio on the About page"><span className="pt-img" style={{ backgroundImage: 'url(/assets/img/aerial.webp)' }}></span><span className="pt-cap">More from Makuta Projects LLP <span>&rarr;</span></span></Link></div></div></section>
+      <section className="projects" data-rail="Portfolio"><div className="wrap reveal"><div className="port-band"><div className="port-text"><div className="kicker"><span className="kn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"><path d="M3 21V8l9-5 9 5v13M3 21h18M9 21v-6h6v6" /></svg></span><div><div className="kt">Selected Projects</div><div className="ks">More from Makuta</div></div></div><h2 className="port-h2">A portfolio you can stand inside</h2><p className="port-p">A track record of homes built around light, space and the calm of good design &mdash; completed and ongoing developments by Makuta.</p><Link className="btn solid" href="/about/#projects">See the full portfolio <span>&rarr;</span></Link></div><Link className="port-teaser" href="/about/#projects" aria-label="See the full portfolio on the About page"><span className="pt-img" style={{ backgroundImage: 'url(/assets/img/makuta-taranga-entrance.jpg)' }}></span><span className="pt-cap">More from Makuta <span>&rarr;</span></span></Link></div></div></section>
 
       <section className="enq wrap" data-rail="Visit" style={{ padding: 'clamp(4.5rem,10vw,7rem) 0' }}><div className="reveal"><div className="label" style={{ marginBottom: '1.3rem' }}>Come see the view that can’t be built out</div><h2>A private visit, by the lake.</h2><p>Leave your details and our team will call you back to arrange a viewing — no obligation.</p>
         {!qDone ? (

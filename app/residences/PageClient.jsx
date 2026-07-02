@@ -30,17 +30,17 @@ export default function PageClient() {
   useEffect(() => {
     const FP = {
       '3': [
-        { t: 'A-03', code: 'A-03', name: '3 BHK · A-03', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a03.webp' },
+        { t: 'A-03', code: 'A-03', name: '3 BHK · A-03', tower: 'Block A', facing: 'East', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a03.webp' },
         { t: 'A-04', code: 'A-04', name: '3 BHK · A-04', tower: 'Block A', facing: 'On request', area: '2480 sft', plan: true, img: '/assets/img/floorplan_a04.webp' },
       ],
       '4': [
-        { t: 'A-01', code: 'A-01', name: '4 BHK · A-01', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a01.webp' },
+        { t: 'A-01', code: 'A-01', name: '4 BHK · A-01', tower: 'Block A', facing: 'East', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a01.webp' },
         { t: 'A-02', code: 'A-02', name: '4 BHK · A-02', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a02.webp' },
-        { t: 'A-05', code: 'A-05', name: '4 BHK · A-05', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a05.webp' },
+        { t: 'A-05', code: 'A-05', name: '4 BHK · A-05', tower: 'Block A', facing: 'East', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a05.webp' },
         { t: 'A-06', code: 'A-06', name: '4 BHK · A-06', tower: 'Block A', facing: 'On request', area: '2990 sft', plan: true, img: '/assets/img/floorplan_a06.webp' },
-        { t: 'B-01', code: 'B-01', name: '4 BHK · B-01', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b01.webp' },
+        { t: 'B-01', code: 'B-01', name: '4 BHK · B-01', tower: 'Block B', facing: 'East', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b01.webp' },
         { t: 'B-02', code: 'B-02', name: '4 BHK · B-02', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b02.webp' },
-        { t: 'B-03', code: 'B-03', name: '4 BHK · B-03', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b03.webp' },
+        { t: 'B-03', code: 'B-03', name: '4 BHK · B-03', tower: 'Block B', facing: 'East', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b03.webp' },
         { t: 'B-04', code: 'B-04', name: '4 BHK · B-04', tower: 'Block B', facing: 'On request', area: '3255 sft', plan: true, img: '/assets/img/floorplan_b04.webp' },
       ],
     };
@@ -262,11 +262,9 @@ export default function PageClient() {
                 <dt>Tower</dt>
                 <dd id="fptower">Block A</dd>
                 <dt>Facing</dt>
-                <dd id="fpface">On request</dd>
+                <dd id="fpface">East</dd>
                 <dt>Built-up area</dt>
                 <dd id="fparea">2480 sft</dd>
-                <dt>Ceiling height</dt>
-                <dd>10.35 ft</dd>
               </dl>
               <div className="ctarow">
                 <a className="btn sm solid" href="#" id="fpdl">
@@ -303,10 +301,6 @@ export default function PageClient() {
           <p className="whisper">Arrival without an audience.</p>
           <div className="flist">
             <div className="f">
-              <h4>A foyer of your own</h4>
-              <p>Step out of the lift into your privacy foyer — not a shared corridor.</p>
-            </div>
-            <div className="f">
               <h4>Light on two sides</h4>
               <p>Corner homes mean more daylight, more air, fewer shared walls.</p>
             </div>
@@ -315,8 +309,8 @@ export default function PageClient() {
               <p>10.35-ft ceilings you feel the moment you walk in.</p>
             </div>
             <div className="f">
-              <h4>The lake, framed</h4>
-              <p>Floor-to-ceiling glass turns your living room into a view.</p>
+              <h4>Glass, wall to wall</h4>
+              <p>Floor-to-ceiling glass in every home — light, sky and open air pulled right into the living room.</p>
             </div>
           </div>
         </div>

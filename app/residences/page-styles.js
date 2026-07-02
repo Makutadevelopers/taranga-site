@@ -54,7 +54,7 @@ nav .nbtn:hover{background:var(--ink);color:var(--canvas);border-color:var(--ink
 .index a:hover{color:var(--line)}.index a i{font-family:var(--display);font-style:italic;color:var(--line);font-size:1rem}
 /* page header (sub pages) */
 .phead{padding:clamp(7rem,13vw,10rem) 0 clamp(2.5rem,6vw,4rem)}
-.phead .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(2rem,6vw,4rem);align-items:end}
+.phead .grid{display:grid;grid-template-columns:1.5fr 1fr;gap:clamp(2rem,6vw,4rem);align-items:center}
 @media(max-width:820px){.phead .grid{grid-template-columns:1fr}}
 .crumb{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}.crumb a{color:var(--line)}
 .phead h1{font-family:var(--display);font-weight:300;font-size:clamp(2.8rem,7vw,5rem);line-height:.98;color:var(--ink)}
@@ -169,9 +169,14 @@ nav .nbtn:hover{background:var(--ink);color:var(--canvas);border-color:var(--ink
 .unit .ctarow{display:flex;gap:1.3rem;align-items:center;margin-top:.4rem}
 .indic{font-size:.72rem;color:var(--line-deep);font-style:italic;margin-top:1.6rem}
 /* philosophy band — lands before the plan picker (feeling before the tool) */
-.philo-band{background:var(--canvas-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:clamp(3.2rem,8vw,5.5rem) 0;text-align:center}
-.philo-band .philo-quote{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,4vw,2.9rem);line-height:1.28;max-width:22ch;margin:0 auto;color:var(--ink)}
-.philo-band .philo-quote em{font-style:italic;color:var(--teal)}
+.philo-band{background:var(--canvas-2);border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:clamp(2.8rem,6.5vw,4.4rem) 0;text-align:center}
+.philo-band .philo-quote{font-family:var(--display);font-weight:300;font-size:clamp(1.7rem,3.6vw,2.7rem);line-height:1.3;max-width:28ch;text-wrap:balance;margin:0 auto;color:var(--ink)}
+.philo-band .philo-quote em{font-style:italic;color:var(--ink)}
+/* even, deliberate line-breaks on the big display headings across the page */
+.phead h1,#floor-plans h2,.enq h2{text-wrap:balance}
+/* the whisper defaults to centered; in these left-aligned blocks, align it left
+   so it sits in line with the kicker + headline above it */
+#floor-plans .whisper{text-align:left;margin-left:0}
 /* feature list */
 .flist{display:grid;grid-template-columns:repeat(2,1fr);gap:1.4rem 3rem;margin-top:2rem}@media(max-width:680px){.flist{grid-template-columns:1fr}}
 .flist .f{border-top:1px solid var(--hair);padding-top:.9rem}
@@ -369,7 +374,7 @@ footer{border-top:1px solid var(--hair);background:var(--canvas-2)}
 .fp .uchip:hover{border-color:var(--line);color:var(--ink)}.fp .uchip.on{border-color:var(--ink);background:var(--ink);color:var(--canvas)}
 @media(max-width:560px){.fp .chips{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;-ms-overflow-style:none;margin:0 -1.4rem 1.6rem;padding:.1rem 1.4rem .4rem}.fp .chips::-webkit-scrollbar{display:none}}
 .fp .uchip-old{display:none}
-.fp .view{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(2rem,5vw,3.5rem);align-items:center;border-top:1px solid var(--hair);padding-top:2rem}
+.fp .view{display:grid;grid-template-columns:1.4fr 1fr;gap:clamp(2rem,5vw,3.5rem);align-items:start;border-top:1px solid var(--hair);padding-top:2rem}
 @media(max-width:820px){.fp .view{grid-template-columns:1fr}}
 .fp .plan{aspect-ratio:4/3;border:1px solid var(--hair);border-radius:2px;background:var(--canvas-2);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
 .fp .plan svg{width:78%;height:78%;color:var(--ink-soft);opacity:.5}

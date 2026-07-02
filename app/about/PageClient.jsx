@@ -8,13 +8,12 @@ const openModal = (m) => window.openModal && window.openModal(m);
 
 /* EDIT PROJECTS: replace name/area/img/url with real ones. url "#" makes the card open the brochure. */
 const PROJECTS = [
-  { name: 'Makuta Horizon', area: 'Residential · Under construction', img: '/assets/img/d_roof.webp', url: 'https://www.makutahorizon.com/' },
-  { name: 'Makuta Nirvana', area: 'Residential · Under construction', img: '/assets/img/hero_blue.webp', url: 'https://www.makutanirvana.in/' },
-  // TODO: add a card for "myspace2" once its real name, link and image are confirmed.
-  { name: 'Makuta Aruna Arcade', area: 'Commercial', img: '/assets/img/d_glass.webp', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
-  { name: 'Makuta Prime', area: 'Commercial', img: '/assets/img/ext_facade_dusk.webp', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
+  { name: 'Makuta Horizon', area: 'Residential · Under construction', img: '/assets/img/makuta-horizon.webp', url: 'https://www.makutahorizon.com/' },
+  { name: 'Makuta Nirvana', area: 'Residential · Under construction', img: '/assets/img/makuta-nirvana.jpg', url: 'https://www.makutanirvana.in/' },
+  { name: 'Makuta MySpace 2', area: 'Residential', img: '/assets/img/makuta-myspace2.jpeg', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
+  { name: 'Makuta Aruna Arcade', area: 'Commercial', img: '/assets/img/makuta-aruna-arcade.jpg', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
+  { name: 'Makuta Prime', area: 'Commercial', img: '/assets/img/makuta-prime.jpg', url: 'https://www.makutadevelopers.com/best-residential-projects-in-hyderabad' },
 ];
-// NOTE: images for Aruna Arcade & Prime are Taranga renders used as placeholders — swap for real project photos when available.
 
 // Company testimonial film (YouTube). Replace the id if the video changes.
 const TESTIMONIAL_YT = 'UKv6I6OjLOI';
@@ -74,12 +73,12 @@ export default function PageClient() {
 
       <section className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(4rem,8vw,6rem)' }}>
         <div className="reveal" style={{ maxWidth: '64ch' }}>
-          <div className="label">About Makuta Projects LLP</div>
+          <div className="label">About Makuta</div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.4rem 0 1rem' }}>
             We build for the long quiet, not the quick sale
           </h2>
           <p style={{ color: 'var(--ink-soft)' }}>
-            For years, Makuta Projects LLP has shaped homes and communities across Hyderabad — measured by how they feel to
+            For years, Makuta has shaped homes and communities across Hyderabad — measured by how they feel to
             live in a decade later, not just how they show on launch day. “Crown of Excellence” is the standard we hold
             every project to: honest build quality, a RERA-clean process, and finishes that age well.
           </p>
@@ -152,7 +151,7 @@ export default function PageClient() {
             </span>
             <div>
               <div className="kt">Selected Projects</div>
-              <div className="ks">More from Makuta Projects LLP</div>
+              <div className="ks">More from Makuta</div>
             </div>
           </div>
           <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4.4vw,3.2rem)', margin: '.3rem 0 .2rem' }}>

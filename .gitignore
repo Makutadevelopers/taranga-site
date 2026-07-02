@@ -4,6 +4,9 @@
 .DS_Store
 *.log
 .env*.local
+.env
+.dev.vars
+.wrangler
 
 # local backup of the original static site (not part of the app)
 /_original-site

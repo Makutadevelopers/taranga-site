@@ -44,3 +44,21 @@ collections:
       - { name: tags, label: Tags, widget: list, required: false, default: ['Project Updates'] }
       - { name: draft, label: 'Draft (hide from live site)', widget: boolean, default: false }
       - { name: body, label: 'Post body', widget: markdown }
+
+  # Homepage / Journal FAQ accordion + the FAQPage SEO schema. One editable file
+  # with a reorderable list of question/answer pairs (content/faq.json).
+  - name: faq
+    label: FAQs
+    files:
+      - name: faq
+        label: FAQ list
+        file: content/faq.json
+        fields:
+          - name: items
+            label: Questions & answers
+            label_singular: Question
+            widget: list
+            summary: '{{fields.q}}'
+            fields:
+              - { name: q, label: Question, widget: string }
+              - { name: a, label: Answer, widget: text }

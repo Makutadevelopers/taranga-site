@@ -23,6 +23,8 @@ with zero email downtime, then retire Wix.
 |---|---|---|
 | `CLOVE_API_KEY` | _the Clove tpi website key_ | **Encrypted.** Required — the lead form posts to the same-origin `/api/lead` Pages Function (`functions/api/lead.js`), which attaches this key server-side. The key is no longer in client JS. |
 | `CLOVE_LEAD_ENDPOINT` | _(optional)_ | Override the upstream Clove URL; defaults to the production endpoint. |
+| `WA_ALERT_TO` | _(optional)_ | **Secondary capture.** Sales number (country code + number, no `+`) that `/api/lead` alerts on WhatsApp when a Clove write fails, so no lead is lost. Needs `WA_PROJECT_ID` + `WA_API_PWD` + `WA_TPL_LEAD_ALERT` (see `WHATSAPP_TEMPLATES.md`). |
+| `WA_TPL_LEAD_ALERT` | _(optional)_ | Approved api-wa.co template name for the lead-failure alert (4 body params). |
 | `NODE_VERSION` | `20` | If not using `.nvmrc`. |
 
 > The `functions/` directory at the repo root is bundled automatically by `wrangler pages deploy out`

@@ -10,3 +10,6 @@
 
 # local backup of the original static site (not part of the app)
 /_original-site
+
+# Claude Code local tooling state
+.claude/

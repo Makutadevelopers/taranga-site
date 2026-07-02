@@ -88,12 +88,14 @@ export default function GlobalUI() {
       sendWhatsAppTemplate(mode, n, p);
       trackWhatsApp();
     }
+    // Show the thank-you immediately — the lead POST runs in the background.
+    // The Clove upstream can take a few seconds (and currently 500s), so there's no
+    // reason to make the visitor wait on it before confirming their enquiry landed.
+    trackLead('modal');
+    setSuccess(true);
     sendLead(
       leadPayload(src, n, p, em, extra),
-      function () {
-        trackLead('modal');
-        setSuccess(true);
-      },
+      null,
       { mail: false } // Clove endpoint currently 500s; don't pop open Mail on failure
     );
   }

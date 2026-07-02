@@ -12,12 +12,57 @@
 // In `next dev` the route doesn't exist; the client falls back to a mailto: link.
 
 const DEFAULT_ENDPOINT = 'https://portal-api.clove.build/api/tpi/website/lead';
+const WA_BASE = 'https://connect.api-wa.co/project-apis/v1/project';
 
 function json(obj, status) {
   return new Response(JSON.stringify(obj), {
     status,
     headers: { 'content-type': 'application/json' },
   });
+}
+
+// WhatsApp template params can't contain newlines/tabs or long runs of spaces;
+// flatten to a single clean line and cap length so the alert always sends.
+function waText(v) {
+  return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 120) || '-';
+}
+
+// Secondary capture: if the Clove write fails, fan the enquiry to the sales team's
+// WhatsApp so no lead is lost while the UI has already shown its (optimistic) thank-you.
+// Fire-and-forget — a failed alert must never turn a lead 500 into a worse error.
+// Needs env: WA_PROJECT_ID, WA_API_PWD (shared with /api/whatsapp), plus:
+//   WA_ALERT_TO       — sales number to notify (country code + number, no '+')
+//   WA_TPL_LEAD_ALERT — approved template, 4 body params: name, phone, email, interest
+// If any are unset the alert is skipped silently.
+async function notifyLeadFailure(env, pl) {
+  const pid = env.WA_PROJECT_ID;
+  const pwd = env.WA_API_PWD;
+  const to = (env.WA_ALERT_TO || '').replace(/\D/g, '');
+  const tpl = env.WA_TPL_LEAD_ALERT;
+  if (!pid || !pwd || !to || !tpl) return;
+
+  const params = [pl.name, pl.mobileNo, pl.email, pl.message || pl.subSource || pl.source]
+    .map((v) => ({ type: 'text', text: waText(v) }));
+  const payload = {
+    messaging_product: 'whatsapp',
+    recipient_type: 'individual',
+    to,
+    type: 'template',
+    template: {
+      name: tpl,
+      language: { code: env.WA_TPL_LANG || 'en' },
+      components: [{ type: 'body', parameters: params }],
+    },
+  };
+  try {
+    await fetch(`${WA_BASE}/${pid}/messages`, {
+      method: 'POST',
+      headers: { 'X-API-WA-Project-API-Pwd': pwd, 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    });
+  } catch {
+    // best-effort; nothing more we can safely do from here
+  }
 }
 
 export async function onRequestPost({ request, env }) {
@@ -51,11 +96,15 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify(payload),
     });
     const body = await upstream.text();
+    // Clove rejected the lead (down / 500 / auth) — capture it to the sales WhatsApp
+    // so it isn't lost. Still return Clove's real status to the caller.
+    if (!upstream.ok) await notifyLeadFailure(env, payload);
     return new Response(body, {
       status: upstream.status,
       headers: { 'content-type': upstream.headers.get('content-type') || 'application/json' },
     });
   } catch {
+    await notifyLeadFailure(env, payload);
     return json({ ok: false, error: 'upstream request failed' }, 502);
   }
 }

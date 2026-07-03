@@ -3,14 +3,32 @@ import { SITE_URL, OG_IMAGE } from '@/lib/site';
 import { ORGANIZATION, LOCAL_BUSINESS, ld } from '@/lib/schema';
 
 export const metadata = {
-  title: 'Makuta Taranga — The Finest Form of Luxury | IDL Lakefront, Hyderabad',
+  title: 'Gated Community Flats For Sale In Kukatpally | Makuta Taranga',
   description:
-    'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet–Kukatpally, Hyderabad. G+24 towers, 10.35-ft ceilings, privacy foyers. TS RERA P02200011012.',
+    'Discover gated community flats for sale in Kukatpally at Makuta Taranga. Luxury 3 & 4 BHK apartments with premium amenities in a prime Hyderabad location.',
+  keywords: [
+    'gated communities in kukatpally',
+    '3 bhk apartments in kukatpally',
+    '3 bhk flats for sale in kukatpally',
+    '4bhk flats for sale',
+    'flats for sale in kukatpally near metro',
+    'flats near kukatpally',
+    'gated communities near kukatpally',
+    'gated community flats for sale in kukatpally',
+    'gated community flats in kukatpally',
+    'kukatpally 3 bhk flat for sale',
+    'kukatpally gated community flats',
+    'new gated communities in kukatpally',
+    '3bhk flats in kukatpally',
+    'gated community apartments in kukatpally',
+    'luxury apartments in kukatpally',
+    'residential projects in kukatpally',
+  ],
   alternates: { canonical: '/' },
   openGraph: {
-    title: 'Makuta Taranga — The Finest Form of Luxury | IDL Lakefront, Hyderabad',
+    title: 'Gated Community Flats For Sale In Kukatpally | Makuta Taranga',
     description:
-      'Lakefront 3 & 4 BHK luxury residences by IDL Lake, Moosapet–Kukatpally, Hyderabad. G+24 towers, 10.35-ft ceilings, privacy foyers. TS RERA P02200011012.',
+      'Discover gated community flats for sale in Kukatpally at Makuta Taranga. Luxury 3 & 4 BHK apartments with premium amenities in a prime Hyderabad location.',
     url: '/',
   },
 };

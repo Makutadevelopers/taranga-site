@@ -579,11 +579,11 @@ export default function HomeClient() {
       {/* Construction-update film — the walkthrough now lives beside "Why Taranga" above.
           Section stays hidden until the construction video link is provided:
           set data-yt + backgroundImage to the real id, then remove `hidden` from the <section>. */}
-      <section className="filmsec reveal" data-rail="Film" id="film" hidden><div className="wrap">
+      <section className="filmsec reveal" data-rail="Film" id="film"><div className="wrap">
         <div className="label">Taranga in motion</div>
         <h2 className="filmsec-h">Construction update</h2>
         <div className="film-stage">
-          <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-film="cons" data-yt="CONSTRUCTION_ID" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/CONSTRUCTION_ID/maxresdefault.jpg)' }} aria-label="Play the construction progress update">
+          <div className="ytfacade film-pane is-active" role="button" tabIndex={0} data-film="cons" data-yt="jL7TM15GYkw" style={{ backgroundImage: 'url(https://i.ytimg.com/vi/jL7TM15GYkw/maxresdefault.jpg)' }} aria-label="Play the construction progress update">
             <span className="yt-play" aria-hidden="true"><svg viewBox="0 0 68 48"><path className="yt-bg" d="M66.5 7.7a8 8 0 0 0-5.6-5.7C56 .6 34 .6 34 .6s-22 0-26.9 1.4A8 8 0 0 0 1.5 7.7 83 83 0 0 0 0 24a83 83 0 0 0 1.5 16.3 8 8 0 0 0 5.6 5.7C12 47.4 34 47.4 34 47.4s22 0 26.9-1.4a8 8 0 0 0 5.6-5.7A83 83 0 0 0 68 24a83 83 0 0 0-1.5-16.3z" /><path className="yt-tri" d="M45 24 27 14v20z" /></svg></span>
           </div>
         </div>

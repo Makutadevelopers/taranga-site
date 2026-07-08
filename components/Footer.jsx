@@ -24,6 +24,7 @@ export default function Footer() {
             <Link href="/gallery/">Gallery</Link>
             <Link href="/blog/">Journal</Link>
             <Link href="/blog/#faq">FAQ</Link>
+            <Link href="/contact/">Contact</Link>
             <Link href="/privacy/">Privacy Policy</Link>
             <Link href="/terms/">Terms of Use</Link>
           </div>

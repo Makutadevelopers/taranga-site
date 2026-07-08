@@ -46,7 +46,13 @@ export default function PageClient() {
       </section>
 
       <section className="wrap" style={{ padding: 'clamp(2rem,5vw,3rem) 0 clamp(3rem,6vw,5rem)' }}>
-        <div className="reveal cgrid">
+        {/* Full-width location map anchors the section; form + details sit as two balanced columns below. */}
+        <div className="reveal" style={{ marginBottom: 'clamp(2.4rem,5vw,3.6rem)' }}>
+          <div className="mapcap"><b>◍</b>&nbsp; Makuta Taranga · IDL Road, Opp. IDL Lake, Hyderabad — 500072</div>
+          <div className="mapwrap"><iframe loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=17.4792373,78.4162829(Makuta+Taranga)&z=16&output=embed" title="Makuta Taranga location"></iframe></div>
+        </div>
+
+        <div className="reveal cgrid" style={{ alignItems: 'start' }}>
           <div>
             <div className="label">Enquire</div>
             <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4vw,2.8rem)', margin: '.3rem 0 1.4rem' }}>Send us your details</h2>
@@ -70,10 +76,8 @@ export default function PageClient() {
           </div>
           <div>
             <div className="label">Site office</div>
-            <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4vw,2.8rem)', margin: '.3rem 0 1rem' }}>Come see us</h2>
-            <div className="mapcap"><b>◍</b>&nbsp; Makuta Taranga · IDL Road, Opp. IDL Lake</div>
-            <div className="mapwrap"><iframe loading="lazy" referrerPolicy="no-referrer-when-downgrade" src="https://maps.google.com/maps?q=17.4792373,78.4162829(Makuta+Taranga)&z=16&output=embed" title="Makuta Taranga location"></iframe></div>
-            <p style={{ marginTop: '1.6rem', color: 'var(--ink-soft)' }}>IDL Road, Opp. IDL Lake, Hyderabad — 500072</p>
+            <h2 style={{ fontFamily: 'var(--display)', fontWeight: 300, fontSize: 'clamp(2rem,4vw,2.8rem)', margin: '.3rem 0 1.2rem' }}>Come see us</h2>
+            <p style={{ color: 'var(--ink-soft)', margin: 0 }}>IDL Road, Opp. IDL Lake, Hyderabad — 500072</p>
             <p style={{ marginTop: '1.2rem' }}><a className="more" href="tel:+919059676464">Call +91 90596 76464</a></p>
             <p style={{ marginTop: '1rem' }}><a className="more" href="https://wa.me/919059676464" target="_blank" rel="noopener noreferrer">WhatsApp us</a></p>
             <p style={{ marginTop: '1rem' }}><a className="more" href="https://www.google.com/maps/dir/?api=1&destination=17.4792373,78.4162829" target="_blank" rel="noopener noreferrer">Get directions</a></p>

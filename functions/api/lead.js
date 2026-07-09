@@ -27,14 +27,14 @@ function waText(v) {
   return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 120) || '-';
 }
 
-// Secondary capture: if the Clove write fails, fan the enquiry to the sales team's
-// WhatsApp so no lead is lost while the UI has already shown its (optimistic) thank-you.
-// Fire-and-forget — a failed alert must never turn a lead 500 into a worse error.
+// Sales notification: fan every enquiry to the sales team's WhatsApp so a human is
+// pinged in real time — sent on every lead, whether or not the Clove write succeeds.
+// Fire-and-forget — a failed alert must never turn a lead into a worse error.
 // Needs env: WA_PROJECT_ID, WA_API_PWD (shared with /api/whatsapp), plus:
 //   WA_ALERT_TO       — sales number to notify (country code + number, no '+')
 //   WA_TPL_LEAD_ALERT — approved template, 4 body params: name, phone, email, interest
 // If any are unset the alert is skipped silently.
-async function notifyLeadFailure(env, pl) {
+async function notifyNewLead(env, pl) {
   const pid = env.WA_PROJECT_ID;
   const pwd = env.WA_API_PWD;
   const to = (env.WA_ALERT_TO || '').replace(/\D/g, '');
@@ -65,7 +65,8 @@ async function notifyLeadFailure(env, pl) {
   }
 }
 
-export async function onRequestPost({ request, env }) {
+export async function onRequestPost(context) {
+  const { request, env } = context;
   const key = env.CLOVE_API_KEY;
   if (!key) return json({ ok: false, error: 'lead proxy not configured' }, 500);
 
@@ -88,6 +89,12 @@ export async function onRequestPost({ request, env }) {
     return json({ ok: false, error: 'missing required fields' }, 422);
   }
 
+  // Ping sales on WhatsApp for every lead. Run it via waitUntil so the alert never
+  // blocks (or fails) the response the form is waiting on; falls back to await if the
+  // runtime doesn't expose waitUntil (e.g. `next dev`).
+  const fireWa = () => notifyNewLead(env, payload);
+  const alert = () => (context.waitUntil ? context.waitUntil(fireWa()) : fireWa());
+
   const endpoint = env.CLOVE_LEAD_ENDPOINT || DEFAULT_ENDPOINT;
   try {
     const upstream = await fetch(endpoint, {
@@ -96,15 +103,13 @@ export async function onRequestPost({ request, env }) {
       body: JSON.stringify(payload),
     });
     const body = await upstream.text();
-    // Clove rejected the lead (down / 500 / auth) — capture it to the sales WhatsApp
-    // so it isn't lost. Still return Clove's real status to the caller.
-    if (!upstream.ok) await notifyLeadFailure(env, payload);
+    alert();
     return new Response(body, {
       status: upstream.status,
       headers: { 'content-type': upstream.headers.get('content-type') || 'application/json' },
     });
   } catch {
-    await notifyLeadFailure(env, payload);
+    alert();
     return json({ ok: false, error: 'upstream request failed' }, 502);
   }
 }

@@ -2,13 +2,15 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { leadPayload, sendLead } from '@/lib/lead';
+import { findCountry, validatePhone, toE164 } from '@/lib/phone';
+import PhoneField from '@/components/PhoneField';
 import pageCss from './page-styles';
 
 const openModal = (m, ex) => window.openModal && window.openModal(m, ex);
 
 export default function PageClient() {
   /* quick visit form */
-  const [q, setQ] = useState({ n: '', p: '', c: '' });
+  const [q, setQ] = useState({ n: '', p: '', c: '', iso: 'IN' });
   const [qDone, setQDone] = useState('');
   const [qNote, setQNote] = useState({
     text: 'We respect your privacy. No spam — just a call back to plan your visit.',
@@ -17,8 +19,9 @@ export default function PageClient() {
 
   function quickSubmit() {
     const n = q.n.trim();
-    const p = q.p.replace(/\D/g, '');
-    if (!n || p.length < 10) {
+    const country = findCountry(q.iso);
+    const p = toE164(country, q.p);
+    if (!n || !validatePhone(country, q.p)) {
       setQNote({ text: 'Please enter your name and a valid phone number.', color: '#b5562f' });
       return;
     }
@@ -335,7 +338,7 @@ export default function PageClient() {
           {!qDone ? (
             <div className="qform" id="qform">
               <input id="qn" placeholder="Your name" value={q.n} onChange={(e) => setQ((v) => ({ ...v, n: e.target.value }))} />
-              <input id="qp" placeholder="Phone" value={q.p} onChange={(e) => setQ((v) => ({ ...v, p: e.target.value }))} />
+              <PhoneField id="qp" placeholder="Phone" iso={q.iso} number={q.p} onIso={(iso) => setQ((v) => ({ ...v, iso }))} onNumber={(p) => setQ((v) => ({ ...v, p }))} />
               <select id="qc" value={q.c} onChange={(e) => setQ((v) => ({ ...v, c: e.target.value }))}>
                 <option value="">Interested in…</option>
                 <option>3 BHK</option>

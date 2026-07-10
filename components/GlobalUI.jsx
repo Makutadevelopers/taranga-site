@@ -1,6 +1,8 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate } from '@/lib/lead';
+import { findCountry, validatePhone, toE164 } from '@/lib/phone';
+import PhoneField from '@/components/PhoneField';
 
 const MODES = {
   visit: ['A private visit, by the lake', 'Tell us how to reach you and we’ll arrange a private visit by the lake.', 'Book a site visit', 'Visit requested', 'Thank you — our team will call you to confirm a time by the lake.'],
@@ -15,7 +17,7 @@ export default function GlobalUI() {
   const [mode, setMode] = useState('brochure');
   const [success, setSuccess] = useState(false);
   const [extra, setExtra] = useState({}); // e.g. { unit, config }
-  const [vals, setVals] = useState({ n: '', p: '', e: '', consent: false });
+  const [vals, setVals] = useState({ n: '', p: '', e: '', iso: 'IN', consent: false });
   const [errs, setErrs] = useState({ n: false, p: false, e: false, con: false });
 
   // lightbox state — items: [{ src, title, desc }], index points at the visible one
@@ -25,7 +27,7 @@ export default function GlobalUI() {
     setMode(m || 'brochure');
     setExtra(ex || {});
     setSuccess(false);
-    setVals({ n: '', p: '', e: '', consent: false });
+    setVals({ n: '', p: '', e: '', iso: 'IN', consent: false });
     setErrs({ n: false, p: false, e: false, con: false });
     setOpen(true);
   }, []);
@@ -71,21 +73,23 @@ export default function GlobalUI() {
 
   function submitModal() {
     const n = vals.n.trim();
-    const p = vals.p.replace(/\D/g, '');
+    const country = findCountry(vals.iso);
+    const national = vals.p.replace(/\D/g, '');
     const em = vals.e.trim();
     const next = {
       n: !n,
-      p: !(p.length >= 10),
+      p: !validatePhone(country, national),
       e: !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em),
       con: !vals.consent,
     };
     setErrs(next);
     if (next.n || next.p || next.e || next.con) return;
     const src = SRC[mode] || 'Enquiry';
+    const intlDigits = toE164(country, national, false); // e.g. "919876543210"
     // Brochure/Price: send the file to the lead's WhatsApp from the business account
     // (api-wa.co template) via our server function — the customer receives it directly.
     if (mode === 'brochure' || mode === 'price') {
-      sendWhatsAppTemplate(mode, n, p);
+      sendWhatsAppTemplate(mode, n, intlDigits);
       trackWhatsApp();
     }
     // Show the thank-you immediately — the lead POST runs in the background.
@@ -94,7 +98,7 @@ export default function GlobalUI() {
     trackLead('modal');
     setSuccess(true);
     sendLead(
-      leadPayload(src, n, p, em, extra),
+      leadPayload(src, n, '+' + intlDigits, em, extra),
       null,
       { mail: false } // Clove endpoint currently 500s; don't pop open Mail on failure
     );
@@ -117,8 +121,8 @@ export default function GlobalUI() {
               <p id="mdesc">{m[1]}</p>
               <input id="mn" placeholder="Full name" value={vals.n} onChange={(e) => setVals((v) => ({ ...v, n: e.target.value }))} />
               <div className="err" id="men" style={{ display: errs.n ? 'block' : 'none' }}>Please enter your name.</div>
-              <input id="mp" placeholder="Phone number" value={vals.p} onChange={(e) => setVals((v) => ({ ...v, p: e.target.value }))} />
-              <div className="err" id="mep" style={{ display: errs.p ? 'block' : 'none' }}>Enter a valid 10-digit phone.</div>
+              <PhoneField id="mp" placeholder="Phone number" iso={vals.iso} number={vals.p} invalid={errs.p} onIso={(iso) => setVals((v) => ({ ...v, iso }))} onNumber={(p) => setVals((v) => ({ ...v, p }))} />
+              <div className="err" id="mep" style={{ display: errs.p ? 'block' : 'none' }}>Enter a valid phone number for the selected country.</div>
               <input id="me" placeholder="Email address" value={vals.e} onChange={(e) => setVals((v) => ({ ...v, e: e.target.value }))} />
               <div className="err" id="mee" style={{ display: errs.e ? 'block' : 'none' }}>Enter a valid email.</div>
               <label htmlFor="mconsent" style={{ display: 'flex', alignItems: 'flex-start', gap: '.55rem', margin: '.1rem 0 1.1rem', fontSize: '.76rem', lineHeight: 1.5, color: 'var(--ink-soft)', textAlign: 'left', cursor: 'pointer' }}>

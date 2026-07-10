@@ -359,6 +359,20 @@ footer{border-top:1px solid var(--hair);background:var(--canvas-2)}
 .modal input{width:100%;font-family:var(--body);font-size:.9rem;padding:.8rem 1rem;margin-bottom:.7rem;background:transparent;border:1px solid var(--hair);border-radius:2px;color:var(--ink)}
 .modal input:focus{outline:none;border-color:var(--line)}.modal .btn{width:100%;text-align:center;margin-top:.3rem}
 .modal .ok{text-align:center}.modal .ok .tick{font-size:2.2rem;color:var(--line)}.err{color:#b5562f;font-size:.72rem;margin:-.3rem 0 .6rem;display:none}
+/* === phone field: country-code selector + number (India default) === */
+.phonefield{display:flex;align-items:stretch;border:1px solid var(--hair);border-radius:2px;background:transparent;overflow:hidden}
+.phonefield:focus-within{border-color:var(--line)}
+.phonefield.is-invalid{border-color:#b5562f}
+.pf-cc{position:relative;display:flex;align-items:center;gap:.32rem;padding:0 .7rem;border-right:1px solid var(--hair);white-space:nowrap;color:var(--ink);font-size:.88rem;cursor:pointer;background:transparent}
+.pf-flag{font-size:1.05rem;line-height:1}
+.pf-dial{font-variant-numeric:tabular-nums}
+.pf-caret{font-size:.55rem;color:var(--muted)}
+.pf-select{position:absolute;inset:0;width:100%;height:100%;opacity:0;border:0;margin:0;padding:0;cursor:pointer;font-size:16px}
+.pf-num{flex:1;min-width:0;border:0;background:transparent;padding:.85rem 1rem;font-family:var(--body);font-size:.88rem;color:var(--ink)}
+.pf-num:focus{outline:none}.pf-num::placeholder{color:var(--muted)}
+.qform .phonefield{flex:1;min-width:180px}
+.modal .phonefield{width:100%;margin-bottom:.7rem}
+@media(max-width:640px){.qform .phonefield,.modal .box .phonefield{width:100%;flex:1 1 100%;min-width:0}.pf-num{font-size:16px;min-height:48px}.pf-cc{font-size:16px}}
 /* === amenities fun-but-elegant === */
 .amintro{display:grid;grid-template-columns:1fr 1fr;gap:clamp(2rem,6vw,4rem);align-items:center}@media(max-width:820px){.amintro{grid-template-columns:1fr}}
 .daytabs{display:flex;gap:.5rem;flex-wrap:wrap;margin-bottom:2.2rem}

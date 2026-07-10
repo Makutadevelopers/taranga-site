@@ -22,7 +22,7 @@ export default function PhoneField({ iso = 'IN', number = '', onIso, onNumber, i
             </option>
           ))}
         </select>
-        <span className="pf-caret" aria-hidden="true">▾</span>
+        <span className="pf-caret" aria-hidden="true" />
       </span>
       <input
         id={id}

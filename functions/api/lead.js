@@ -12,7 +12,6 @@
 // In `next dev` the route doesn't exist; the client falls back to a mailto: link.
 
 const DEFAULT_ENDPOINT = 'https://portal-api.clove.build/api/tpi/website/lead';
-const WA_BASE = 'https://connect.api-wa.co/project-apis/v1/project';
 
 function json(obj, status) {
   return new Response(JSON.stringify(obj), {
@@ -21,52 +20,7 @@ function json(obj, status) {
   });
 }
 
-// WhatsApp template params can't contain newlines/tabs or long runs of spaces;
-// flatten to a single clean line and cap length so the alert always sends.
-function waText(v) {
-  return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, 120) || '-';
-}
-
-// Sales notification: fan every enquiry to the sales team's WhatsApp so a human is
-// pinged in real time — sent on every lead, whether or not the Clove write succeeds.
-// Fire-and-forget — a failed alert must never turn a lead into a worse error.
-// Needs env: WA_PROJECT_ID, WA_API_PWD (shared with /api/whatsapp), plus:
-//   WA_ALERT_TO       — sales number to notify (country code + number, no '+')
-//   WA_TPL_LEAD_ALERT — approved template, 4 body params: name, phone, email, interest
-// If any are unset the alert is skipped silently.
-async function notifyNewLead(env, pl) {
-  const pid = env.WA_PROJECT_ID;
-  const pwd = env.WA_API_PWD;
-  const to = (env.WA_ALERT_TO || '').replace(/\D/g, '');
-  const tpl = env.WA_TPL_LEAD_ALERT;
-  if (!pid || !pwd || !to || !tpl) return;
-
-  const params = [pl.name, pl.mobileNo, pl.email, pl.message || pl.subSource || pl.source]
-    .map((v) => ({ type: 'text', text: waText(v) }));
-  const payload = {
-    messaging_product: 'whatsapp',
-    recipient_type: 'individual',
-    to,
-    type: 'template',
-    template: {
-      name: tpl,
-      language: { code: env.WA_TPL_LANG || 'en' },
-      components: [{ type: 'body', parameters: params }],
-    },
-  };
-  try {
-    await fetch(`${WA_BASE}/${pid}/messages`, {
-      method: 'POST',
-      headers: { 'X-API-WA-Project-API-Pwd': pwd, 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
-    });
-  } catch {
-    // best-effort; nothing more we can safely do from here
-  }
-}
-
-export async function onRequestPost(context) {
-  const { request, env } = context;
+export async function onRequestPost({ request, env }) {
   const key = env.CLOVE_API_KEY;
   if (!key) return json({ ok: false, error: 'lead proxy not configured' }, 500);
 
@@ -89,12 +43,6 @@ export async function onRequestPost(context) {
     return json({ ok: false, error: 'missing required fields' }, 422);
   }
 
-  // Ping sales on WhatsApp for every lead. Run it via waitUntil so the alert never
-  // blocks (or fails) the response the form is waiting on; falls back to await if the
-  // runtime doesn't expose waitUntil (e.g. `next dev`).
-  const fireWa = () => notifyNewLead(env, payload);
-  const alert = () => (context.waitUntil ? context.waitUntil(fireWa()) : fireWa());
-
   const endpoint = env.CLOVE_LEAD_ENDPOINT || DEFAULT_ENDPOINT;
   try {
     const upstream = await fetch(endpoint, {
@@ -103,13 +51,11 @@ export async function onRequestPost(context) {
       body: JSON.stringify(payload),
     });
     const body = await upstream.text();
-    alert();
     return new Response(body, {
       status: upstream.status,
       headers: { 'content-type': upstream.headers.get('content-type') || 'application/json' },
     });
   } catch {
-    alert();
     return json({ ok: false, error: 'upstream request failed' }, 502);
   }
 }

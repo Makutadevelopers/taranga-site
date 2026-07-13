@@ -23,12 +23,18 @@ export default function GlobalUI() {
   // lightbox state — items: [{ src, title, desc }], index points at the visible one
   const [lb, setLb] = useState({ open: false, items: [], index: 0 });
 
+  // Double-tap guard. A ref, not state: two taps in the same tick would both pass a
+  // state check before React re-renders, sending the lead — and the WhatsApp template
+  // — twice. The ref flips synchronously, so the second tap is dropped.
+  const sending = useRef(false);
+
   const openModal = useCallback((m, ex) => {
     setMode(m || 'brochure');
     setExtra(ex || {});
     setSuccess(false);
     setVals({ n: '', p: '', e: '', iso: 'IN', consent: false });
     setErrs({ n: false, p: false, e: false, con: false });
+    sending.current = false;
     setOpen(true);
   }, []);
   const closeModal = useCallback(() => setOpen(false), []);
@@ -84,6 +90,8 @@ export default function GlobalUI() {
     };
     setErrs(next);
     if (next.n || next.p || next.e || next.con) return;
+    if (sending.current) return; // already submitted — drop the repeat tap
+    sending.current = true;
     const src = SRC[mode] || 'Enquiry';
     const intlDigits = toE164(country, national, false); // e.g. "919876543210"
     // Brochure/Price: send the file to the lead's WhatsApp from the business account
@@ -135,7 +143,7 @@ export default function GlobalUI() {
                 </span>
               </label>
               <div className="err" id="mecon" style={{ display: errs.con ? 'block' : 'none' }}>Please tick the box to continue.</div>
-              <a href="#" className="btn solid" id="msb" onClick={(e) => { e.preventDefault(); submitModal(); }}>{m[2]}</a>
+              <a href="#" className="btn solid" id="msb" style={{ touchAction: 'manipulation' }} onClick={(e) => { e.preventDefault(); submitModal(); }}>{m[2]}</a>
             </div>
           ) : (
             <div id="msuccess" className="ok">

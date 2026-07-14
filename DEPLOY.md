@@ -1,9 +1,20 @@
 # Deployment runbook — Makuta Taranga (Cloudflare Pages)
 
 Static Next.js export (`output: 'export'` → `out/`). Hosted on **Cloudflare Pages**.
-Domain `makutataranga.com` is registered at **GoDaddy**, currently using **Wix nameservers**
-(`ns0/ns1.wixdns.net`). Email is **Google Workspace**. Goal: move hosting + DNS to Cloudflare
-with zero email downtime, then retire Wix.
+
+**Live now.** The GoDaddy → Wix → Cloudflare migration is **done**:
+
+| | |
+|---|---|
+| Canonical host | `https://www.makutataranga.com` (apex 301-redirects to `www`) |
+| Registrar | GoDaddy |
+| Nameservers | Cloudflare (`rick` / `bingo.ns.cloudflare.com`) — Wix is out of the path |
+| Email | Google Workspace — MX records live on Cloudflare, unchanged |
+| Deploys | Cloudflare Pages, connected to Git. **Push to `main` → production build.** |
+
+> The old `taranga-site.pages.dev` URL still resolves, but `www.makutataranga.com` is canonical:
+> `SITE_URL` in `lib/site.js` already points at it, and canonical tags, OG URLs, JSON-LD,
+> `robots.txt` and the generated sitemap all derive from it.
 
 ---
 
@@ -28,76 +39,55 @@ with zero email downtime, then retire Wix.
 | `WA_TPL_BROCHURE` / `WA_TPL_PRICE` | `taranga_website` | Approved template sent to the lead on a brochure / price-sheet enquiry. |
 | `NODE_VERSION` | `20` | If not using `.nvmrc`. |
 
-> The `functions/` directory at the repo root is bundled automatically by `wrangler pages deploy out`
-> (Functions are read from the project root, not from `out/`). After setting `CLOVE_API_KEY`, redeploy
-> and submit a test lead — confirm it lands in Clove and that **no** API key appears in the browser
-> Network tab or page source.
+> The `functions/` directory at the repo root is bundled automatically by Pages (Functions are read
+> from the project root, not from `out/`). After changing `CLOVE_API_KEY`, redeploy and submit a test
+> lead — confirm it lands in Clove and that **no** API key appears in the browser Network tab or page
+> source.
 
-## Canonical domain (one-line flip)
-Canonical tags, OG URLs and JSON-LD all derive from `lib/site.js` (`SITE_URL`). It currently points at
-`https://taranga-site.pages.dev`. When the custom domain is live + SSL-active on Pages:
-1. Set `SITE_URL` in `lib/site.js` to `https://www.makutataranga.com`.
-2. Update `public/sitemap.xml` and `public/robots.txt` (static files) to the same host.
-3. Redeploy and resubmit the sitemap in Search Console.
+## Changing the canonical host
+Everything derives from one constant. To move hosts, set `SITE_URL` in `lib/site.js`, then redeploy
+and resubmit the sitemap in Search Console. `robots.txt` (static, in `public/`) is the only place the
+host is written by hand — update it to match. The sitemap is **generated** by `app/sitemap.js` and
+needs no edit.
 
----
+## Google Search Console
+The GA4 gtag snippet lives in `<head>` in `app/layout.jsx` and **must stay there** — Search Console's
+Google Analytics ownership check reads the tag from `<head>` and fails with *"the tracking code is in
+the wrong location on the page"* if `next/script` defers it into `<body>`.
 
-## Phase 1 — Deploy & test (no DNS changes)
-1. Cloudflare → **Workers & Pages → Create → Pages → Connect to Git** → `Makutadevelopers/taranga-site`.
-2. Enter the build settings above → Deploy.
-3. Open `https://taranga-site.pages.dev` and test: every page, lead forms (confirm a lead reaches
-   Clove CRM), WhatsApp/call buttons, GA4 + Meta Pixel firing, mobile layout.
-
-## Phase 2 — Add domain to Cloudflare DNS
-4. Cloudflare → **Add a site** → `makutataranga.com` → Free plan. Let it scan.
-5. **Verify these records imported (re-add any missing). Email records are critical:**
-
-   KEEP (DNS only / grey cloud):
-   | Type | Name | Value | Priority |
-   |---|---|---|---|
-   | MX | @ | aspmx.l.google.com | 10 |
-   | MX | @ | alt1.aspmx.l.google.com | 20 |
-   | MX | @ | alt2.aspmx.l.google.com | 30 |
-   | MX | @ | alt3.aspmx.l.google.com | 40 |
-   | MX | @ | alt4.aspmx.l.google.com | 50 |
-   | TXT | @ | `v=spf1 include:_spf.google.com ~all` | — |
-   | TXT | @ | `google-site-verification=D9EiOVS1fSl_Gwu6TmhEVNziEwNlSt3vQ6mgZLPHOqc` | — |
-
-   DELETE (old Wix records — Pages recreates apex/www on its own):
-   - `A @` → 185.230.63.x (Wix)
-   - `CNAME www` → *.wixdns.net (Wix)
-
-   OPTIONAL but recommended (add now or later):
-   - DKIM: check **Google Admin → Apps → Google Workspace → Gmail → Authenticate email**; if a
-     DKIM TXT exists, copy it into Cloudflare.
-   - DMARC: `TXT _dmarc` → `v=DMARC1; p=none; rua=mailto:dm@makutadevelopers.com`
-
-6. Cloudflare shows two nameservers (e.g. `xxx.ns.cloudflare.com`).
-
-## Phase 3 — Switch nameservers (at GoDaddy)
-7. GoDaddy → `makutataranga.com` → **Nameservers** → replace the Wix nameservers with the two
-   Cloudflare ones. (No Wix changes needed.) Wait for Cloudflare to report the zone "Active".
-
-## Phase 4 — Attach custom domain
-8. Pages project → **Custom domains** → add `makutataranga.com` **and** `www.makutataranga.com`.
-   SSL provisions automatically. Set one to redirect to the other for a single canonical host.
-
-## Phase 5 — Verify, then retire Wix
-9. Check: `https://makutataranga.com` loads; `/about.html` 301-redirects to `/about/`; SSL padlock;
-   GA4 + Pixel fire; forms submit; **send a test email to a @makutataranga.com address** to confirm
-   Google Workspace still receives.
-10. Resubmit `https://makutataranga.com/sitemap.xml` in Google Search Console.
-11. After a few stable days: cancel the Wix plan / remove the Wix domain connection.
+Verification methods available, in order of durability:
+1. **DNS TXT (best)** — a `TXT @` record on Cloudflare. Verifies the whole domain at once, immune to
+   the apex→www redirect. ⚠️ **Add a new record; never overwrite the existing TXT records** — the
+   root already carries the Google Workspace SPF record and an older `google-site-verification`
+   token. Multiple root TXT records are normal.
+2. **Google Analytics** — works now that the tag is in `<head>`. The verifying Google account needs
+   **Edit** permission on GA property `G-LG2FQH38BR`.
+3. **HTML file** — `public/google4a4f1c76e9a697e0.html`. If you use the URL-prefix property, register
+   it as `https://www.makutataranga.com/` (with the `www`), since the apex 301-redirects.
 
 ---
 
-## Post-launch checklist
-- [ ] All 7 pages load over HTTPS
-- [ ] Old `.html` URLs 301 to clean URLs (spot-check `/about.html`, `/contact.html`)
-- [ ] `www` and apex resolve to one canonical host
+## Ongoing checks after a deploy
+- [ ] All pages load over HTTPS on `www.makutataranga.com`
+- [ ] Old `.html` URLs 301 to clean URLs (spot-check `/about.html` → `/about/`)
+- [ ] Apex still 301s to `www`
 - [ ] Lead form → lead appears in Clove CRM (test submission)
 - [ ] GA4 Realtime shows the visit; Meta Pixel Helper shows PageView + Lead
-- [ ] Test email received at @makutataranga.com (Google Workspace intact)
 - [ ] Security headers present (check response headers / securityheaders.com)
-- [ ] sitemap.xml resubmitted in Search Console; old URLs re-crawled
-- [ ] Wix plan cancelled
+
+## DNS records that must not be broken
+These carry **Google Workspace email**. Deleting or overwriting them takes mail down.
+
+| Type | Name | Value | Priority |
+|---|---|---|---|
+| MX | @ | aspmx.l.google.com | 10 |
+| MX | @ | alt1.aspmx.l.google.com | 20 |
+| MX | @ | alt2.aspmx.l.google.com | 30 |
+| MX | @ | alt3.aspmx.l.google.com | 40 |
+| MX | @ | alt4.aspmx.l.google.com | 50 |
+| TXT | @ | `v=spf1 include:_spf.google.com ~all` | — |
+| TXT | @ | `google-site-verification=D9EiOVS1fSl_Gwu6TmhEVNziEwNlSt3vQ6mgZLPHOqc` | — |
+
+Still worth adding if absent:
+- **DKIM** — Google Admin → Apps → Google Workspace → Gmail → Authenticate email; copy the TXT into Cloudflare.
+- **DMARC** — `TXT _dmarc` → `v=DMARC1; p=none; rua=mailto:dm@makutadevelopers.com`

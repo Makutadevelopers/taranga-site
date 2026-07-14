@@ -54,16 +54,24 @@ export default function RootLayout({ children }) {
           href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Poppins:wght@300;400;500&display=swap"
           rel="stylesheet"
         />
-      </head>
-      <body>
-        {/* Google Analytics 4 */}
-        <Script src="https://www.googletagmanager.com/gtag/js?id=G-LG2FQH38BR" strategy="afterInteractive" />
-        <Script id="ga4" strategy="afterInteractive">{`
+        {/* Google Analytics 4 — Google's official gtag snippet, verbatim and in <head>.
+            It must stay here, not in <body>: Search Console's Google Analytics ownership
+            check reads the tag from <head> and fails ("tracking code in the wrong
+            location") if next/script defers it into the body. `async` keeps it
+            non-blocking, so this costs nothing at render time. */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-LG2FQH38BR" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
           gtag('config', 'G-LG2FQH38BR', {'anonymize_ip': true});
-        `}</Script>
+        `,
+          }}
+        />
+      </head>
+      <body>
         {/* Meta Pixel */}
         <Script id="fb-pixel" strategy="afterInteractive">{`
           !function(f,b,e,v,n,t,s)

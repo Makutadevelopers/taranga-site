@@ -36,7 +36,7 @@ Static Next.js export (`output: 'export'` → `out/`). Hosted on **Cloudflare Pa
 | `CLOVE_LEAD_ENDPOINT` | _(optional)_ | Override the upstream Clove URL; defaults to the production endpoint. |
 | `WA_PROJECT_ID` | _api-wa.co project id_ | Required for the brochure/price WhatsApp template. See `WHATSAPP_TEMPLATES.md`. |
 | `WA_API_PWD` | _api-wa.co project API password_ | **Encrypted.** Required for the brochure/price WhatsApp template. |
-| `WA_TPL_BROCHURE` / `WA_TPL_PRICE` | `taranga_website` | Approved template sent to the lead on a brochure / price-sheet enquiry. |
+| `WA_TPL_BROCHURE` / `WA_TPL_PRICE` | `taranga_website_1` | Approved template sent to the lead on a brochure / price-sheet enquiry. |
 | `NODE_VERSION` | `20` | If not using `.nvmrc`. |
 
 > The `functions/` directory at the repo root is bundled automatically by Pages (Functions are read

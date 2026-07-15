@@ -85,6 +85,18 @@ export default function RootLayout({ children }) {
           fbq('init', '29987720737478821');
           fbq('track', 'PageView');
         `}</Script>
+
+        {/* Microsoft Clarity — heatmaps + session recordings. Project xmplmcrl7j.
+            Loads the tag from clarity.ms and beacons back to *.clarity.ms; both are
+            allow-listed in the CSP (public/_headers). The Decap CMS at /admin is a
+            standalone index.html outside this layout, so it never loads this. */}
+        <Script id="ms-clarity" strategy="afterInteractive">{`
+          (function(c,l,a,r,i,t,y){
+            c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+            t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+            y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+          })(window, document, "clarity", "script", "xmplmcrl7j");
+        `}</Script>
         <noscript>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img height="1" width="1" style={{ display: 'none' }} src="https://www.facebook.com/tr?id=29987720737478821&ev=PageView&noscript=1" alt="" />

@@ -344,6 +344,11 @@ footer{border-top:1px solid var(--hair);background:var(--canvas-2)}
 .ft a,.ft p{font-size:.83rem;color:var(--ink-soft);display:block;margin-bottom:.5rem;transition:.3s}.ft a:hover{color:var(--line)}
 .ft h4{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem}
 .ft .rera{font-size:.78rem;border:1px solid var(--hair);padding:.6rem .9rem;border-radius:2px;margin-top:.7rem;display:inline-block}
+/* financier disclosure badge — its own band above the legal disclaimer. width/height
+   on the <img> reserve the box so it never shifts layout as it lazy-loads. */
+.ft-finance{border-top:1px solid var(--hair);padding:1.3rem 0 .2rem}
+.ft-finance img{width:100%;max-width:430px;height:auto;display:block;border-radius:2px}
+@media(max-width:760px){.ft-finance img{max-width:100%}}
 .disc{font-size:.62rem;color:var(--muted);border-top:1px solid var(--hair);padding:1.3rem 0;line-height:1.6}
 /* floats */
 .wa{position:fixed;right:1.1rem;bottom:1.3rem;z-index:80;width:56px;height:56px;border-radius:50%;background:#25D366;display:grid;place-items:center;box-shadow:0 10px 26px rgba(37,211,102,.45);transition:.3s}.wa:hover{transform:scale(1.08)}.wa svg{width:32px;height:32px;fill:#fff}

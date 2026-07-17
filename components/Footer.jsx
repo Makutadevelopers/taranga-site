@@ -35,6 +35,16 @@ export default function Footer() {
             <a href="mailto:sales@makutataranga.com">sales@makutataranga.com</a>
           </div>
         </div>
+        <div className="ft-finance">
+          <img
+            src="/assets/img/abhfl-financed.webp"
+            alt="Project is financed by and mortgaged to Aditya Birla Housing Finance Ltd. NOC from Aditya Birla Housing Finance Ltd. will be required before entering into any arrangement/agreement for sale of any unit/flat in the Project."
+            width="900"
+            height="250"
+            loading="lazy"
+            decoding="async"
+          />
+        </div>
         <p className="disc">
           TS RERA Registration No. P02200011012 — project details available at rera.telangana.gov.in. Artist’s impressions and renders are for representation only and may vary from actuals. All plans, areas, specifications and amenities are indicative and subject to the sanctioned and RERA-approved plans. This does not constitute a legal offer or invitation; all transactions are governed solely by the registered Agreement of Sale. © Makuta.
         </p>

@@ -48,6 +48,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        {/* Meta Business domain verification — pairs with the Pixel below and must stay
+            in <head> on every page; Business Manager re-checks it periodically. */}
+        <meta name="facebook-domain-verification" content="v5hu8yy9zip6g0wvg6jpaczh0t4vi2" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link

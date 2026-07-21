@@ -1,6 +1,9 @@
 'use client';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate } from '@/lib/lead';
+import {
+  leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate,
+  trackCtaClick, trackSubmitAttempt, trackSubmitError,
+} from '@/lib/lead';
 import { findCountry, validatePhone, toE164 } from '@/lib/phone';
 import PhoneField from '@/components/PhoneField';
 
@@ -11,6 +14,32 @@ const MODES = {
   plan: ['The Floor Plan', 'Share your details and we’ll send the detailed floor plan straight to you.', 'Send it to me', 'Thank you', 'Your floor plan is on its way.'],
 };
 const SRC = { visit: 'Site Visit', brochure: 'Brochure', price: 'Price Sheet', plan: 'Floor Plan' };
+
+// Derive cta_placement / cta_label from the DOM at click time instead of hand-labelling
+// each of the ~31 CTAs. They all funnel through window.openModal, which receives only the
+// mode — so the clicked element is captured separately (see lastClick below) and walked
+// here. Adding a CTA anywhere needs no analytics change.
+// Only 4 of 13 sections carry an id, so `section[id]` alone reports "unknown" for most
+// CTAs. Fall back to the section's own identifying class (`ess`, `ctaband`, `enq`…),
+// skipping layout-only classes, then to landmarks and the sticky bar's #sbar.
+const GENERIC_CLASS = new Set(['wrap', 'reveal', 'alt', 'section', 'container', 'row', 'inner']);
+
+function nameFor(el) {
+  if (!el) return '';
+  if (el.id) return el.id;
+  const cls = (typeof el.className === 'string' ? el.className : '').trim().split(/\s+/);
+  return cls.find((c) => c && !GENERIC_CLASS.has(c)) || el.tagName.toLowerCase();
+}
+
+function ctaContext(el) {
+  if (!el) return { placement: 'unknown', label: '' };
+  const btn = el.closest('a,button') || el;
+  const label = (btn.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 60);
+  const host =
+    btn.closest('section') || btn.closest('header') || btn.closest('footer') ||
+    btn.closest('nav') || btn.closest('[id]');
+  return { placement: nameFor(host) || 'unknown', label };
+}
 
 export default function GlobalUI() {
   const [open, setOpen] = useState(false);
@@ -28,8 +57,22 @@ export default function GlobalUI() {
   // — twice. The ref flips synchronously, so the second tap is dropped.
   const sending = useRef(false);
 
+  // What the visitor actually clicked, recorded in the CAPTURE phase so it lands before
+  // React's onClick runs openModal. Timestamped because openModal can also be called
+  // programmatically — a stale element would silently mis-attribute the placement.
+  const lastClick = useRef({ el: null, t: 0 });
+  useEffect(() => {
+    const onDocClick = (e) => { lastClick.current = { el: e.target, t: Date.now() }; };
+    document.addEventListener('click', onDocClick, true);
+    return () => document.removeEventListener('click', onDocClick, true);
+  }, []);
+
   const openModal = useCallback((m, ex) => {
-    setMode(m || 'brochure');
+    const kind = m || 'brochure';
+    const { el, t } = lastClick.current;
+    const { placement, label } = ctaContext(Date.now() - t < 1000 ? el : null);
+    trackCtaClick(kind, placement, label);
+    setMode(kind);
     setExtra(ex || {});
     setSuccess(false);
     setVals({ n: '', p: '', e: '', iso: 'IN', consent: false });
@@ -78,6 +121,7 @@ export default function GlobalUI() {
   }, []);
 
   function submitModal() {
+    trackSubmitAttempt(mode); // before validation — counts everyone who presses Submit
     const n = vals.n.trim();
     const country = findCountry(vals.iso);
     const national = vals.p.replace(/\D/g, '');
@@ -89,7 +133,12 @@ export default function GlobalUI() {
       con: !vals.consent,
     };
     setErrs(next);
-    if (next.n || next.p || next.e || next.con) return;
+    if (next.n || next.p || next.e || next.con) {
+      // One event per rejected submission, reporting the first failing field in form
+      // order — keeps the attempt → error → generate_lead funnel arithmetic 1:1.
+      trackSubmitError(mode, next.n ? 'name' : next.p ? 'phone' : next.e ? 'email' : 'consent');
+      return;
+    }
     if (sending.current) return; // already submitted — drop the repeat tap
     sending.current = true;
     const src = SRC[mode] || 'Enquiry';

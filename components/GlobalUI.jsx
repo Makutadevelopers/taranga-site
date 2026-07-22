@@ -61,6 +61,7 @@ export default function GlobalUI() {
   // React's onClick runs openModal. Timestamped because openModal can also be called
   // programmatically — a stale element would silently mis-attribute the placement.
   const lastClick = useRef({ el: null, t: 0 });
+  const ctaCtx = useRef(null); // {type, placement, label} of the CTA that opened the modal
   useEffect(() => {
     const onDocClick = (e) => { lastClick.current = { el: e.target, t: Date.now() }; };
     document.addEventListener('click', onDocClick, true);
@@ -71,7 +72,10 @@ export default function GlobalUI() {
     const kind = m || 'brochure';
     const { el, t } = lastClick.current;
     const { placement, label } = ctaContext(Date.now() - t < 1000 ? el : null);
-    trackCtaClick(kind, placement, label);
+    // Held for the life of this modal so the submit events and the completed lead all
+    // report the button that opened it, not just the click.
+    ctaCtx.current = { type: kind, placement, label };
+    trackCtaClick(ctaCtx.current);
     setMode(kind);
     setExtra(ex || {});
     setSuccess(false);
@@ -121,7 +125,7 @@ export default function GlobalUI() {
   }, []);
 
   function submitModal() {
-    trackSubmitAttempt(mode); // before validation — counts everyone who presses Submit
+    trackSubmitAttempt(ctaCtx.current); // before validation — counts everyone who presses Submit
     const n = vals.n.trim();
     const country = findCountry(vals.iso);
     const national = vals.p.replace(/\D/g, '');
@@ -136,7 +140,7 @@ export default function GlobalUI() {
     if (next.n || next.p || next.e || next.con) {
       // One event per rejected submission, reporting the first failing field in form
       // order — keeps the attempt → error → generate_lead funnel arithmetic 1:1.
-      trackSubmitError(mode, next.n ? 'name' : next.p ? 'phone' : next.e ? 'email' : 'consent');
+      trackSubmitError(ctaCtx.current, next.n ? 'name' : next.p ? 'phone' : next.e ? 'email' : 'consent');
       return;
     }
     if (sending.current) return; // already submitted — drop the repeat tap
@@ -149,15 +153,18 @@ export default function GlobalUI() {
       sendWhatsAppTemplate(mode, n, intlDigits);
       trackWhatsApp();
     }
-    // Show the thank-you immediately — the lead POST runs in the background.
-    // The Clove upstream can take a few seconds (and currently 500s), so there's no
-    // reason to make the visitor wait on it before confirming their enquiry landed.
-    trackLead('modal');
+    // Show the thank-you immediately — the lead POST runs in the background. The Clove
+    // upstream can take a few seconds, so there's no reason to make the visitor wait on
+    // it before confirming their enquiry landed. That makes generate_lead optimistic:
+    // lead_send_failed (with failure_reason) is what reconciles it.
+    trackLead('modal', ctaCtx.current);
     setSuccess(true);
     sendLead(
       leadPayload(src, n, '+' + intlDigits, em, extra),
       null,
-      { mail: false } // Clove endpoint currently 500s; don't pop open Mail on failure
+      // mail:false — the visitor is handed to WhatsApp anyway, so a Clove hiccup
+      // shouldn't also pop open their Mail app. The failure is reported to GA4 instead.
+      { mail: false, cta: ctaCtx.current }
     );
   }
 

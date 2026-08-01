@@ -285,7 +285,21 @@ export default function HomeClient() {
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('price'); }} className="hero-btn hero-btn-secondary">Price Sheet</a>
             <a href="#" onClick={(e) => { e.preventDefault(); openModal('visit'); }} className="hero-btn hero-btn-cta">Book a site visit</a>
           </div>
-          <p className="hero-trust reveal-anim" style={{ animationDelay: '1.8s' }}>TS RERA P02200011012</p>
+          <div className="hero-compliance reveal-anim" style={{ animationDelay: '1.8s' }}>
+            <div className="hc-row">
+              <span className="hc-label">Layout / Building Permission No</span>
+              <span className="hc-value">4488/GHMC/KPL/2025-BP</span>
+              <span className="hc-sub">HMDA / GHMC / DTCP / G.P etc.</span>
+            </div>
+            <div className="hc-div" aria-hidden="true"></div>
+            <div className="hc-row">
+              <span className="hc-label">TS RERA Registration No</span>
+              <span className="hc-value">P02200011012</span>
+              <span className="hc-sub">
+                <a href="https://rera.telangana.gov.in" target="_blank" rel="noopener noreferrer">rera.telangana.gov.in</a>
+              </span>
+            </div>
+          </div>
         </div>
         <a href="#luxury" className="hero-scroll reveal-anim" style={{ animationDelay: '2.1s' }}>
           <span className="hero-scroll-text">Scroll &mdash; what luxury really means</span>

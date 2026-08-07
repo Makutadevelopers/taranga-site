@@ -2,7 +2,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   leadPayload, sendLead, trackLead, trackWhatsApp, sendWhatsAppTemplate,
-  trackCtaClick, trackSubmitAttempt, trackSubmitError,
+  trackCtaClick, trackSubmitAttempt, trackSubmitError, captureAttribution,
 } from '@/lib/lead';
 import { findCountry, validatePhone, toE164 } from '@/lib/phone';
 import PhoneField from '@/components/PhoneField';
@@ -63,6 +63,9 @@ export default function GlobalUI() {
   const lastClick = useRef({ el: null, t: 0 });
   const ctaCtx = useRef(null); // {type, placement, label} of the CTA that opened the modal
   useEffect(() => {
+    // Record the landing URL's traffic source (UTM / gclid / referrer) on first paint,
+    // before any client navigation strips the query — this feeds the lead's subSource.
+    captureAttribution();
     const onDocClick = (e) => { lastClick.current = { el: e.target, t: Date.now() }; };
     document.addEventListener('click', onDocClick, true);
     return () => document.removeEventListener('click', onDocClick, true);

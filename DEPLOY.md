@@ -37,7 +37,15 @@ Static Next.js export (`output: 'export'` → `out/`). Hosted on **Cloudflare Pa
 | `WA_PROJECT_ID` | _api-wa.co project id_ | Required for the brochure/price WhatsApp template. See `WHATSAPP_TEMPLATES.md`. |
 | `WA_API_PWD` | _api-wa.co project API password_ | **Encrypted.** Required for the brochure/price WhatsApp template. |
 | `WA_TPL_BROCHURE` / `WA_TPL_PRICE` | `taranga_website_1` | Approved template sent to the lead on a brochure / price-sheet enquiry. |
+| `SHEET_WEBHOOK_URL` | _Apps Script /exec URL_ | Optional. Every lead (delivered **or** rejected) is also appended to a Google Sheet. Deploy `content/lead-backup.gs` as a Web App and paste its URL here. Silently inactive until both this and `SHEET_SECRET` are set. |
+| `SHEET_SECRET` | _long random string_ | **Encrypted.** Must equal the `SECRET` in the deployed `content/lead-backup.gs`. Guards the otherwise-public webhook. |
 | `NODE_VERSION` | `20` | If not using `.nvmrc`. |
+
+> **Lead attribution:** `lib/lead.js` now captures the visitor's traffic source (Google/Meta
+> ad, organic, WhatsApp, direct, portal…) as a first-touch and writes a plain-English bucket
+> into the lead's **`subSource`** (e.g. `Google Ads`, `Organic Search`), with the specific
+> site/campaign in the CRM note. No env var needed — it's client-side. The Google Sheet backup
+> (`SHEET_*` above) records the same, one row per lead, so a Clove-rejected lead is recoverable.
 
 > The `functions/` directory at the repo root is bundled automatically by Pages (Functions are read
 > from the project root, not from `out/`). After changing `CLOVE_API_KEY`, redeploy and submit a test

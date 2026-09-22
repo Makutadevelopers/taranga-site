@@ -9,6 +9,9 @@
 //   CLOVE_LEAD_ENDPOINT    — override the upstream URL (defaults below)
 //   SHEET_WEBHOOK_URL      — Google Apps Script /exec URL; every lead is also appended
 //   SHEET_SECRET           — shared secret the Apps Script checks (see content/lead-backup.gs)
+//   MAKUTA_CRM_WEBHOOK_SECRET — X-Webhook-Secret for the Makuta Sales CRM; every lead is also
+//                            copied there (inactive until set). Encrypted env var.
+//   MAKUTA_CRM_WEBHOOK_URL — override the CRM URL (defaults below)
 //
 // NOTE: unlike the Nirvana port, there is deliberately NO WhatsApp sales alert here — it
 // was removed from this project on purpose (see the lead-flow memory). The Sheet backup +
@@ -18,6 +21,9 @@
 // In `next dev` the route doesn't exist; the client falls back to a mailto: link.
 
 const DEFAULT_ENDPOINT = 'https://portal-api.clove.build/api/tpi/website/lead';
+const CRM_DEFAULT_ENDPOINT = 'https://crm.makutadevelopers.com/api/webhooks/website';
+// Must match the LeadFormMapping externalId configured in the CRM (Admin → Lead Form Mappings).
+const CRM_PROJECT_CODE = 'TARANGA';
 
 function json(obj, status) {
   return new Response(JSON.stringify(obj), {
@@ -75,6 +81,9 @@ export async function onRequestPost(context) {
     maxSize: cap(body.maxSize, 40),
   };
 
+  // Independent of Clove's outcome — a lead Clove rejects should still reach the CRM.
+  forwardToMakutaCrm(context, lead);
+
   const endpoint = env.CLOVE_LEAD_ENDPOINT || DEFAULT_ENDPOINT;
   try {
     const upstream = await fetch(endpoint, {
@@ -105,6 +114,59 @@ export async function onRequestPost(context) {
   }
 }
 // Only POST is defined, so Pages returns 405 for any other method automatically.
+
+/* ---- copy into the Makuta Sales CRM ---------------------------------------
+ * Same fire-and-forget shape as the Sheet backup: a slow or down CRM must never
+ * delay the visitor or cost a lead (Clove + the Sheet still have it). Inactive until
+ * MAKUTA_CRM_WEBHOOK_SECRET is set. The CRM logs every delivery (Admin → Ingest Log),
+ * so a rejected one is visible and replayable there.
+ *
+ * The CRM only accepts a bare 10-digit Indian mobile; the site sends "+91XXXXXXXXXX".
+ * Anything else (e.g. an NRI number) is passed through as digits and the CRM records
+ * it as a failed ingest rather than dropping it silently.
+ * ------------------------------------------------------------------------ */
+function toIndianMobile(raw) {
+  const d = String(raw || '').replace(/\D/g, '');
+  if (d.length === 12 && d.startsWith('91')) return d.slice(2);
+  if (d.length === 11 && d.startsWith('0')) return d.slice(1);
+  return d;
+}
+
+function forwardToMakutaCrm(context, lead) {
+  try {
+    const { env } = context;
+    if (!env.MAKUTA_CRM_WEBHOOK_SECRET) return;
+    const phone = toIndianMobile(lead.mobileNo);
+    if (!phone) return; // email-only enquiry — the CRM needs a phone to create a lead
+    context.waitUntil(postToMakutaCrm(env, lead, phone));
+  } catch {
+    /* a copy must never break the thing it is copying */
+  }
+}
+
+async function postToMakutaCrm(env, lead, phone) {
+  try {
+    const res = await fetch(env.MAKUTA_CRM_WEBHOOK_URL || CRM_DEFAULT_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-webhook-secret': env.MAKUTA_CRM_WEBHOOK_SECRET,
+      },
+      // The CRM reads projectCode/name/phone/email; the rest is kept verbatim in its Ingest Log.
+      body: JSON.stringify({
+        projectCode: CRM_PROJECT_CODE,
+        name: lead.name,
+        phone,
+        email: lead.email || undefined,
+        subSource: lead.subSource,
+        message: lead.message,
+      }),
+    });
+    if (!res.ok) console.error('MAKUTA_CRM_FORWARD_FAILED ' + res.status);
+  } catch (err) {
+    try { console.error('MAKUTA_CRM_FORWARD_FAILED ' + String(err)); } catch {}
+  }
+}
 
 /* ---- backup copy in a Google Sheet --------------------------------------
  * Clove was the ONLY record of an enquiry: this handler forwards and keeps

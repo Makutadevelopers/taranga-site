@@ -27,6 +27,11 @@
  *
  * AFTER EDITING THIS FILE: Deploy → Manage deployments → edit → New version.
  * Saving alone does not update the live web app.
+ *
+ * v2 (Sep 2026): four columns appended AFTER "Full note" — Keyword, Match type,
+ * Device, Google click ID. Existing columns and rows are untouched; the headers are
+ * added to an existing sheet automatically on the next lead. Empty values are
+ * written as "N/A" (not available), never left blank or guessed.
  */
 
 var SECRET = 'CHANGE_ME_TO_A_LONG_RANDOM_STRING';
@@ -45,7 +50,11 @@ var HEADERS = [
   'First page',
   'Unit',
   'Delivered to CRM',
-  'Full note'
+  'Full note',
+  'Keyword',
+  'Match type',
+  'Device',
+  'Google click ID'
 ];
 
 function doPost(e) {
@@ -76,7 +85,11 @@ function doPost(e) {
       body.page || '',
       body.unit || '',
       body.delivered || '',
-      body.note || ''
+      body.note || '',
+      body.keyword || 'N/A',
+      body.matchType || 'N/A',
+      body.device || 'N/A',
+      body.gclid || 'N/A'
     ];
 
     // Two forms submitted at once would otherwise race for the same row.
@@ -105,8 +118,25 @@ function sheet_() {
     sh.setFrozenRows(1);
     sh.setColumnWidth(1, 160); // Received
     sh.setColumnWidth(12, 420); // Full note
+  } else {
+    ensureHeaders_(sh);
   }
   return sh;
+}
+
+/** Adds any missing header cells (e.g. the v2 keyword columns) to an existing
+ *  sheet. Only blank header cells are written — nothing is overwritten. */
+function ensureHeaders_(sh) {
+  var range = sh.getRange(1, 1, 1, HEADERS.length);
+  var current = range.getValues()[0];
+  var changed = false;
+  for (var i = 0; i < HEADERS.length; i++) {
+    if (!current[i]) { current[i] = HEADERS[i]; changed = true; }
+  }
+  if (changed) {
+    range.setValues([current]);
+    range.setFontWeight('bold');
+  }
 }
 
 function reply_(obj) {
@@ -125,6 +155,7 @@ function testAppend() {
     Utilities.formatDate(new Date(), TIMEZONE, 'd MMM yyyy, h:mm a'),
     'Test Lead', '+919876543210', 'test@example.com',
     'Google Ads', 'Google', 'test-campaign', 'Brochure',
-    'Home page', '', 'Yes — test row, safe to delete', ''
+    'Home page', '', 'Yes — test row, safe to delete', '',
+    '3bhk flats kukatpally', 'Phrase', 'Mobile', 'TEST-GCLID'
   ]);
 }

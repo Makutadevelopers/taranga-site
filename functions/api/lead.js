@@ -81,8 +81,26 @@ export async function onRequestPost(context) {
     maxSize: cap(body.maxSize, 40),
   };
 
+  // Ad attribution (keyword, match type, click IDs). NOT part of Clove's contract, so it
+  // is kept out of `lead` and only goes to the Sheet backup and the Makuta Sales CRM.
+  const at = body.attribution && typeof body.attribution === 'object' && !Array.isArray(body.attribution)
+    ? body.attribution : {};
+  const attr = {
+    keyword: cap(at.keyword, 120),
+    matchType: cap(at.matchType, 20),
+    device: cap(at.device, 20),
+    campaign: cap(at.campaign, 120),
+    source: cap(at.source, 80),
+    medium: cap(at.medium, 80),
+    gclid: cap(at.gclid, 300),
+    fbclid: cap(at.fbclid, 300),
+    landing: cap(at.landing, 200),
+    referrer: cap(at.referrer, 200),
+    firstSeen: cap(at.firstSeen, 40),
+  };
+
   // Independent of Clove's outcome — a lead Clove rejects should still reach the CRM.
-  forwardToMakutaCrm(context, lead);
+  forwardToMakutaCrm(context, lead, attr);
 
   const endpoint = env.CLOVE_LEAD_ENDPOINT || DEFAULT_ENDPOINT;
   try {
@@ -96,20 +114,20 @@ export async function onRequestPost(context) {
       // Clove rejected — record it (a rejected lead is exactly the one worth recovering)
       // and relay Clove's real status to the client.
       captureFailure(lead, `Clove ${upstream.status}`);
-      backup(context, lead, `No — Clove ${upstream.status}`);
+      backup(context, lead, `No — Clove ${upstream.status}`, attr);
       return new Response(text || JSON.stringify({ ok: false, error: 'CRM rejected lead' }), {
         status: upstream.status,
         headers: { 'content-type': upstream.headers.get('content-type') || 'application/json' },
       });
     }
-    backup(context, lead, 'Yes');
+    backup(context, lead, 'Yes', attr);
     return new Response(text || JSON.stringify({ ok: true }), {
       status: 200,
       headers: { 'content-type': upstream.headers.get('content-type') || 'application/json' },
     });
   } catch {
     captureFailure(lead, 'network error');
-    backup(context, lead, 'No — network error');
+    backup(context, lead, 'No — network error', attr);
     return json({ ok: false, error: 'upstream request failed' }, 502);
   }
 }
@@ -132,19 +150,19 @@ function toIndianMobile(raw) {
   return d;
 }
 
-function forwardToMakutaCrm(context, lead) {
+function forwardToMakutaCrm(context, lead, attr) {
   try {
     const { env } = context;
     if (!env.MAKUTA_CRM_WEBHOOK_SECRET) return;
     const phone = toIndianMobile(lead.mobileNo);
     if (!phone) return; // email-only enquiry — the CRM needs a phone to create a lead
-    context.waitUntil(postToMakutaCrm(env, lead, phone));
+    context.waitUntil(postToMakutaCrm(env, lead, phone, attr || {}));
   } catch {
     /* a copy must never break the thing it is copying */
   }
 }
 
-async function postToMakutaCrm(env, lead, phone) {
+async function postToMakutaCrm(env, lead, phone, attr) {
   try {
     const res = await fetch(env.MAKUTA_CRM_WEBHOOK_URL || CRM_DEFAULT_ENDPOINT, {
       method: 'POST',
@@ -160,6 +178,22 @@ async function postToMakutaCrm(env, lead, phone) {
         email: lead.email || undefined,
         subSource: lead.subSource,
         message: lead.message,
+        // Keyword/ad detail for the CRM's lead record (see "Lead Keyword Attribution –
+        // CRM Field Spec"). Empty values are sent as "" — the CRM displays them as N/A.
+        attribution: {
+          channel: lead.subSource,
+          keyword: attr.keyword,
+          matchType: attr.matchType,
+          device: attr.device,
+          campaign: attr.campaign,
+          source: attr.source,
+          medium: attr.medium,
+          gclid: attr.gclid,
+          fbclid: attr.fbclid,
+          landingPage: attr.landing,
+          referrer: attr.referrer,
+          firstSeen: attr.firstSeen,
+        },
       }),
     });
     if (!res.ok) console.error('MAKUTA_CRM_FORWARD_FAILED ' + res.status);
@@ -178,11 +212,11 @@ async function postToMakutaCrm(env, lead, phone) {
  * Google, and a slow or broken Sheet must never cost us a lead. Silently
  * inactive until SHEET_WEBHOOK_URL and SHEET_SECRET are set in Pages env vars.
  * ------------------------------------------------------------------------ */
-function backup(context, lead, delivered) {
+function backup(context, lead, delivered, attr) {
   try {
     const { env } = context;
     if (!env.SHEET_WEBHOOK_URL || !env.SHEET_SECRET) return;
-    context.waitUntil(appendToSheet(env, lead, delivered));
+    context.waitUntil(appendToSheet(env, lead, delivered, attr || {}));
   } catch {
     /* a backup must never break the thing it is backing up */
   }
@@ -201,7 +235,7 @@ function noteField(message, label) {
   return '';
 }
 
-async function appendToSheet(env, lead, delivered) {
+async function appendToSheet(env, lead, delivered, attr) {
   try {
     // "Google Ads (Instagram), campaign "diwali"" → detail + campaign apart, so the
     // sheet can filter on either without string-matching in a formula.
@@ -235,6 +269,11 @@ async function appendToSheet(env, lead, delivered) {
         unit: noteField(lead.message, 'Unit'),
         delivered,
         note: lead.message,
+        // New Sheet columns (appended after "Full note"; see content/lead-backup.gs).
+        keyword: attr.keyword,
+        matchType: attr.matchType,
+        device: attr.device,
+        gclid: attr.gclid,
       }),
     });
   } catch (err) {

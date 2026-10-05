@@ -1,8 +1,8 @@
 ---
 title: "Living Near IDL Lake: Benefits of Lakefront Apartments in Kukatpally"
-description: Explore the benefits of lakefront apartments in Kukatpally near IDL
-  Lake, including connectivity, open views, amenities and premium 3 & 4 BHK
-  living.
+description: "Explore the benefits of lakefront apartments in Kukatpally near
+  IDL Lake, including connectivity, open views, amenities and premium 3 & 4 BHK
+  living. "
 date: 2026-10-05
 author: Makuta Developers
 tags:

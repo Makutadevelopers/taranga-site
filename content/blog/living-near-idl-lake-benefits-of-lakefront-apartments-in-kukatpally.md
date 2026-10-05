@@ -6,7 +6,7 @@ description: "Explore the benefits of lakefront apartments in Kukatpally near
 date: 2026-10-05
 author: Makuta Developers
 tags:
-  - Project Updates
+  - Benefits of Lakefront Apartments
 draft: false
 ---
 # Living Near IDL Lake: Benefits of Lakefront Apartments in Kukatpally

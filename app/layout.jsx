@@ -113,6 +113,10 @@ export default function RootLayout({ children }) {
         <FloatingActions />
         <GlobalUI />
         <SharedEffects />
+        {/* Website chat assistant (Makuta CRM). Renders nothing unless it is switched on
+            for TARANGA in the CRM (Admin → Website chat). Needs crm.makutadevelopers.com
+            in connect-src (public/_headers). */}
+        <Script id="makuta-chat" src="/makuta-chat.js" strategy="lazyOnload" data-site="TARANGA" data-avoid=".hero-compliance" />
       </body>
     </html>
   );

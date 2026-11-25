@@ -1,5 +1,6 @@
 ---
-title: What Are the Benefits of Living in a Gated Community in Kukatpally?
+title: What Are the Benefits of Living in a Gated Community in Makuta Taranga,
+  Kukatpally?
 description: Discover the benefits of gated community living in Kukatpally.
   Explore Makuta Taranga's 3 & 4 BHK homes, 36 amenities and lakefront
   lifestyle.
